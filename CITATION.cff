@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "The Prize Corpus: scientific awards annotated by type of contribution"
+message: "If you use this corpus, please cite the paper below."
+type: dataset
+authors:
+  - family-names: Wu
+    given-names: Tianyu
+    email: tianyu16@illinois.edu
+    affiliation: "Center for Biophysics and Quantitative Biology, University of Illinois Urbana-Champaign"
+license: CC-BY-4.0
+keywords:
+  - science of science
+  - scientific discovery
+  - prize data
+  - conceptual change
+  - machine learning
+preferred-citation:
+  type: article
+  title: "Patch or Reinterpret? A Prize Corpus and a Measurable Test for the Move Models Do Not Make"
+  authors:
+    - family-names: Wu
+      given-names: Tianyu
+      email: tianyu16@illinois.edu
+      affiliation: "Center for Biophysics and Quantitative Biology, University of Illinois Urbana-Champaign"
+  year: 2026

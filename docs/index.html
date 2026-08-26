@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Prize Corpus</title>
+<meta name="description" content="2,327 scientific prize records, 1,547 annotated by what kind of thing the contribution was.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F2F3F5; --surface:#FFFFFF; --surface-2:#E9EBEF;
+  --ink:#16181D; --ink-2:#3D434F; --muted:#5B6270;
+  --rule:#D6DAE1; --rule-soft:#E4E7EC;
+  --accent:#B4443C; --accent-ink:#8E332C; --accent-wash:#F6E7E5;
+  --quiet:#8A8F98; --on-accent:#FFFFFF;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --maxw:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14161A; --surface:#1B1E24; --surface-2:#23272F;
+    --ink:#E7E9ED; --ink-2:#B6BCC7; --muted:#949BA7;
+    --rule:#2C313A; --rule-soft:#242830;
+    --accent:#D9635A; --accent-ink:#E88178; --accent-wash:#2A1E1D;
+    --quiet:#767D89; --on-accent:#1A0E0D;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14161A; --surface:#1B1E24; --surface-2:#23272F;
+  --ink:#E7E9ED; --ink-2:#B6BCC7; --muted:#949BA7;
+  --rule:#2C313A; --rule-soft:#242830;
+  --accent:#D9635A; --accent-ink:#E88178; --accent-wash:#2A1E1D;
+  --quiet:#767D89; --on-accent:#1A0E0D;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:16.5px; line-height:1.6;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px}
+a{color:var(--accent-ink); text-decoration-thickness:1px; text-underline-offset:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+h1,h2,h3{font-family:var(--serif); font-weight:600; text-wrap:balance; margin:0; line-height:1.15}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 14px
+}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+header.top{border-bottom:1px solid var(--rule); background:var(--surface)}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:16px; padding-bottom:16px}
+.brand{font-family:var(--serif); font-size:19px; font-weight:600; letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+.topnav{display:flex; gap:22px; flex-wrap:wrap; align-items:center}
+.topnav a{font-size:14px; color:var(--ink-2); text-decoration:none}
+.topnav a:hover{color:var(--accent-ink); text-decoration:underline}
+
+/* ---------- hero ---------- */
+.hero{padding:76px 0 8px; border-bottom:1px solid var(--rule-soft)}
+.hero h1{font-size:clamp(34px,5.2vw,58px); letter-spacing:-.02em; max-width:19ch}
+.hero h1 em{font-style:italic; color:var(--accent)}
+.lede{max-width:62ch; margin:24px 0 0; font-size:19px; color:var(--ink-2)}
+.lede strong{color:var(--ink); font-weight:600}
+.facts{
+  display:flex; flex-wrap:wrap; gap:0; margin:40px 0 0;
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)
+}
+.fact{flex:1 1 150px; padding:18px 20px 18px 0; border-right:1px solid var(--rule-soft)}
+.fact:last-child{border-right:0}
+.fact b{display:block; font-family:var(--mono); font-size:26px; font-weight:500; letter-spacing:-.02em}
+.fact span{font-size:13px; color:var(--muted)}
+.cta{display:flex; flex-wrap:wrap; gap:12px; margin:32px 0 60px}
+.btn{
+  font-family:var(--sans); font-size:14.5px; font-weight:500;
+  padding:11px 20px; border-radius:3px; text-decoration:none; border:1px solid var(--accent);
+  background:var(--accent); color:var(--on-accent); transition:opacity .15s
+}
+.btn:hover{opacity:.87}
+.btn.ghost{background:transparent; color:var(--accent-ink); border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--accent); opacity:1}
+
+/* ---------- sections ---------- */
+section{padding:64px 0; border-bottom:1px solid var(--rule-soft)}
+section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:22ch}
+.say{max-width:64ch; color:var(--ink-2); margin:18px 0 0}
+.say + .say{margin-top:14px}
+
+/* ---------- finding ---------- */
+.finding{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:52px; align-items:start}
+.bignum{font-family:var(--mono); font-size:clamp(60px,11vw,104px); font-weight:400; line-height:.92; letter-spacing:-.04em; color:var(--accent)}
+.bignum small{display:block; font-family:var(--sans); font-size:16px; letter-spacing:0; color:var(--ink-2); margin-top:16px; max-width:34ch; line-height:1.55}
+.split{margin-top:30px}
+.splitbar{display:flex; height:13px; border-radius:2px; overflow:hidden; background:var(--surface-2)}
+.splitbar i{display:block}
+.legend{list-style:none; margin:18px 0 0; padding:0; display:grid; gap:9px}
+.legend li{display:grid; grid-template-columns:11px 1fr auto auto; gap:12px; align-items:baseline; font-size:14.5px}
+.legend .sw{width:11px; height:11px; border-radius:2px; transform:translateY(1px)}
+.legend .n{font-family:var(--mono); color:var(--ink-2)}
+.legend .p{font-family:var(--mono); color:var(--muted); font-size:13px; min-width:48px; text-align:right}
+
+/* ---------- ladder ---------- */
+.ladder{margin-top:36px; border:1px solid var(--rule); border-radius:4px; overflow:hidden; background:var(--surface)}
+.rung{display:grid; grid-template-columns:58px minmax(0,1fr) 132px; gap:20px; align-items:center;
+      padding:15px 20px; border-bottom:1px solid var(--rule-soft)}
+.rung:last-child{border-bottom:0}
+.rung.ml{background:var(--accent-wash)}
+.lv{font-family:var(--mono); font-size:15px; font-weight:500; color:var(--accent)}
+.rung .what{font-size:15.5px}
+.rung .eg{display:block; font-size:13px; color:var(--muted); margin-top:3px}
+.bar{display:flex; align-items:center; gap:9px}
+.bar i{display:block; height:8px; background:var(--accent); border-radius:1px; min-width:2px; opacity:.85}
+.bar b{font-family:var(--mono); font-size:13px; font-weight:400; color:var(--ink-2)}
+.mlnote{margin:14px 0 0; font-size:14px; color:var(--muted); max-width:70ch}
+.mlnote b{color:var(--accent-ink); font-weight:600}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto; margin-top:26px; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:560px}
+th,td{text-align:left; padding:11px 16px; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+thead th{
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); font-weight:400; background:var(--surface-2); border-bottom:1px solid var(--rule)
+}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right; font-family:var(--mono); white-space:nowrap}
+code{font-family:var(--mono); font-size:.9em; background:var(--surface-2); padding:1.5px 5px; border-radius:2px}
+pre{
+  margin:24px 0 0; padding:18px 20px; overflow-x:auto; background:var(--surface);
+  border:1px solid var(--rule); border-radius:4px; font-family:var(--mono); font-size:13.5px; line-height:1.65
+}
+pre code{background:none; padding:0}
+.cmt{color:var(--muted)}
+.kw{color:var(--accent-ink)}
+
+/* ---------- limits ---------- */
+.limits{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:1px; margin-top:30px;
+        background:var(--rule); border:1px solid var(--rule); border-radius:4px; overflow:hidden}
+.limit{background:var(--surface); padding:22px}
+.limit h3{font-size:17px; margin-bottom:8px}
+.limit p{margin:0; font-size:14.5px; color:var(--ink-2)}
+.warn{
+  margin-top:26px; padding:16px 20px; border-left:3px solid var(--accent);
+  background:var(--accent-wash); font-size:15px; border-radius:0 3px 3px 0
+}
+.warn b{font-weight:600}
+
+/* ---------- join ---------- */
+.steps{list-style:none; counter-reset:s; margin:28px 0 0; padding:0; display:grid; gap:16px; max-width:70ch}
+.steps li{counter-increment:s; display:grid; grid-template-columns:32px 1fr; gap:16px; align-items:baseline}
+.steps li::before{
+  content:counter(s,decimal-leading-zero); font-family:var(--mono); font-size:13px; color:var(--accent)
+}
+footer{padding:44px 0 60px; color:var(--muted); font-size:14px}
+footer .wrap{display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:space-between}
+footer a{color:var(--ink-2)}
+@media (max-width:820px){
+  .finding{grid-template-columns:1fr; gap:34px}
+  .rung{grid-template-columns:48px minmax(0,1fr); row-gap:9px}
+  .rung .bar{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">The Prize <span>Corpus</span></div>
+    <nav class="topnav">
+      <a href="#finding">Finding</a>
+      <a href="#scheme">Scheme</a>
+      <a href="#data">Data</a>
+      <a href="#limits">Limitations</a>
+      <a href="#join">Contribute</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">1731 &ndash; 2026 &nbsp;/&nbsp; 23 prizes &nbsp;/&nbsp; one annotator</p>
+    <h1>A breakthrough is rarely a better <em>fit</em> to the data.</h1>
+    <p class="lede">More often it is a decision that the data was about something else. This corpus
+    annotates <strong>2,327 scientific prizes</strong> by what kind of thing the contribution actually
+    was &mdash; whether it reframed something, measured something new, extended reach, or built an
+    instrument. Existing prize datasets count citations. None of them record this.</p>
+    <div class="facts">
+      <div class="fact"><b>2,327</b><span>award records</span></div>
+      <div class="fact"><b>1,547</b><span>annotated events</span></div>
+      <div class="fact"><b>15,693</b><span>laureate&ndash;paper links</span></div>
+      <div class="fact"><b>295</b><span>years covered</span></div>
+    </div>
+    <div class="cta">
+      <a class="btn" href="https://github.com/">Get the data</a>
+      <a class="btn ghost" href="paper.pdf">Read the paper (5pp)</a>
+      <a class="btn ghost" href="#join">Re-annotate a sample</a>
+    </div>
+  </div>
+</div>
+
+<section id="finding">
+  <div class="wrap">
+    <p class="eyebrow">The headline finding</p>
+    <div class="finding">
+      <div>
+        <div class="bignum">53%
+          <small>of awarded work is not a change of description at all &mdash; 820 of 1,547 events.
+          It delivered facts, or reach, or a working artifact.</small>
+        </div>
+      </div>
+      <div>
+        <h2>A two-way split misses more than half of what gets awarded.</h2>
+        <p class="say">Machine learning frames discovery as fitting versus reframing. Against 1,547
+        real awarded contributions, that split has nowhere to put the majority of them: no
+        description changed, so there is nothing to grade as shallow or deep.</p>
+        <div class="split">
+          <div class="splitbar" role="img" aria-label="Mode distribution: description 45.1%, facts 43.0%, built 8.7%, other 3.2%">
+            <i style="width:45.1%; background:var(--accent)"></i>
+            <i style="width:43.0%; background:var(--quiet)"></i>
+            <i style="width:8.7%;  background:var(--ink-2); opacity:.5"></i>
+            <i style="width:3.2%;  background:var(--rule)"></i>
+          </div>
+          <ul class="legend">
+            <li><span class="sw" style="background:var(--accent)"></span><span>changed the <b>description</b></span><span class="n">698</span><span class="p">45.1%</span></li>
+            <li><span class="sw" style="background:var(--quiet)"></span><span>changed the <b>facts</b> or <b>reach</b></span><span class="n">665</span><span class="p">43.0%</span></li>
+            <li><span class="sw" style="background:var(--ink-2); opacity:.5"></span><span>built or computed something</span><span class="n">134</span><span class="p">8.7%</span></li>
+            <li><span class="sw" style="background:var(--rule)"></span><span>other, or out of scope</span><span class="n">50</span><span class="p">3.2%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="scheme">
+  <div class="wrap">
+    <p class="eyebrow">The annotation scheme &nbsp;/&nbsp; axis 2 of 2</p>
+    <h2>Where a description <em>did</em> change, how far did it move?</h2>
+    <p class="say">Six rungs, and they are ordered &mdash; that ordering is what carries the argument.
+    Machine learning has an operation for exactly one of them.</p>
+
+    <div class="ladder">
+      <div class="rung">
+        <span class="lv">L5</span>
+        <span class="what">Change the repertoire of moves itself
+          <span class="eg">Cohen 1966 &mdash; forcing</span></span>
+        <span class="bar"><i style="width:1px"></i><b>1</b></span>
+      </div>
+      <div class="rung">
+        <span class="lv">L4</span>
+        <span class="what">Introduce a kind of object the language lacked
+          <span class="eg">Scholze 2018 &mdash; perfectoid spaces</span></span>
+        <span class="bar"><i style="width:36%"></i><b>181</b></span>
+      </div>
+      <div class="rung">
+        <span class="lv">L3</span>
+        <span class="what">Bridge one domain onto another
+          <span class="eg">Bennett &amp; Brassard 2025 &mdash; quantum communication</span></span>
+        <span class="bar"><i style="width:38%"></i><b>189</b></span>
+      </div>
+      <div class="rung">
+        <span class="lv">L2</span>
+        <span class="what">Retype, merge or split what counts as the same
+          <span class="eg">Cook 1982 &mdash; NP-completeness</span></span>
+        <span class="bar"><i style="width:100%"></i><b>501</b></span>
+      </div>
+      <div class="rung">
+        <span class="lv">L1</span>
+        <span class="what">Same predictions, <em>less</em> structure
+          <span class="eg">Nambu 2008 &mdash; symmetry breaking carried into particle physics</span></span>
+        <span class="bar"><i style="width:8%"></i><b>38</b></span>
+      </div>
+      <div class="rung ml">
+        <span class="lv">L0</span>
+        <span class="what">Solved inside the existing description
+          <span class="eg">Duminil-Copin 2022 &mdash; phase transitions in three and four dimensions</span></span>
+        <span class="bar"><i style="width:26%"></i><b>131</b></span>
+      </div>
+    </div>
+    <p class="mlnote"><b>The shaded rung is everything machine learning does today</b> &mdash; 131 of
+    1,041 depth labels. It is not the shallow end: Duminil-Copin won a Fields Medal there. It is
+    simply the only rung with an operation. And strict reinterpretation &mdash; L1, same predictions
+    with less structure, Einstein against Lorentz &mdash; is the rarest move in the corpus at 38 events.</p>
+
+    <p class="eyebrow" style="margin-top:56px">Axis 1 of 2</p>
+    <h2>What did the contribution change?</h2>
+    <p class="say">Every event gets exactly one mode. Modes are nominal &mdash; no ordering holds
+    between measuring something new and retyping what counts as the same &mdash; which is why they
+    are kept on a separate axis from the ladder above.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Mode</th><th class="n">n</th><th>What it means</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><code>REPRESENT</code></td><td class="n">698</td><td>the description used to write the phenomenon down</td><td>Prusiner 1997 &mdash; &ldquo;a new biological principle of infection&rdquo;</td></tr>
+          <tr><td><code>RECORD</code></td><td class="n">479</td><td>facts nobody had</td><td>P&auml;&auml;bo 2022 &mdash; genomes of extinct hominins</td></tr>
+          <tr><td><code>REACH</code></td><td class="n">186</td><td>what can be observed or reached at all</td><td>Karik&oacute; &amp; Weissman 2023 &mdash; mRNA made usable as a platform</td></tr>
+          <tr><td><code>ARTIFACT</code></td><td class="n">102</td><td>a thing that works</td><td>Goodenough et al. 2019 &mdash; the lithium-ion battery</td></tr>
+          <tr><td><code>TRACTABLE</code></td><td class="n">32</td><td>what can be computed</td><td>Hassabis &amp; Jumper 2024 &mdash; protein structure</td></tr>
+          <tr><td><code>ORGANIZE</code></td><td class="n">11</td><td>a field&rsquo;s standing or reach</td><td>founding, legitimating, carrying a field outward</td></tr>
+          <tr><td><code>OUT-OF-SCOPE</code></td><td class="n">31</td><td>not a scientific contribution</td><td>chiefly Templeton awards to religious figures</td></tr>
+          <tr><td><code>UNRESOLVED</code></td><td class="n">8</td><td>citation too thin to place</td><td>early Copley Medals, 1803&ndash;1824</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="wrap">
+    <p class="eyebrow">What you get</p>
+    <h2>One SQLite file, five CSVs, and a script that checks our arithmetic.</h2>
+    <p class="say">Every statistic on this page is recomputed from the shipped data by
+    <code>scripts/summary.py</code>. It exits non-zero if any published number fails to reproduce.
+    Run it before you trust us.</p>
+<pre><code><span class="cmt"># reproduces all 30 published statistics, straight from the data</span>
+python3 scripts/summary.py
+
+<span class="cmt"># every contribution that introduced a kind of object its language lacked</span>
+<span class="kw">SELECT</span> a.year, a.laureate, c.levels, c.ops, a.citation
+  <span class="kw">FROM</span> awards a
+  <span class="kw">JOIN</span> classifications c
+    <span class="kw">ON</span> a.prize_key = c.prize_key <span class="kw">AND</span> a.year = c.year
+ <span class="kw">WHERE</span> c.levels <span class="kw">LIKE</span> <span class="cmt">'%L4%'</span>
+ <span class="kw">ORDER BY</span> a.year <span class="kw">DESC</span>;</code></pre>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>File</th><th class="n">rows</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><code>prizes.sqlite</code></td><td class="n">&mdash;</td><td>everything below, indexed, in one file</td></tr>
+          <tr><td><code>awards.csv</code></td><td class="n">2,327</td><td>prize, year, laureate, official citation, institution, source</td></tr>
+          <tr><td><code>classifications.csv</code></td><td class="n">1,547</td><td>mode, depth, operators, trigger, evidence grade, justification</td></tr>
+          <tr><td><code>papers.csv</code></td><td class="n">15,693</td><td>laureate &rarr; paper links; 14,968 carry a DOI or arXiv ID</td></tr>
+          <tr><td><code>documents_index.csv</code></td><td class="n">4,044</td><td>document type and source URL &mdash; the text itself is not shipped</td></tr>
+          <tr><td><code>prizes.csv</code></td><td class="n">23</td><td>prize registry with official sites</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="say" style="margin-top:22px">Covering the three science Nobels, Copley, Turing, Fields,
+    Abel, Wolf, Crafoord, Kavli, Shaw, Breakthrough, Lasker, Templeton, Dirac, Boltzmann, Onsager and
+    others. <strong>2,221 of 2,327</strong> carry the awarding body&rsquo;s own citation; the other 106
+    never had one published.</p>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <p class="eyebrow">Read this before using the annotations</p>
+    <h2>One annotator, and it is a language model.</h2>
+    <div class="warn"><b>These are not the judgements of human domain experts.</b> Every count on this
+    page is one annotator&rsquo;s reading of the official citation text, under human direction. There is
+    exactly one annotator, so no inter-annotator agreement statistic exists &mdash; and we do not
+    report a proxy for one.</div>
+    <div class="limits">
+      <div class="limit">
+        <h3>The soft boundary</h3>
+        <p>A paper that reports a measurement often reframes something too, and which half the
+        citation rewards is a judgement call. Read the 53% as a <em>lower bound</em> on how badly a
+        two-way split fails, not as a constant.</p>
+      </div>
+      <div class="limit">
+        <h3>The scheme is not symmetric</h3>
+        <p>The facts column draws its own coarse distinction &mdash; facts newly in hand versus reach
+        newly extended &mdash; but encodes it as two modes rather than as a ladder. A scheme that
+        graded every column would be cleaner. We did not build one.</p>
+      </div>
+      <div class="limit">
+        <h3>Hindsight and selection</h3>
+        <p>Prizes are awarded with decades of hindsight, so the corpus samples work that turned out
+        to matter, and citations justify a decision already taken. Physics and mathematics are
+        better represented than biology or the earth sciences.</p>
+      </div>
+      <div class="limit">
+        <h3>Confidence is self-reported</h3>
+        <p>Evidence grades &mdash; A (1,442), B (77), C (28) &mdash; record how directly the citation
+        supported the call. They are a confidence signal from the annotator, not a validation of it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <p class="eyebrow">What would help most</p>
+    <h2>Re-annotate a sample. Disagree with us in public.</h2>
+    <p class="say">We cannot tell from the inside whether this scheme is reproducible or whether it
+    records one system&rsquo;s habits. Only someone else applying it can settle that. A few hundred
+    events is plenty.</p>
+    <ol class="steps">
+      <li>Sample a few hundred events from <code>classifications.csv</code>, spread across prizes and eras.</li>
+      <li>Read <strong>only</strong> the citation text. That is all our annotator saw &mdash; do not read our labels first.</li>
+      <li>Assign a mode, and a depth if a description changed.</li>
+      <li>Send the labels. We will publish the agreement statistic <strong>whatever it says</strong>, including if it is bad.</li>
+    </ol>
+    <p class="say" style="margin-top:24px">Also useful: filling a coverage gap in biology or the earth
+    sciences, fixing a wrong record, or attacking the scheme outright. If you can design a symmetric
+    one that survives contact with 1,547 real citations, it supersedes this one and we will say so.</p>
+    <div class="cta" style="margin-bottom:0">
+      <a class="btn" href="https://github.com/">Open an issue</a>
+      <a class="btn ghost" href="mailto:tianyu16@illinois.edu">Email the author</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Tianyu Wu &middot; Center for Biophysics and Quantitative Biology, UIUC</span>
+    <span>Annotations &amp; code <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> / MIT &middot;
+    citation text remains the awarding bodies&rsquo;</span>
+  </div>
+</footer>
+
+</body>
+</html>

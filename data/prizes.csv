@@ -1,0 +1,24 @@
+prize_key,prize_name,field,n_awards,first_year,last_year,wikipedia_page,official_site
+abel,Abel Prize,,29,2003,2026,,https://abelprize.no/
+boltzmann,Boltzmann Medal,,29,1975,2025,,
+breakthrough_fundamental_physics,Breakthrough Prize in Fundamental Physics,,155,2012,2026,,https://breakthroughprize.org/
+breakthrough_life_sciences,Breakthrough Prize in Life Sciences,,87,2013,2026,,https://breakthroughprize.org/
+breakthrough_mathematics,Breakthrough Prize in Mathematics,,18,2015,2026,,https://breakthroughprize.org/
+copley,Copley Medal,,288,1731,2025,,https://royalsociety.org/medals-and-prizes/copley/
+crafoord,Crafoord Prize,,82,1982,2026,,https://www.crafoordprize.se/
+dirac,Dirac Medal (ICTP),,104,1985,2026,,https://www.ictp.it/about-ictp/dirac-medal
+fields,Fields Medal,,68,1936,2026,,https://www.mathunion.org/imu-awards/fields-medal
+heineman_mathphys,Dannie Heineman Prize for Mathematical Physics,,89,1959,2026,,
+kavli,Kavli Prize,,83,2008,2026,,https://kavliprize.org/
+lars_onsager,Lars Onsager Prize,,47,1995,2026,,
+lorentz,Lorentz Medal,,25,1927,2025,,
+max_planck,Max Planck Medal,,93,1929,2026,,
+nobel_chemistry,Nobel Prize in Chemistry,,200,1901,2025,,https://www.nobelprize.org/prizes/chemistry/
+nobel_medicine,Nobel Prize in Physiology or Medicine,,232,1901,2025,,https://www.nobelprize.org/prizes/medicine/
+nobel_physics,Nobel Prize in Physics,,230,1901,2025,,https://www.nobelprize.org/prizes/physics/
+sakurai,Sakurai Prize for Theoretical Particle Physics,,76,1985,2026,,
+shaw,Shaw Prize,,121,2004,2026,,https://www.shawprize.org/
+templeton,Templeton Prize,,56,1973,2026,,https://www.templetonprize.org/
+turing,ACM A.M. Turing Award,,81,1966,2025,,https://amturing.acm.org/
+wolf_chemistry,Wolf Prize in Chemistry,,62,1978,2025,,https://wolffund.org.il/
+wolf_physics,Wolf Prize in Physics,,72,1978,2025,,https://wolffund.org.il/
