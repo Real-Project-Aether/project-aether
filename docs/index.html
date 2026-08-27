@@ -138,6 +138,49 @@ section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:2
 .mlnote{margin:18px 0 0; font-size:14px; color:var(--muted); max-width:70ch}
 .mlnote b{color:var(--accent-ink); font-weight:600}
 
+/* ---------- table of contents ---------- */
+.toc{display:none}
+.toc a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (min-width:1100px){
+  body{padding-left:222px}
+  .toc{
+    display:block; position:fixed; left:0; top:0; bottom:0; width:222px; z-index:20;
+    padding:26px 18px 26px 26px; overflow-y:auto;
+    background:var(--surface); border-right:1px solid var(--rule)
+  }
+  .toc .tochead{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 14px
+  }
+  .toc ol{list-style:none; margin:0; padding:0; display:grid; gap:1px; counter-reset:toc}
+  .toc li{counter-increment:toc}
+  .toc a{
+    display:grid; grid-template-columns:20px 1fr; gap:8px; align-items:baseline;
+    padding:6px 9px 6px 7px; border-radius:3px; text-decoration:none;
+    font-size:13.5px; line-height:1.35; color:var(--ink-2);
+    border-left:2px solid transparent; transition:color .12s, background .12s
+  }
+  .toc a::before{
+    content:counter(toc,decimal-leading-zero);
+    font-family:var(--mono); font-size:10.5px; color:var(--muted)
+  }
+  .toc a:hover{color:var(--ink); background:var(--surface-2)}
+  .toc a[aria-current="true"]{
+    color:var(--accent-ink); font-weight:600;
+    background:var(--accent-wash); border-left-color:var(--accent)
+  }
+  .toc a[aria-current="true"]::before{color:var(--accent)}
+  .toc .tocfoot{
+    margin:20px 0 0; padding-top:14px; border-top:1px solid var(--rule-soft);
+    font-size:12px; color:var(--muted); line-height:1.5
+  }
+  .toc .tocfoot a{display:block; padding:0; border:0; font-size:12px; color:var(--accent-ink)}
+  .toc .tocfoot a:hover{background:none; text-decoration:underline}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+section,.hero{scroll-margin-top:18px}
+
 /* ---------- the branch rule ---------- */
 .branch{margin-top:26px; border:1px solid var(--rule); border-radius:4px; overflow:hidden;
   background:var(--surface)}
@@ -213,13 +256,33 @@ footer a{color:var(--ink-2)}
 </style>
 </head><body>
 
-<header class="top">
+<nav class="toc" aria-label="Contents">
+  <p class="tochead">Contents</p>
+  <ol>
+    <li><a href="#top">Overview</a></li>
+    <li><a href="#gap">The gap</a></li>
+    <li><a href="#ladder">The ladder</a></li>
+    <li><a href="#today">What exists today</a></li>
+    <li><a href="#op">The operation</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#bound">The boundary</a></li>
+    <li><a href="#data">Data &amp; code</a></li>
+    <li><a href="#limits">Limitations</a></li>
+    <li><a href="#join">Contribute</a></li>
+  </ol>
+  <p class="tocfoot">
+    <a href="paper.pdf">Read the paper &rarr;</a>
+    <a href="https://github.com/">Code &amp; data &rarr;</a>
+  </p>
+</nav>
+
+<header class="top" id="top">
   <div class="wrap">
     <div class="brand">Reinterpretation as an <span>Operation</span></div>
     <nav class="topnav">
       <a href="#gap">The gap</a>
-      <a href="#today">Prior work</a>
       <a href="#ladder">The ladder</a>
+      <a href="#today">Prior work</a>
       <a href="#op">The operation</a>
       <a href="#results">Results</a>
       <a href="#bound">The boundary</a>
@@ -268,11 +331,14 @@ footer a{color:var(--ink-2)}
         contrast with science at large is why this work is about physics.</p>
         <div class="scroll" style="margin-top:22px">
           <table style="min-width:0">
-            <thead><tr><th></th><th class="n">all fields</th><th class="n">physics</th></tr></thead>
+            <thead><tr><th>of awarded work&hellip;</th><th class="n">all fields</th><th class="n">physics</th></tr></thead>
             <tbody>
-              <tr><td>changed a description</td><td class="n">45%</td><td class="n"><b>65%</b></td></tr>
-              <tr><td>changed no description at all</td><td class="n">53%</td><td class="n"><b>33%</b></td></tr>
-              <tr><td>L0 &mdash; the rung ML implements</td><td class="n">131/1,041</td><td class="n"><b>42/542</b></td></tr>
+              <tr><td>changed how the phenomenon is described</td><td class="n">45%</td><td class="n"><b>65%</b></td></tr>
+              <tr><td>brought new facts or new reach instead, and reframed nothing</td><td class="n">53%</td><td class="n"><b>33%</b></td></tr>
+              <tr class="hi"><td>and of the reframing, the part that is only fitting &mdash;
+                  the one move machine learning can make
+                  <span class="yr">131/1,041 vs 42/542</span></td>
+                  <td class="n">13%</td><td class="n"><b>8%</b></td></tr>
             </tbody>
           </table>
         </div>
@@ -280,41 +346,6 @@ footer a{color:var(--ink-2)}
         there. It is simply the only rung for which machine learning has an operation.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="today">
-  <div class="wrap">
-    <p class="eyebrow">What automated discovery does today</p>
-    <h2>Fourteen systems. Everything piles up on the bottom rung.</h2>
-    <p class="say">Placed by the <em>operation each system exposes</em>, not by the significance of
-    its results. The claim is about published operations, never about limits in principle.</p>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>system</th><th>what it does</th><th>rung</th><th>why not higher</th></tr></thead>
-        <tbody>
-          <tr><td>BACON <span class="yr">1981</span></td><td>rediscovers laws from tabulated data</td><td><code>L0</code></td><td>searches within a fixed term language</td></tr>
-          <tr><td>Eureqa <span class="yr">2009</span></td><td>symbolic regression on motion data</td><td><code>L0</code></td><td>the operator set is given in advance</td></tr>
-          <tr><td>AI Feynman <span class="yr">2020</span></td><td>physics-informed symbolic regression</td><td><code>L0</code></td><td>recovers known forms; invents no term</td></tr>
-          <tr><td>PySR <span class="yr">2023</span></td><td>evolutionary symbolic regression</td><td><code>L0</code></td><td>fixed primitive set</td></tr>
-          <tr><td>LaSR <span class="yr">2024</span></td><td>symbolic regression, learned library</td><td><code>L0/L2</code></td><td>abstractions are shortcuts, not retypings</td></tr>
-          <tr class="hi"><td>DreamCoder <span class="yr">2021</span></td><td>wake&ndash;sleep library learning</td><td><code>L2</code></td><td>names reusable structure; no theory to reinterpret</td></tr>
-          <tr><td>FunSearch <span class="yr">2024</span></td><td>LLM program search vs an evaluator</td><td><code>L0</code></td><td>searches programs in a fixed language</td></tr>
-          <tr><td>AlphaGeometry <span class="yr">2024</span></td><td>olympiad geometry by synthesis</td><td><code>L0</code></td><td>derives inside a fixed axiom set</td></tr>
-          <tr><td>Robot Scientist <span class="yr">2004</span></td><td>hypotheses tested by a robot</td><td><code>L0</code> + facts</td><td>chooses experiments; the ontology is fixed</td></tr>
-          <tr><td>Coscientist <span class="yr">2023</span></td><td>runs chemistry autonomously</td><td>instruments</td><td>extends reach; no description changes</td></tr>
-          <tr><td>AI Scientist <span class="yr">2024</span></td><td>end-to-end ML papers</td><td><code>L0</code></td><td>searches a fixed hypothesis space</td></tr>
-          <tr><td>AlphaFold <span class="yr">2021</span></td><td>protein structure prediction</td><td>tractability</td><td>makes computable; does not reframe</td></tr>
-          <tr><td>Cascade-Correlation <span class="yr">1990</span></td><td>grows hidden units as needed</td><td><code>L0</code></td><td>capacity, not concepts</td></tr>
-          <tr class="hi"><td>predicate invention <span class="yr">ILP</span></td><td>invents relations in logic programs</td><td><code>L4</code>*</td><td>*still open after three decades</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="mlnote"><b>Nothing performs L1.</b> No system takes a theory that already fits and
-    returns a theory that fits identically while carrying less &mdash; the Lorentz-to-Einstein move.
-    And a language model does not close it: on five episodes it scored <b>87%</b> when it could
-    recognise them and <b>48%</b>, chance, when the names were stripped out. It recalls; it does
-    not judge.</p>
   </div>
 </section>
 
@@ -388,6 +419,42 @@ footer a{color:var(--ink-2)}
         new result.</span>
         <em>One candidate in 1,547 events, and the annotator flagged even that one uncertain.</em></dd></div>
     </dl>
+  </div>
+</section>
+
+<section id="today">
+  <div class="wrap">
+    <p class="eyebrow">What automated discovery does today</p>
+    <h2>Fourteen systems. Everything piles up on the bottom rung.</h2>
+    <p class="say">Each system is placed on the ladder above by the <em>operation it exposes</em>,
+    not by the significance of its results. The claim is about published operations, never about
+    limits in principle.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>system</th><th>what it does</th><th>rung</th><th>why not higher</th></tr></thead>
+        <tbody>
+          <tr><td>BACON <span class="yr">1981</span></td><td>rediscovers laws from tabulated data</td><td><code>L0</code></td><td>searches within a fixed term language</td></tr>
+          <tr><td>Eureqa <span class="yr">2009</span></td><td>symbolic regression on motion data</td><td><code>L0</code></td><td>the operator set is given in advance</td></tr>
+          <tr><td>AI Feynman <span class="yr">2020</span></td><td>physics-informed symbolic regression</td><td><code>L0</code></td><td>recovers known forms; invents no term</td></tr>
+          <tr><td>PySR <span class="yr">2023</span></td><td>evolutionary symbolic regression</td><td><code>L0</code></td><td>fixed primitive set</td></tr>
+          <tr><td>LaSR <span class="yr">2024</span></td><td>symbolic regression, learned library</td><td><code>L0/L2</code></td><td>abstractions are shortcuts, not retypings</td></tr>
+          <tr class="hi"><td>DreamCoder <span class="yr">2021</span></td><td>wake&ndash;sleep library learning</td><td><code>L2</code></td><td>names reusable structure; no theory to reinterpret</td></tr>
+          <tr><td>FunSearch <span class="yr">2024</span></td><td>LLM program search vs an evaluator</td><td><code>L0</code></td><td>searches programs in a fixed language</td></tr>
+          <tr><td>AlphaGeometry <span class="yr">2024</span></td><td>olympiad geometry by synthesis</td><td><code>L0</code></td><td>derives inside a fixed axiom set</td></tr>
+          <tr><td>Robot Scientist <span class="yr">2004</span></td><td>hypotheses tested by a robot</td><td><code>L0</code> + facts</td><td>chooses experiments; the ontology is fixed</td></tr>
+          <tr><td>Coscientist <span class="yr">2023</span></td><td>runs chemistry autonomously</td><td>instruments</td><td>extends reach; no description changes</td></tr>
+          <tr><td>AI Scientist <span class="yr">2024</span></td><td>end-to-end ML papers</td><td><code>L0</code></td><td>searches a fixed hypothesis space</td></tr>
+          <tr><td>AlphaFold <span class="yr">2021</span></td><td>protein structure prediction</td><td>tractability</td><td>makes computable; does not reframe</td></tr>
+          <tr><td>Cascade-Correlation <span class="yr">1990</span></td><td>grows hidden units as needed</td><td><code>L0</code></td><td>capacity, not concepts</td></tr>
+          <tr class="hi"><td>predicate invention <span class="yr">ILP</span></td><td>invents relations in logic programs</td><td><code>L4</code>*</td><td>*still open after three decades</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mlnote"><b>Nothing performs L1.</b> No system takes a theory that already fits and
+    returns a theory that fits identically while carrying less &mdash; the Lorentz-to-Einstein move.
+    And a language model does not close it: on five episodes it scored <b>87%</b> when it could
+    recognise them and <b>48%</b>, chance, when the names were stripped out. It recalls; it does
+    not judge.</p>
   </div>
 </section>
 
@@ -622,5 +689,50 @@ python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where the criteri
   </div>
 </footer>
 
+
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var byId = {}, targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (el) { byId[el.id] = a; targets.push(el); }
+  });
+
+  function mark(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      if (on) { a.setAttribute('aria-current', 'true'); }
+      else { a.removeAttribute('aria-current'); }
+    });
+  }
+
+  // Highlight whichever section currently occupies the reading band near the top.
+  // Falls back to nearest-above on scroll, so the last section still lights up at page end.
+  function nearest() {
+    var best = targets[0], bestTop = -Infinity;
+    var probe = window.innerHeight * 0.28;
+    targets.forEach(function (el) {
+      var t = el.getBoundingClientRect().top;
+      if (t <= probe && t > bestTop) { bestTop = t; best = el; }
+    });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+      best = targets[targets.length - 1];
+    }
+    mark(best.id);
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () { nearest(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  nearest();
+})();
+</script>
 </body>
 </html>
