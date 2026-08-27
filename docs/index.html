@@ -166,7 +166,7 @@ section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:2
     font-size:13.5px; line-height:1.35; color:var(--ink-2);
     border-left:2px solid transparent; transition:color .12s, background .12s
   }
-  .toc a::before{
+  .toc ol a::before{
     content:counter(toc,decimal-leading-zero);
     font-family:var(--mono); font-size:10.5px; color:var(--muted)
   }
@@ -175,12 +175,13 @@ section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:2
     color:var(--accent-ink); font-weight:600;
     background:var(--accent-wash); border-left-color:var(--accent)
   }
-  .toc a[aria-current="true"]::before{color:var(--accent)}
+  .toc ol a[aria-current="true"]::before{color:var(--accent)}
   .toc .tocfoot{
     margin:20px 0 0; padding-top:14px; border-top:1px solid var(--rule-soft);
     font-size:12px; color:var(--muted); line-height:1.5
   }
-  .toc .tocfoot a{display:block; padding:0; border:0; font-size:12px; color:var(--accent-ink)}
+  .toc .tocfoot a{display:block; padding:2px 0; border:0; font-size:12px;
+    color:var(--accent-ink); grid-template-columns:none}
   .toc .tocfoot a:hover{background:none; text-decoration:underline}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
