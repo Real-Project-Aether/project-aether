@@ -16,7 +16,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 def main(owner, repo):
     repo_url = f"https://github.com/{owner}/{repo}"
-    pages_url = f"https://{owner}.github.io/{repo}/"
+    # GitHub lower-cases the owner in Pages hostnames; the repo path keeps its case.
+    pages_url = f"https://{owner.lower()}.github.io/{repo}/"
     changed = []
 
     # --- the website: bare placeholders, and any previously-set value

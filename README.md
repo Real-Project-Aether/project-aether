@@ -76,7 +76,7 @@ no probe-based method can reach those.
 ## Quick start
 
 ```bash
-git clone https://github.com/<you>/prize-corpus.git && cd prize-corpus
+git clone https://github.com/Real-Project-Aether/project-aether.git && cd project-aether
 python3 scripts/summary.py          # reproduces every number in the paper
 ```
 
