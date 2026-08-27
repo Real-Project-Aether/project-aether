@@ -152,10 +152,12 @@ pre code{background:none; padding:0}
 .warn b{font-weight:600}
 
 /* ---------- join ---------- */
-.steps{list-style:none; counter-reset:s; margin:28px 0 0; padding:0; display:grid; gap:16px; max-width:70ch}
-.steps li{counter-increment:s; display:grid; grid-template-columns:32px 1fr; gap:16px; align-items:baseline}
+.steps{list-style:none; counter-reset:s; margin:28px 0 0; padding:0; display:grid; gap:18px; max-width:68ch}
+.steps li{counter-increment:s; position:relative; padding-left:46px; min-height:26px}
 .steps li::before{
-  content:counter(s,decimal-leading-zero); font-family:var(--mono); font-size:13px; color:var(--accent)
+  content:counter(s,decimal-leading-zero); position:absolute; left:0; top:0; width:34px;
+  font-family:var(--mono); font-size:13px; font-weight:500; line-height:1.6;
+  color:var(--accent); font-variant-numeric:tabular-nums
 }
 footer{padding:44px 0 60px; color:var(--muted); font-size:14px}
 footer .wrap{display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:space-between}
