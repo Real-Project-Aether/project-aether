@@ -71,8 +71,12 @@ bibliometric---who won, what they published, how it was cited~\cite{li2019nobel}
 say whether an advance reframed something or measured something new. A contribution changes one of
 three things: the \textbf{facts} you hold, the \textbf{instruments} you have, or the
 \textbf{description} you use. Only the third has a depth, and Fig.~\ref{fig:framework} gives that
-ladder, from fitting parameters inside a fixed description up to introducing a kind of object the
-language lacked.
+ladder. Its six rungs, in order, are \textbf{regression}~(L0), solving inside the description you
+already have; \textbf{reinterpretation}~(L1), the same predictions carried with less structure;
+\textbf{retyping}~(L2), deciding two things are the same or that one thing is really two;
+\textbf{transfer}~(L3), carrying one field's language into another; \textbf{new object}~(L4),
+adding a kind of thing the language did not have; and \textbf{new move}~(L5), changing what
+counts as a move at all. We use these names throughout, and on the project site.
 
 \begin{figure*}[t]
 \centering
@@ -194,6 +198,11 @@ failure is not a missing-information problem.
 \section{An operation for reinterpretation}
 \label{sec:mech}
 
+If no system performs the move, the first question is whether it can be written down as something
+a machine runs at all. A verdict available only in hindsight and in prose cannot be automated, so
+what follows turns ``Einstein's theory carried less than Lorentz's'' into a quantity computable
+from a theory and its data before anyone knows which one is right.
+
 \paragraph{The measurement.} ``Carries structure no measurement can see'' is not a metaphor. For
 a theory with parameters $p$ predicting $f(x,p)$, the directions along which no prediction moves
 are the null space of the Jacobian $J_{ij}=\partial f_i/\partial p_j$. This is structural
@@ -230,7 +239,8 @@ fluently and judges at chance. We therefore use it \emph{only to generate} and n
 
 \paragraph{Controls first.} Twenty-one checks run on cases whose answers we put in ourselves: the
 mechanism must find hidden slack and remove it \emph{without moving any prediction}, leave an
-honest theory alone, and \textbf{reject} a proposed term that buys coverage while moving no
+honest theory alone, and \textbf{reject} a proposed term that buys coverage---the fraction of
+observations the fitted theory reproduces inside $2\sigma$---while moving no
 prediction---the property that stops ``add a parameter'' from being free. All twenty-one pass.
 This establishes that the implementation does what it claims, not that the criterion tracks real
 theory choice; the two results below are where that is tested.
