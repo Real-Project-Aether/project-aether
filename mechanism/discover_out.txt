@@ -1,0 +1,35 @@
+Candidate generators supplied (nothing is said about which are real invariances):
+    flavour I
+    flavour sx
+    flavour sy
+    flavour sz
+    gauge (compensated)
+    link phase
+    rescale
+    shift flavour 0
+
+Step 1-2  uniform d(probes)/dc singular values: 6.5e+01  5.1e+01  5.6e+00  2.6e-08  1.6e-08  1.3e-08  1.0e-08  8.7e-09
+          rank 3 of 8  ->  5 invariant direction(s) FOUND
+          rejected as not invariant: link phase, rescale, shift flavour 0
+
+Step 3    local d(probes)/dc within those directions: 6.6e+01  5.7e+01  5.3e+01  5.1e+01  2.6e-05
+          1 REDUNDANCY (survives point-by-point)  ->  quotient   [L1]
+          4 SYMMETRY   (needs to move everywhere at once) -> keep [L4]
+            redundancy = +1.00[gauge (compensated)]
+
+Step 4    do the symmetry branches buy a conserved quantity?
+symmetry direction                        charge before          after   rel drift
+----------------------------------------------------------------------------------
++0.34I -0.34sx +0.84sy -0.25sz                51.702175      51.702175     1.8e-11
+-0.63sx +0.77sz                              -25.036839     -25.036839     5.5e-11
++0.90I +0.23sx -0.18sy +0.32sz               120.197699     120.197699     5.8e-11
++0.24I -0.66sx -0.52sy -0.49sz                16.365246      16.365246     7.6e-10
+redundancy: would-be local charge              6.087300      11.339602     8.6e-01
+
+Without step 3 (quotient everything no probe can see -- the D1 bug):
+          all 5 invariant directions quotiented, including the 4 that are symmetries
+          -> 4 conservation law(s) destroyed, each verified above to 8e-10
+          the local/uniform test is what separates 'delete it' from 'it is a charge'
+
+  energy drift on the same trajectory: 1.3e-10  (trajectory sound)
+  worst symmetry-charge drift:         7.6e-10

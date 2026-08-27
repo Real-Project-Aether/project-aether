@@ -1,0 +1,42 @@
+model gpt-oss:20b   acceptance: coverage must rise AND unobservable dimension stay 0
+
+WORLD A -- a real missing concept, 0.4*sin(3x)
+  base model covers 18% of observations; model proposed 8 concepts
+  proposed concept             cover  unobs   verdict
+  --------------------------------------------------------------
+  sin(3.1415926535*x)           48%      0   ACCEPT
+  cos(3.1415926535*x)           18%      0   reject -- no gain
+  sin(6.2831853071*x)           18%      0   reject -- no gain
+  cos(6.2831853071*x)           18%      0   reject -- no gain
+  x*sin(3.1415926535*x)         28%      0   ACCEPT
+  exp(-x)                       18%      0   reject -- no gain
+  log(x+1)                      17%      0   reject -- no gain
+  tanh(x)                       17%      0   reject -- no gain
+
+WORLD B -- CONTROL, nothing to find (residual is noise)
+  base model covers 95% of observations; model proposed 8 concepts
+  proposed concept             cover  unobs   verdict
+  --------------------------------------------------------------
+  sin(2*x)                      95%      0   reject -- no gain
+  cos(2*x)                      93%      0   reject -- no gain
+  exp(-x)                       93%      0   reject -- no gain
+  exp(-x)*sin(2*x)              93%      0   reject -- no gain
+  exp(-x)*cos(2*x)              93%      0   reject -- no gain
+  x*sin(2*x)                    95%      0   reject -- no gain
+  x*cos(2*x)                    95%      0   reject -- no gain
+  tanh(x-3)                     95%      0   reject -- no gain
+
+ORACLE CHECK -- would the filter have recognised the true concept if offered?
+  candidate           coverage  unobs
+  sin(3*x)  TRUE          97%      0
+  sin(2.9*x) near         68%      0
+  sin(2*x)  wrong         20%      0
+  x**3      wrong         20%      0
+  base was 18%. The filter separates the truth from the near-misses by a wide
+  margin, so the bottleneck here is the PROPOSER, not the test.
+
+summary
+  world A (real concept)     proposed  8   accepted  2   best: sin(3.1415926535*x)
+  world B (control)          proposed  8   accepted  0
+
+  The model proposes in both worlds. Only the measurement tells them apart.

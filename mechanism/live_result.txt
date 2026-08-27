@@ -1,0 +1,24 @@
+NGC 3198 -- 43 points, 0.32 to 44.1 kpc  (SPARC)
+
+description                      concepts   chi2/N   cover  unobs   singular values
+--------------------------------------------------------------------------------------------------------
+LCDM: baryons + NFW halo                3     1.22    93%      0     251.65     51.85      6.44
+MOND: baryons, a0 universal             1     9.21    60%      0      84.54
+MOND: baryons, a0 free                  2     1.78    86%      0     118.74     24.20
+
+fitted values
+  LCDM: baryons + NFW halo
+      M/L     0.4852
+      V200    109.9
+      c       10.32
+  MOND: baryons, a0 universal
+      M/L     0.4341
+  MOND: baryons, a0 free
+      M/L     0.6751
+      a0      2053
+
+what the mechanism does with the LCDM description
+  exact algebraic null space : none
+  at the measured error bars : 0 of 3 directions move no prediction past the noise
+  softest direction          : sigma_min = 6.440  (a 100% excursion moves the curve 6.44 sigma)
+  it is a combination of     : -0.72*M/L, -0.11*V200, +0.68*c
