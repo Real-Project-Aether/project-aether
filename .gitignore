@@ -10,3 +10,6 @@ documents/
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+
+# LaTeX source lives outside this repo; docs/paper.pdf is the served copy
+paper/

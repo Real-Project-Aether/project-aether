@@ -182,7 +182,9 @@ down. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Citing
 
-See [CITATION.cff](CITATION.cff). The paper is in `paper/paper.pdf`.
+See [CITATION.cff](CITATION.cff). The paper is at
+[real-project-aether.github.io/project-aether/paper.pdf](https://real-project-aether.github.io/project-aether/paper.pdf);
+the LaTeX source is not part of this repository.
 
 ## Licence
 
