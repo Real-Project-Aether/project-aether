@@ -132,7 +132,9 @@ section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:2
 .levels dt{font-size:15.5px; font-weight:600; margin:0 0 4px}
 .levels dt b{font-family:var(--mono); font-weight:500; color:var(--accent); margin-right:9px}
 .levels dd{margin:0; font-size:14.5px; color:var(--ink-2); max-width:74ch}
-.levels dd em{font-style:normal; color:var(--accent-ink)}
+.levels dd em{display:block; margin-top:7px; font-style:normal; color:var(--accent-ink); font-size:13.5px}
+.levels .ex{display:block; margin-top:7px; padding-left:13px; border-left:2px solid var(--rule)}
+.levels .ex b{color:var(--ink); font-weight:600}
 .mlnote{margin:18px 0 0; font-size:14px; color:var(--muted); max-width:70ch}
 .mlnote b{color:var(--accent-ink); font-weight:600}
 
@@ -287,26 +289,49 @@ footer a{color:var(--ink-2)}
     </div>
 
     <dl class="levels">
-      <div><dt><b>L0</b> Regression</dt><dd>Keep the description you have and solve the problem
-        inside it. Kerr found an exact solution to Einstein&rsquo;s equations; nothing about general
-        relativity changed. <em>The only level machine learning has an operation for &mdash; and not
-        the easy one. Fields Medals sit here.</em></dd></div>
-      <div><dt><b>L1</b> Reinterpretation</dt><dd>The theory predicts the same numbers but carries
-        less. Lorentz and Einstein agreed on every measurement; Einstein&rsquo;s version dropped the
-        aether. Jackiw and Adler did it to the axial anomaly: what looked like a calculational
-        artifact was a real feature of the theory. <em>38 events &mdash; the rarest move in the
-        corpus.</em></dd></div>
-      <div><dt><b>L2</b> Retyping</dt><dd>Decide two things are the same thing, or that one thing is
-        really two. Casini, Huerta, Ryu and Takayanagi replaced raw entanglement entropy with
-        relative entropy. <em>Most description-changing work is here.</em></dd></div>
-      <div><dt><b>L3</b> Transfer</dt><dd>Carry one field&rsquo;s language into another. Mukhanov,
-        Starobinsky and Sunyaev mapped quantum fluctuations onto the large-scale structure of the
-        universe.</dd></div>
-      <div><dt><b>L4</b> New object</dt><dd>Add a kind of thing the language did not have. Neveu,
-        Ramond and Virasoro put fermionic symmetries into the string framework.</dd></div>
-      <div><dt><b>L5</b> New move</dt><dd>Change what counts as a move at all. One candidate in
-        1,547 events &mdash; Cohen&rsquo;s forcing &mdash; and the annotator flagged even that one
-        uncertain.</dd></div>
+      <div><dt><b>L0</b> Regression</dt>
+        <dd>Keep the description you have and solve inside it.
+        <span class="ex"><b>Dirac Medal 2025 &mdash; Kerr.</b> An exact rotating black-hole solution
+        of Einstein&rsquo;s equations. Nothing about general relativity changed; he solved a hard
+        problem in the language it already had.</span>
+        <em>The only rung machine learning has an operation for &mdash; and not the easy one.
+        Fields Medals sit here.</em></dd></div>
+
+      <div><dt><b>L1</b> Reinterpretation</dt>
+        <dd>The theory predicts the same numbers but carries less.
+        <span class="ex"><b>Dirac Medal 1998 &mdash; Jackiw &amp; Adler.</b> The axial anomaly looked
+        like a defect of the calculation, something to be regularised away. They established it was
+        a real structural feature of the quantum theory. Same predictions; a supposed artifact
+        became part of the content.</span>
+        <em>38 events &mdash; the rarest move in the corpus. Seven are Dirac Medals.</em></dd></div>
+
+      <div><dt><b>L2</b> Retyping</dt>
+        <dd>Decide two things are the same, or that one thing is really two.
+        <span class="ex"><b>Dirac Medal 2024 &mdash; Casini, Huerta, Ryu &amp; Takayanagi.</b> Cited
+        for &ldquo;insights on quantum entropy&rdquo;: stop measuring raw entanglement entropy, which
+        diverges, and measure relative entropy instead. Same physics, a different quantity counted as
+        the thing.</span>
+        <em>Most description-changing work is here.</em></dd></div>
+
+      <div><dt><b>L3</b> Transfer</dt>
+        <dd>Carry one field&rsquo;s language into another.
+        <span class="ex"><b>Dirac Medal 2019 &mdash; Mukhanov, Starobinsky &amp; Sunyaev.</b> The
+        citation says it outright &mdash; &ldquo;combining microscopic physics with the large scale
+        structure of the universe.&rdquo; Quantum fluctuations, a microscopic language, carried onto
+        cosmological scale.</span></dd></div>
+
+      <div><dt><b>L4</b> New object</dt>
+        <dd>Add a kind of thing the language did not have.
+        <span class="ex"><b>Dirac Medal 2020 &mdash; Neveu, Ramond &amp; Virasoro.</b> Cited for work
+        &ldquo;which introduced new Bosonic and Fermionic symmetries into physics.&rdquo; The prize
+        text names the move: physics gained objects it had no way to write down before.</span></dd></div>
+
+      <div><dt><b>L5</b> New move</dt>
+        <dd>Change what counts as a move at all.
+        <span class="ex"><b>Cohen 1966 &mdash; forcing.</b> Not a Dirac Medal; no physics award
+        reaches this rung. Forcing is a general method for building models to order &mdash; a new kind
+        of move rather than a new result.</span>
+        <em>One candidate in 1,547 events, and the annotator flagged even that one uncertain.</em></dd></div>
     </dl>
 
     <p class="mlnote"><b>Theoretical physics lives in this column.</b> The Dirac Medal is
