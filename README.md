@@ -1,7 +1,8 @@
-# The Prize Corpus
+# The Prize Corpus, and an operation for reinterpretation
 
 **2,327 scientific prize records (1731–2026), 1,547 annotated by _what kind of thing the
-contribution was_ — not by how much it was cited.**
+contribution was_ — plus a mechanism for the one discovery move that annotation shows is
+missing from every automated system we could find.**
 
 [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-blue.svg)](LICENSE-DATA.md)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-green.svg)](LICENSE)
@@ -34,6 +35,43 @@ And within the description column, the move machine learning knows how to make (
 inside a fixed description) accounts for **131 of 1,041 depth labels**. Strict reinterpretation
 — same predictions, less structure, Einstein against Lorentz — is **38 events, under 3%**. It is
 the rarest thing in the corpus.
+
+## The mechanism (`mechanism/`)
+
+Among **physics** prizes, 65% changed a description (vs 45% across all science), and the rung
+machine learning implements covers **42 of 542** physics depth labels — one in thirteen. Placing
+fourteen automated-discovery systems on the same ladder, all sit on that rung or one above it,
+and **none performs L1**: take a theory that already fits, return one that fits identically while
+carrying less.
+
+`mechanism/` implements that operation. Structure no measurement can see is the null space of the
+prediction Jacobian. Removing it naively **deletes conservation laws** — a global symmetry is
+invisible to every probe too — so the operation first asks whether the invariance survives being
+applied *point by point*:
+
+| | |
+|---|---|
+| invariant **point by point** | redundancy → quotient it → **L1** |
+| invariant only **uniformly** | symmetry → keep it, read off a conserved charge → **L4** |
+
+```bash
+cd mechanism
+python3 test_mechanism.py        # 21/21 engineering checks
+python3 discover_symmetry.py     # finds 5 invariances in a lattice gauge system,
+                                 # sorts 1 redundancy from 4 symmetries, emits 4 charges
+python3 live_rotation_curve.py   # NGC 3198: where the criterion goes silent, and why
+```
+
+On the lattice, handed eight candidate generators and told nothing about which are real, it finds
+five invariant directions, isolates the gauge redundancy, and emits four conserved charges
+accurate to 1e-10 — while the redundancy's would-be charge drifts by 0.86. Without the sort, all
+four conservation laws would have been destroyed to remove one redundancy.
+
+See [`mechanism/FINDINGS.md`](mechanism/FINDINGS.md) for full results, **including where it
+fails**: on galaxy rotation curves the criterion is silent, because it needs two descriptions
+that *agree* on the data. And [`mechanism/STANDARD_MODEL.md`](mechanism/STANDARD_MODEL.md) bounds
+it: four of eight Standard Model concepts were bought by a **theorem** before any experiment, and
+no probe-based method can reach those.
 
 ## Quick start
 
