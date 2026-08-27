@@ -111,13 +111,29 @@ section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:2
       padding:15px 20px; border-bottom:1px solid var(--rule-soft)}
 .rung:last-child{border-bottom:0}
 .rung.ml{background:var(--accent-wash)}
+.rung.rein{background:var(--accent-wash); box-shadow:inset 3px 0 0 var(--accent)}
+.tag{
+  display:inline-block; margin:0 0 5px; padding:2px 8px; border-radius:2px;
+  background:var(--accent); color:var(--on-accent);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase
+}
+.tag+em,.tag{vertical-align:middle}
+.rung.rein .what{display:block}
 .lv{font-family:var(--mono); font-size:15px; font-weight:500; color:var(--accent)}
 .rung .what{font-size:15.5px}
 .rung .eg{display:block; font-size:13px; color:var(--muted); margin-top:3px}
 .bar{display:flex; align-items:center; gap:9px}
 .bar i{display:block; height:8px; background:var(--accent); border-radius:1px; min-width:2px; opacity:.85}
 .bar b{font-family:var(--mono); font-size:13px; font-weight:400; color:var(--ink-2)}
-.mlnote{margin:14px 0 0; font-size:14px; color:var(--muted); max-width:70ch}
+.levels{margin:26px 0 0; padding:0; display:grid; gap:0; border:1px solid var(--rule);
+  border-radius:4px; overflow:hidden; background:var(--surface)}
+.levels>div{padding:15px 20px; border-bottom:1px solid var(--rule-soft)}
+.levels>div:last-child{border-bottom:0}
+.levels dt{font-size:15.5px; font-weight:600; margin:0 0 4px}
+.levels dt b{font-family:var(--mono); font-weight:500; color:var(--accent); margin-right:9px}
+.levels dd{margin:0; font-size:14.5px; color:var(--ink-2); max-width:74ch}
+.levels dd em{font-style:normal; color:var(--accent-ink)}
+.mlnote{margin:18px 0 0; font-size:14px; color:var(--muted); max-width:70ch}
 .mlnote b{color:var(--accent-ink); font-weight:600}
 
 /* ---------- tables ---------- */
@@ -245,51 +261,57 @@ footer a{color:var(--ink-2)}
   <div class="wrap">
     <p class="eyebrow">The annotation scheme &nbsp;/&nbsp; axis 2 of 2</p>
     <h2>Where a description <em>did</em> change, how far did it move?</h2>
-    <p class="say">Six rungs, and they are ordered &mdash; that ordering is what carries the argument.
-    Machine learning has an operation for exactly one of them.</p>
+    <p class="say">Six rungs, ordered. <strong>Reinterpretation is not a category of its own</strong>
+    &mdash; it is <strong>L1</strong> here, inside <code>REPRESENT</code>. Machine learning has an
+    operation for one rung, and it is not that one.</p>
 
     <div class="ladder">
-      <div class="rung">
-        <span class="lv">L5</span>
-        <span class="what">Change the repertoire of moves itself
-          <span class="eg">Cohen 1966 &mdash; forcing</span></span>
-        <span class="bar"><i style="width:1px"></i><b>1</b></span>
-      </div>
-      <div class="rung">
-        <span class="lv">L4</span>
-        <span class="what">Introduce a kind of object the language lacked
-          <span class="eg">Scholze 2018 &mdash; perfectoid spaces</span></span>
-        <span class="bar"><i style="width:36%"></i><b>181</b></span>
-      </div>
-      <div class="rung">
-        <span class="lv">L3</span>
-        <span class="what">Bridge one domain onto another
-          <span class="eg">Bennett &amp; Brassard 2025 &mdash; quantum communication</span></span>
-        <span class="bar"><i style="width:38%"></i><b>189</b></span>
-      </div>
-      <div class="rung">
-        <span class="lv">L2</span>
-        <span class="what">Retype, merge or split what counts as the same
-          <span class="eg">Cook 1982 &mdash; NP-completeness</span></span>
-        <span class="bar"><i style="width:100%"></i><b>501</b></span>
-      </div>
-      <div class="rung">
-        <span class="lv">L1</span>
-        <span class="what">Same predictions, <em>less</em> structure
-          <span class="eg">Nambu 2008 &mdash; symmetry breaking carried into particle physics</span></span>
-        <span class="bar"><i style="width:8%"></i><b>38</b></span>
-      </div>
-      <div class="rung ml">
-        <span class="lv">L0</span>
-        <span class="what">Solved inside the existing description
-          <span class="eg">Duminil-Copin 2022 &mdash; phase transitions in three and four dimensions</span></span>
-        <span class="bar"><i style="width:26%"></i><b>131</b></span>
-      </div>
+      <div class="rung"><span class="lv">L5?</span>
+        <span class="what">New move<span class="eg">Cohen 1966 &mdash; forcing</span></span>
+        <span class="bar"><i style="width:1px"></i><b>1</b></span></div>
+      <div class="rung"><span class="lv">L4</span>
+        <span class="what">New object<span class="eg">Dirac Medal 2020 &mdash; Neveu, Ramond &amp; Virasoro</span></span>
+        <span class="bar"><i style="width:36%"></i><b>181</b></span></div>
+      <div class="rung"><span class="lv">L3</span>
+        <span class="what">Transfer<span class="eg">Dirac Medal 2019 &mdash; Mukhanov, Starobinsky &amp; Sunyaev</span></span>
+        <span class="bar"><i style="width:38%"></i><b>189</b></span></div>
+      <div class="rung"><span class="lv">L2</span>
+        <span class="what">Retyping<span class="eg">Dirac Medal 2024 &mdash; Casini, Huerta, Ryu &amp; Takayanagi</span></span>
+        <span class="bar"><i style="width:100%"></i><b>501</b></span></div>
+      <div class="rung rein"><span class="lv">L1</span>
+        <span class="what">Reinterpretation<span class="eg">Dirac Medal 1998 &mdash; Jackiw &amp; Adler</span></span>
+        <span class="bar"><i style="width:8%"></i><b>38</b></span></div>
+      <div class="rung ml"><span class="lv">L0</span>
+        <span class="what">Regression<span class="eg">Dirac Medal 2025 &mdash; Kerr</span></span>
+        <span class="bar"><i style="width:26%"></i><b>131</b></span></div>
     </div>
-    <p class="mlnote"><b>The shaded rung is everything machine learning does today</b> &mdash; 131 of
-    1,041 depth labels. It is not the shallow end: Duminil-Copin won a Fields Medal there. It is
-    simply the only rung with an operation. And strict reinterpretation &mdash; L1, same predictions
-    with less structure, Einstein against Lorentz &mdash; is the rarest move in the corpus at 38 events.</p>
+
+    <dl class="levels">
+      <div><dt><b>L0</b> Regression</dt><dd>Keep the description you have and solve the problem
+        inside it. Kerr found an exact solution to Einstein&rsquo;s equations; nothing about general
+        relativity changed. <em>The only level machine learning has an operation for &mdash; and not
+        the easy one. Fields Medals sit here.</em></dd></div>
+      <div><dt><b>L1</b> Reinterpretation</dt><dd>The theory predicts the same numbers but carries
+        less. Lorentz and Einstein agreed on every measurement; Einstein&rsquo;s version dropped the
+        aether. Jackiw and Adler did it to the axial anomaly: what looked like a calculational
+        artifact was a real feature of the theory. <em>38 events &mdash; the rarest move in the
+        corpus.</em></dd></div>
+      <div><dt><b>L2</b> Retyping</dt><dd>Decide two things are the same thing, or that one thing is
+        really two. Casini, Huerta, Ryu and Takayanagi replaced raw entanglement entropy with
+        relative entropy. <em>Most description-changing work is here.</em></dd></div>
+      <div><dt><b>L3</b> Transfer</dt><dd>Carry one field&rsquo;s language into another. Mukhanov,
+        Starobinsky and Sunyaev mapped quantum fluctuations onto the large-scale structure of the
+        universe.</dd></div>
+      <div><dt><b>L4</b> New object</dt><dd>Add a kind of thing the language did not have. Neveu,
+        Ramond and Virasoro put fermionic symmetries into the string framework.</dd></div>
+      <div><dt><b>L5</b> New move</dt><dd>Change what counts as a move at all. One candidate in
+        1,547 events &mdash; Cohen&rsquo;s forcing &mdash; and the annotator flagged even that one
+        uncertain.</dd></div>
+    </dl>
+
+    <p class="mlnote"><b>Theoretical physics lives in this column.</b> The Dirac Medal is
+    <b>49 of 50 events REPRESENT</b> &mdash; 98%, against 45% corpus-wide. Seven of the corpus&rsquo;s
+    38 reinterpretations are Dirac Medals.</p>
 
     <p class="eyebrow" style="margin-top:56px">Axis 1 of 2</p>
     <h2>What did the contribution change?</h2>
@@ -300,12 +322,12 @@ footer a{color:var(--ink-2)}
       <table>
         <thead><tr><th>Mode</th><th class="n">n</th><th>What it means</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td><code>REPRESENT</code></td><td class="n">698</td><td>the description used to write the phenomenon down</td><td>Prusiner 1997 &mdash; &ldquo;a new biological principle of infection&rdquo;</td></tr>
-          <tr><td><code>RECORD</code></td><td class="n">479</td><td>facts nobody had</td><td>P&auml;&auml;bo 2022 &mdash; genomes of extinct hominins</td></tr>
-          <tr><td><code>REACH</code></td><td class="n">186</td><td>what can be observed or reached at all</td><td>Karik&oacute; &amp; Weissman 2023 &mdash; mRNA made usable as a platform</td></tr>
-          <tr><td><code>ARTIFACT</code></td><td class="n">102</td><td>a thing that works</td><td>Goodenough et al. 2019 &mdash; the lithium-ion battery</td></tr>
-          <tr><td><code>TRACTABLE</code></td><td class="n">32</td><td>what can be computed</td><td>Hassabis &amp; Jumper 2024 &mdash; protein structure</td></tr>
-          <tr><td><code>ORGANIZE</code></td><td class="n">11</td><td>a field&rsquo;s standing or reach</td><td>founding, legitimating, carrying a field outward</td></tr>
+          <tr><td><code>REPRESENT</code></td><td class="n">698</td><td>the description used to write the phenomenon down</td><td>Dirac Medal 2024 &mdash; entanglement entropy as a minimal surface</td></tr>
+          <tr><td><code>RECORD</code></td><td class="n">479</td><td>facts nobody had</td><td>Chadwick 1935 &mdash; the neutron found</td></tr>
+          <tr><td><code>REACH</code></td><td class="n">186</td><td>what can be observed or reached at all</td><td>Agostini, Krausz &amp; L&rsquo;Huillier 2023 &mdash; attosecond pulses</td></tr>
+          <tr><td><code>ARTIFACT</code></td><td class="n">102</td><td>a thing that works</td><td>Shockley, Bardeen &amp; Brattain 1956 &mdash; the transistor</td></tr>
+          <tr><td><code>TRACTABLE</code></td><td class="n">32</td><td>what can be computed</td><td>Dirac Medal 2009 &mdash; Car &amp; Parrinello: ab-initio molecular dynamics</td></tr>
+          <tr><td><code>ORGANIZE</code></td><td class="n">11</td><td>a field&rsquo;s standing or reach</td><td>founding or legitimating a field &mdash; no physics award falls here</td></tr>
           <tr><td><code>OUT-OF-SCOPE</code></td><td class="n">31</td><td>not a scientific contribution</td><td>chiefly Templeton awards to religious figures</td></tr>
           <tr><td><code>UNRESOLVED</code></td><td class="n">8</td><td>citation too thin to place</td><td>early Copley Medals, 1803&ndash;1824</td></tr>
         </tbody>
