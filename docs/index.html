@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Prize Corpus</title>
-<meta name="description" content="2,327 scientific prize records, 1,547 annotated by what kind of thing the contribution was.">
+<title>Reinterpretation as an Operation</title>
+<meta name="description" content="An operation for the discovery move automated systems do not make, and a measurement of how much of physics needs it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -138,6 +138,30 @@ section h2{font-size:clamp(25px,3.2vw,34px); letter-spacing:-.015em; max-width:2
 .mlnote{margin:18px 0 0; font-size:14px; color:var(--muted); max-width:70ch}
 .mlnote b{color:var(--accent-ink); font-weight:600}
 
+/* ---------- the branch rule ---------- */
+.branch{margin-top:26px; border:1px solid var(--rule); border-radius:4px; overflow:hidden;
+  background:var(--surface)}
+.brline{display:grid; grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr); gap:20px;
+  padding:16px 20px; border-bottom:1px solid var(--rule-soft); align-items:baseline}
+.brline:last-child{border-bottom:0}
+.brline:last-child .bra{color:var(--accent-ink)}
+.brq{font-size:15px; color:var(--ink-2)}
+.brq b{color:var(--ink)}
+.bra{font-size:15px; font-weight:500}
+.bra code{background:var(--accent-wash); color:var(--accent-ink); font-weight:500}
+
+/* ---------- emphasis inside tables ---------- */
+tbody tr.hi{background:var(--accent-wash)}
+.yr{font-family:var(--mono); font-size:11px; color:var(--muted); margin-left:5px}
+
+/* ---------- the four theorem-bought concepts ---------- */
+.theorems{list-style:none; margin:24px 0 0; padding:0; display:grid; gap:12px; max-width:72ch}
+.theorems li{position:relative; padding-left:20px; font-size:15px; color:var(--ink-2)}
+.theorems li::before{content:""; position:absolute; left:0; top:.62em; width:7px; height:7px;
+  border-radius:1px; background:var(--accent)}
+.theorems li b{color:var(--ink)}
+.theorems li em{font-style:italic; color:var(--accent-ink)}
+
 /* ---------- tables ---------- */
 .scroll{overflow-x:auto; margin-top:26px; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
 table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:560px}
@@ -187,85 +211,118 @@ footer a{color:var(--ink-2)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
 </style>
-</head>
-<body>
+</head><body>
 
 <header class="top">
   <div class="wrap">
-    <div class="brand">The Prize <span>Corpus</span></div>
+    <div class="brand">Reinterpretation as an <span>Operation</span></div>
     <nav class="topnav">
-      <a href="#finding">Finding</a>
-      <a href="#scheme">Scheme</a>
+      <a href="#gap">The gap</a>
+      <a href="#today">Prior work</a>
+      <a href="#ladder">The ladder</a>
+      <a href="#op">The operation</a>
+      <a href="#results">Results</a>
+      <a href="#bound">The boundary</a>
       <a href="#data">Data</a>
-      <a href="#limits">Limitations</a>
-      <a href="#join">Contribute</a>
     </nav>
   </div>
 </header>
 
 <div class="hero">
   <div class="wrap">
-    <p class="eyebrow">1731 &ndash; 2026 &nbsp;/&nbsp; 23 prizes &nbsp;/&nbsp; one annotator</p>
-    <h1>A breakthrough is rarely a better <em>fit</em> to the data.</h1>
-    <p class="lede">More often it is a decision that the data was about something else. This corpus
-    annotates <strong>2,327 scientific prizes</strong> by what kind of thing the contribution actually
-    was &mdash; whether it reframed something, measured something new, extended reach, or built an
-    instrument. Existing prize datasets count citations. None of them record this.</p>
+    <p class="eyebrow">2,327 prizes &nbsp;/&nbsp; 14 systems on one ladder &nbsp;/&nbsp; one missing operation</p>
+    <h1>A breakthrough in physics is rarely a better <em>fit</em> to the data nowadays.</h1>
+    <p class="lede">More often it is a decision that the data was about something else. Lorentz and
+    Einstein predicted the same numbers; Einstein&rsquo;s theory dropped an aether velocity no
+    measurement could reach. <strong>Automated discovery has no operation for that move.</strong>
+    This project measures how big the gap is, builds an operation that performs the move, and then
+    bounds what it cannot reach.</p>
     <div class="facts">
-      <div class="fact"><b>2,327</b><span>award records</span></div>
-      <div class="fact"><b>1,547</b><span>annotated events</span></div>
-      <div class="fact"><b>15,693</b><span>laureate&ndash;paper links</span></div>
-      <div class="fact"><b>295</b><span>years covered</span></div>
+      <div class="fact"><b>65%</b><span>of physics prizes changed a description</span></div>
+      <div class="fact"><b>1 in 13</b><span>depth labels are the rung ML implements</span></div>
+      <div class="fact"><b>0 of 14</b><span>systems perform the move</span></div>
+      <div class="fact"><b>2 of 8</b><span>Standard Model concepts reachable</span></div>
     </div>
     <div class="cta">
-      <a class="btn" href="https://github.com/">Get the data</a>
-      <a class="btn ghost" href="paper.pdf">Read the paper (5pp)</a>
-      <a class="btn ghost" href="#join">Re-annotate a sample</a>
+      <a class="btn" href="paper.pdf">Read the paper (5pp)</a>
+      <a class="btn ghost" href="https://github.com/">Code &amp; data</a>
+      <a class="btn ghost" href="#bound">What it cannot reach</a>
     </div>
   </div>
 </div>
 
-<section id="finding">
+<section id="gap">
   <div class="wrap">
-    <p class="eyebrow">The headline finding</p>
+    <p class="eyebrow">The gap</p>
     <div class="finding">
       <div>
-        <div class="bignum">53%
-          <small>of awarded work is not a change of description at all &mdash; 820 of 1,547 events.
-          It delivered facts, or reach, or a working artifact.</small>
+        <div class="bignum">65%
+          <small>of awarded physics work changed a <em>description</em> &mdash; against 45% across
+          science as a whole. In physics, reframing is not a side issue. It is the main road.</small>
         </div>
       </div>
       <div>
-        <h2>A two-way split misses more than half of what gets awarded.</h2>
-        <p class="say">Machine learning frames discovery as fitting versus reframing. Against 1,547
-        real awarded contributions, that split has nowhere to put the majority of them: no
-        description changed, so there is nothing to grade as shallow or deep.</p>
-        <div class="split">
-          <div class="splitbar" role="img" aria-label="Mode distribution: description 45.1%, facts 43.0%, built 8.7%, other 3.2%">
-            <i style="width:45.1%; background:var(--accent)"></i>
-            <i style="width:43.0%; background:var(--quiet)"></i>
-            <i style="width:8.7%;  background:var(--ink-2); opacity:.5"></i>
-            <i style="width:3.2%;  background:var(--rule)"></i>
-          </div>
-          <ul class="legend">
-            <li><span class="sw" style="background:var(--accent)"></span><span>changed the <b>description</b></span><span class="n">698</span><span class="p">45.1%</span></li>
-            <li><span class="sw" style="background:var(--quiet)"></span><span>changed the <b>facts</b> or <b>reach</b></span><span class="n">665</span><span class="p">43.0%</span></li>
-            <li><span class="sw" style="background:var(--ink-2); opacity:.5"></span><span>built or computed something</span><span class="n">134</span><span class="p">8.7%</span></li>
-            <li><span class="sw" style="background:var(--rule)"></span><span>other, or out of scope</span><span class="n">50</span><span class="p">3.2%</span></li>
-          </ul>
+        <h2>Machine learning has an operation for one rung of six.</h2>
+        <p class="say">We annotated 2,327 scientific prizes by what the contribution did rather
+        than by how it was cited. Restricting to the ten physics prizes gives 532 events, and the
+        contrast with science at large is why this work is about physics.</p>
+        <div class="scroll" style="margin-top:22px">
+          <table style="min-width:0">
+            <thead><tr><th></th><th class="n">all fields</th><th class="n">physics</th></tr></thead>
+            <tbody>
+              <tr><td>changed a description</td><td class="n">45%</td><td class="n"><b>65%</b></td></tr>
+              <tr><td>changed no description at all</td><td class="n">53%</td><td class="n"><b>33%</b></td></tr>
+              <tr><td>L0 &mdash; the rung ML implements</td><td class="n">131/1,041</td><td class="n"><b>42/542</b></td></tr>
+            </tbody>
+          </table>
         </div>
+        <p class="say"><strong>L0 is not the shallow end</strong> &mdash; a Fields Medal can sit
+        there. It is simply the only rung for which machine learning has an operation.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="scheme">
+<section id="today">
   <div class="wrap">
-    <p class="eyebrow">The annotation scheme &nbsp;/&nbsp; axis 2 of 2</p>
-    <h2>Where a description <em>did</em> change, how far did it move?</h2>
-    <p class="say">Six rungs, ordered. <strong>Reinterpretation is not a category of its own</strong>
-    &mdash; it is <strong>L1</strong> here, inside <code>REPRESENT</code>. Machine learning has an
-    operation for one rung, and it is not that one.</p>
+    <p class="eyebrow">What automated discovery does today</p>
+    <h2>Fourteen systems. Everything piles up on the bottom rung.</h2>
+    <p class="say">Placed by the <em>operation each system exposes</em>, not by the significance of
+    its results. The claim is about published operations, never about limits in principle.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>system</th><th>what it does</th><th>rung</th><th>why not higher</th></tr></thead>
+        <tbody>
+          <tr><td>BACON <span class="yr">1981</span></td><td>rediscovers laws from tabulated data</td><td><code>L0</code></td><td>searches within a fixed term language</td></tr>
+          <tr><td>Eureqa <span class="yr">2009</span></td><td>symbolic regression on motion data</td><td><code>L0</code></td><td>the operator set is given in advance</td></tr>
+          <tr><td>AI Feynman <span class="yr">2020</span></td><td>physics-informed symbolic regression</td><td><code>L0</code></td><td>recovers known forms; invents no term</td></tr>
+          <tr><td>PySR <span class="yr">2023</span></td><td>evolutionary symbolic regression</td><td><code>L0</code></td><td>fixed primitive set</td></tr>
+          <tr><td>LaSR <span class="yr">2024</span></td><td>symbolic regression, learned library</td><td><code>L0/L2</code></td><td>abstractions are shortcuts, not retypings</td></tr>
+          <tr class="hi"><td>DreamCoder <span class="yr">2021</span></td><td>wake&ndash;sleep library learning</td><td><code>L2</code></td><td>names reusable structure; no theory to reinterpret</td></tr>
+          <tr><td>FunSearch <span class="yr">2024</span></td><td>LLM program search vs an evaluator</td><td><code>L0</code></td><td>searches programs in a fixed language</td></tr>
+          <tr><td>AlphaGeometry <span class="yr">2024</span></td><td>olympiad geometry by synthesis</td><td><code>L0</code></td><td>derives inside a fixed axiom set</td></tr>
+          <tr><td>Robot Scientist <span class="yr">2004</span></td><td>hypotheses tested by a robot</td><td><code>L0</code> + facts</td><td>chooses experiments; the ontology is fixed</td></tr>
+          <tr><td>Coscientist <span class="yr">2023</span></td><td>runs chemistry autonomously</td><td>instruments</td><td>extends reach; no description changes</td></tr>
+          <tr><td>AI Scientist <span class="yr">2024</span></td><td>end-to-end ML papers</td><td><code>L0</code></td><td>searches a fixed hypothesis space</td></tr>
+          <tr><td>AlphaFold <span class="yr">2021</span></td><td>protein structure prediction</td><td>tractability</td><td>makes computable; does not reframe</td></tr>
+          <tr><td>Cascade-Correlation <span class="yr">1990</span></td><td>grows hidden units as needed</td><td><code>L0</code></td><td>capacity, not concepts</td></tr>
+          <tr class="hi"><td>predicate invention <span class="yr">ILP</span></td><td>invents relations in logic programs</td><td><code>L4</code>*</td><td>*still open after three decades</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mlnote"><b>Nothing performs L1.</b> No system takes a theory that already fits and
+    returns a theory that fits identically while carrying less &mdash; the Lorentz-to-Einstein move.
+    And a language model does not close it: on five episodes it scored <b>87%</b> when it could
+    recognise them and <b>48%</b>, chance, when the names were stripped out. It recalls; it does
+    not judge.</p>
+  </div>
+</section>
+
+<section id="ladder">
+  <div class="wrap">
+    <p class="eyebrow">The ladder</p>
+    <h2>Six rungs, ordered. Reinterpretation is L1.</h2>
+    <p class="say">Examples are Dirac Medals, read against what the citation actually says.</p>
 
     <div class="ladder">
       <div class="rung"><span class="lv">L5?</span>
@@ -294,8 +351,7 @@ footer a{color:var(--ink-2)}
         <span class="ex"><b>Dirac Medal 2025 &mdash; Kerr.</b> An exact rotating black-hole solution
         of Einstein&rsquo;s equations. Nothing about general relativity changed; he solved a hard
         problem in the language it already had.</span>
-        <em>The only rung machine learning has an operation for &mdash; and not the easy one.
-        Fields Medals sit here.</em></dd></div>
+        <em>The only rung machine learning has an operation for &mdash; and not the easy one.</em></dd></div>
 
       <div><dt><b>L1</b> Reinterpretation</dt>
         <dd>The theory predicts the same numbers but carries less.
@@ -308,128 +364,228 @@ footer a{color:var(--ink-2)}
 
       <div><dt><b>L2</b> Retyping</dt>
         <dd>Decide two things are the same, or that one thing is really two.
-        <span class="ex"><b>Dirac Medal 2024 &mdash; Casini, Huerta, Ryu &amp; Takayanagi.</b> Cited
-        for &ldquo;insights on quantum entropy&rdquo;: stop measuring raw entanglement entropy, which
-        diverges, and measure relative entropy instead. Same physics, a different quantity counted as
-        the thing.</span>
+        <span class="ex"><b>Dirac Medal 2024 &mdash; Casini, Huerta, Ryu &amp; Takayanagi.</b> Stop
+        measuring raw entanglement entropy, which diverges, and measure relative entropy instead.
+        Same physics, a different quantity counted as the thing.</span>
         <em>Most description-changing work is here.</em></dd></div>
 
       <div><dt><b>L3</b> Transfer</dt>
         <dd>Carry one field&rsquo;s language into another.
         <span class="ex"><b>Dirac Medal 2019 &mdash; Mukhanov, Starobinsky &amp; Sunyaev.</b> The
         citation says it outright &mdash; &ldquo;combining microscopic physics with the large scale
-        structure of the universe.&rdquo; Quantum fluctuations, a microscopic language, carried onto
-        cosmological scale.</span></dd></div>
+        structure of the universe.&rdquo;</span></dd></div>
 
       <div><dt><b>L4</b> New object</dt>
         <dd>Add a kind of thing the language did not have.
         <span class="ex"><b>Dirac Medal 2020 &mdash; Neveu, Ramond &amp; Virasoro.</b> Cited for work
         &ldquo;which introduced new Bosonic and Fermionic symmetries into physics.&rdquo; The prize
-        text names the move: physics gained objects it had no way to write down before.</span></dd></div>
+        text names the move.</span></dd></div>
 
       <div><dt><b>L5</b> New move</dt>
         <dd>Change what counts as a move at all.
-        <span class="ex"><b>Cohen 1966 &mdash; forcing.</b> Not a Dirac Medal; no physics award
-        reaches this rung. Forcing is a general method for building models to order &mdash; a new kind
-        of move rather than a new result.</span>
+        <span class="ex"><b>Cohen 1966 &mdash; forcing.</b> Not a physics award; none reaches this
+        rung. A general method for building models to order &mdash; a new kind of move rather than a
+        new result.</span>
         <em>One candidate in 1,547 events, and the annotator flagged even that one uncertain.</em></dd></div>
     </dl>
+  </div>
+</section>
 
-    <p class="mlnote"><b>Theoretical physics lives in this column.</b> The Dirac Medal is
-    <b>49 of 50 events REPRESENT</b> &mdash; 98%, against 45% corpus-wide. Of the corpus&rsquo;s 38
-    reinterpretations, 24 are physics prizes.</p>
+<section id="op">
+  <div class="wrap">
+    <p class="eyebrow">The operation</p>
+    <h2>Structure no measurement can see &mdash; and why you must not simply delete it.</h2>
+    <p class="say">&ldquo;Carries structure no measurement can see&rdquo; is not a metaphor. For a
+    theory predicting <code>f(x,p)</code>, the directions along which no prediction moves are the
+    <strong>null space of the prediction Jacobian</strong>. Removing them is reinterpretation.</p>
+    <p class="say">Measured against the error bars, not exactly: Lorentz&rsquo;s aether was not
+    unobservable in principle, only to the precision of the day.</p>
+    <div class="warn"><b>Applied naively, this deletes conservation laws.</b> A <em>global</em>
+    phase rotation is invisible to every probe exactly as a gauge transformation is. Quotient both
+    and you do not discover charge conservation &mdash; you erase the conserved quantity.</div>
+    <div class="branch">
+      <div class="brline">
+        <span class="brq">invariant applied <b>point by point</b></span>
+        <span class="bra">redundancy &rarr; quotient it <code>L1</code></span>
+      </div>
+      <div class="brline">
+        <span class="brq">invariant only applied <b>uniformly</b></span>
+        <span class="bra">symmetry &rarr; keep it, read off a conserved charge <code>L4</code></span>
+      </div>
+    </div>
+    <p class="mlnote">One test, two discovery operations. The second is the more productive:
+    <b>a distinction no probe can see, but only when moved everywhere at once, is a conservation
+    law.</b> Our implementation refuses to quotient at all when no locality test is available,
+    rather than guess.</p>
+  </div>
+</section>
 
-    <p class="eyebrow" style="margin-top:56px">Axis 1 of 2</p>
-    <h2>What did the contribution change?</h2>
-    <p class="say">Every event gets exactly one mode. Modes are nominal &mdash; no ordering holds
-    between measuring something new and retyping what counts as the same &mdash; which is why they
-    are kept on a separate axis from the ladder above.</p>
+<section id="results">
+  <div class="wrap">
+    <p class="eyebrow">Results</p>
+    <h2>It finds symmetries nobody named, and refuses to delete them.</h2>
+    <p class="say">On a periodic 6&times;6 lattice with a two-flavour matter field and U(1) links,
+    the mechanism is handed <strong>eight candidate generators and told nothing</strong> about which
+    are real invariances.</p>
     <div class="scroll">
       <table>
-        <thead><tr><th>Mode</th><th class="n">n</th><th>What it means</th><th>Example</th></tr></thead>
+        <thead><tr><th>step</th><th>what it does</th><th>result</th></tr></thead>
         <tbody>
-          <tr><td><code>REPRESENT</code></td><td class="n">698</td><td>the description used to write the phenomenon down</td><td>Dirac Medal 2024 &mdash; entanglement entropy as a minimal surface</td></tr>
-          <tr><td><code>RECORD</code></td><td class="n">479</td><td>facts nobody had</td><td>Chadwick 1935 &mdash; the neutron found</td></tr>
-          <tr><td><code>REACH</code></td><td class="n">186</td><td>what can be observed or reached at all</td><td>Agostini, Krausz &amp; L&rsquo;Huillier 2023 &mdash; attosecond pulses</td></tr>
-          <tr><td><code>ARTIFACT</code></td><td class="n">102</td><td>a thing that works</td><td>Shockley, Bardeen &amp; Brattain 1956 &mdash; the transistor</td></tr>
-          <tr><td><code>TRACTABLE</code></td><td class="n">32</td><td>what can be computed</td><td>Dirac Medal 2009 &mdash; Car &amp; Parrinello: ab-initio molecular dynamics</td></tr>
-          <tr><td><code>ORGANIZE</code></td><td class="n">11</td><td>a field&rsquo;s standing or reach</td><td>founding or legitimating a field &mdash; no physics award falls here</td></tr>
-          <tr><td><code>OUT-OF-SCOPE</code></td><td class="n">31</td><td>not a scientific contribution</td><td>chiefly Templeton awards to religious figures</td></tr>
-          <tr><td><code>UNRESOLVED</code></td><td class="n">8</td><td>citation too thin to place</td><td>early Copley Medals, 1803&ndash;1824</td></tr>
+          <tr><td>1&ndash;2</td><td>null space of <code>&part;probes/&part;c</code>, applied uniformly</td><td><b>5 invariant directions found</b>; link phase, rescale and a flavour shift rejected</td></tr>
+          <tr><td>3</td><td>second null space <em>inside</em> the first, coefficient now varying by site</td><td><b>1 redundancy</b> (pure gauge) sorted from <b>4 symmetries</b></td></tr>
+          <tr><td>4</td><td>evolve, and check each emitted charge</td><td>four charges conserved to <b>1.8e-11 &ndash; 7.6e-10</b></td></tr>
         </tbody>
       </table>
     </div>
+    <p class="say">The separation had to be done in that order: at uniform order the gauge
+    transformation and the global phase act identically, so the first null space mixes them and only
+    the local test breaks the degeneracy.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>branch</th><th class="n">relative drift</th></tr></thead>
+        <tbody>
+          <tr><td>four symmetry charges</td><td class="n">1.8e-11 &ndash; 7.6e-10</td></tr>
+          <tr><td>redundancy, would-be local charge</td><td class="n"><b>8.6e-01</b></td></tr>
+          <tr><td>energy on the same trajectory</td><td class="n">1.3e-10</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn"><b>Without the sort, all five directions are unobservable and all five get
+    quotiented</b> &mdash; destroying four conservation laws in order to remove one redundancy.</div>
+
+    <p class="eyebrow" style="margin-top:52px">The proposer</p>
+    <h2>The model proposes in both worlds. Only the measurement tells them apart.</h2>
+    <p class="say">A null-space search finds only what its basis contains, so something must widen
+    it. We use the language model <em>only to generate</em>, never to decide.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>world</th><th>residual</th><th class="n">proposed</th><th class="n">accepted</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>a real missing concept, <code>0.4&middot;sin(3x)</code></td><td class="n">8</td><td class="n">2&ndash;3</td></tr>
+          <tr class="hi"><td>B</td><td><b>control</b> &mdash; pure noise, nothing to find</td><td class="n">8</td><td class="n"><b>0</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mlnote">Offered the truth directly the filter is decisive &mdash; <code>sin(3x)</code>
+    reaches <b>97%</b> coverage against 68% for <code>sin(2.9x)</code> and 20% for wrong terms. So
+    <b>the proposer is the bottleneck, not the test</b>: across runs the model offered
+    <code>sin(x)</code>, <code>sin(2x)</code>, <code>x&sup3;</code> and <code>sin(&pi;x)</code>
+    &mdash; never <code>sin(3x)</code>, though the residual is a clean sine.</p>
+
+    <p class="eyebrow" style="margin-top:52px">Where it goes quiet</p>
+    <h2>On a real controversy, the criterion is silent &mdash; and that is the result.</h2>
+    <p class="say">NGC 3198 from SPARC, fitted by a dark-matter halo and by MOND. No ground truth;
+    that is what makes it free of the leakage that makes historical cases worthless for testing a
+    model that has read the histories.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>description</th><th class="n">concepts</th><th class="n">&chi;&sup2;/N</th><th class="n">unobservable</th></tr></thead>
+        <tbody>
+          <tr><td>baryons + NFW halo</td><td class="n">3</td><td class="n">1.22</td><td class="n"><b>0</b></td></tr>
+          <tr><td>MOND, a&#8320; universal</td><td class="n">1</td><td class="n">9.21</td><td class="n"><b>0</b></td></tr>
+          <tr><td>MOND, a&#8320; free</td><td class="n">2</td><td class="n">1.78</td><td class="n"><b>0</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mlnote">Neither carries structure the measurements cannot see: the halo model&rsquo;s
+    softest direction still moves the curve <b>6.4&sigma;</b> &mdash; unsurprising, since
+    SPARC&rsquo;s 3.6&nbsp;&micro;m photometry was assembled to break exactly that degeneracy.
+    <b>The Lorentz&ndash;Einstein signature needs two descriptions that agree on the data.</b> These
+    disagree at 1.22 against 9.21, and where descriptions disagree ordinary model comparison settles
+    it. The operation applies to a narrower class of disputes than we assumed.</p>
+  </div>
+</section>
+
+<section id="bound">
+  <div class="wrap">
+    <p class="eyebrow">The boundary</p>
+    <h2>Four of eight Standard Model concepts were bought by a theorem, before any experiment.</h2>
+    <p class="say">The mechanism buys concepts with measurements. Against eight concept-forming
+    episodes in the Standard Model it accounts for <strong>two</strong>: the neutrino, and gauge
+    redundancy. The other six do not fail for want of cleverness. Four contain
+    <strong>no probe at all</strong>.</p>
+    <ul class="theorems">
+      <li><b>&Delta;<sup>++</sup></b> violated Fermi statistics. Colour was invented so the state would be <em>allowed</em>.</li>
+      <li><b>FCNC</b> were too suppressed. Charm was invented so the excess would <em>cancel</em>.</li>
+      <li><b>Gauge anomalies</b> had to sum to zero, which required <em>complete</em> generations.</li>
+      <li><b>WW scattering</b> had to stay unitary, putting the Higgs below about a TeV &mdash; and telling experimenters what to build.</li>
+    </ul>
+    <div class="warn"><b>Every one predicted a real particle. Every one was paid for by a theorem
+    first, with the experiment arriving years or decades later.</b> A framework whose founding
+    commitment is that a concept is paid for by an experiment has these exactly backwards.</div>
+    <p class="say">The prerequisite is not more data or a better search: <strong>you can only have
+    theorems if there is a formal theory to have them about</strong>, and no discovery system we know
+    of carries one. That, rather than the difficulty of reinterpretation, is what bounds automated
+    physics discovery today.</p>
+    <p class="mlnote">The weaker version of this route is already refuted here. Proposing concepts
+    from structural defects in a description was tested on three substrates and lost on all three.
+    The difference is grade, not kind: heuristics say a defect is a hint, theorems say a state is
+    forbidden or it is not.</p>
   </div>
 </section>
 
 <section id="data">
   <div class="wrap">
     <p class="eyebrow">What you get</p>
-    <h2>One SQLite file, five CSVs, and a script that checks our arithmetic.</h2>
-    <p class="say">Every statistic on this page is recomputed from the shipped data by
-    <code>scripts/summary.py</code>. It exits non-zero if any published number fails to reproduce.
-    Run it before you trust us.</p>
-<pre><code><span class="cmt"># reproduces all 30 published statistics, straight from the data</span>
+    <h2>The corpus, the mechanism, and a script that checks our arithmetic.</h2>
+    <p class="say">Every statistic here is recomputed from the shipped data by
+    <code>scripts/summary.py</code>, which exits non-zero if any published number fails to
+    reproduce. Run it before you trust us.</p>
+<pre><code><span class="cmt"># all 30 published corpus statistics, recomputed from the data</span>
 python3 scripts/summary.py
 
-<span class="cmt"># every contribution that introduced a kind of object its language lacked</span>
-<span class="kw">SELECT</span> a.year, a.laureate, c.levels, c.ops, a.citation
-  <span class="kw">FROM</span> awards a
-  <span class="kw">JOIN</span> classifications c
-    <span class="kw">ON</span> a.prize_key = c.prize_key <span class="kw">AND</span> a.year = c.year
- <span class="kw">WHERE</span> c.levels <span class="kw">LIKE</span> <span class="cmt">'%L4%'</span>
- <span class="kw">ORDER BY</span> a.year <span class="kw">DESC</span>;</code></pre>
+<span class="cmt"># the mechanism</span>
+cd mechanism
+python3 test_mechanism.py        <span class="cmt"># 21/21 engineering checks</span>
+python3 discover_symmetry.py     <span class="cmt"># finds 5 invariances, sorts 1 from 4, emits 4 charges</span>
+python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where the criterion goes silent</span></code></pre>
     <div class="scroll">
       <table>
-        <thead><tr><th>File</th><th class="n">rows</th><th>What it is</th></tr></thead>
+        <thead><tr><th>file</th><th class="n">rows</th><th>what it is</th></tr></thead>
         <tbody>
-          <tr><td><code>prizes.sqlite</code></td><td class="n">&mdash;</td><td>everything below, indexed, in one file</td></tr>
-          <tr><td><code>awards.csv</code></td><td class="n">2,327</td><td>prize, year, laureate, official citation, institution, source</td></tr>
-          <tr><td><code>classifications.csv</code></td><td class="n">1,547</td><td>mode, depth, operators, trigger, evidence grade, justification</td></tr>
-          <tr><td><code>papers.csv</code></td><td class="n">15,693</td><td>laureate &rarr; paper links; 14,968 carry a DOI or arXiv ID</td></tr>
-          <tr><td><code>documents_index.csv</code></td><td class="n">4,044</td><td>document type and source URL &mdash; the text itself is not shipped</td></tr>
-          <tr><td><code>prizes.csv</code></td><td class="n">23</td><td>prize registry with official sites</td></tr>
+          <tr><td><code>data/prizes.sqlite</code></td><td class="n">&mdash;</td><td>everything below, indexed, in one file</td></tr>
+          <tr><td><code>data/awards.csv</code></td><td class="n">2,327</td><td>prize, year, laureate, official citation, source</td></tr>
+          <tr><td><code>data/classifications.csv</code></td><td class="n">1,547</td><td>mode, depth, operators, evidence grade, justification</td></tr>
+          <tr><td><code>data/papers.csv</code></td><td class="n">15,693</td><td>laureate &rarr; paper links</td></tr>
+          <tr><td><code>data/documents_index.csv</code></td><td class="n">4,044</td><td>document type and source URL &mdash; text not shipped</td></tr>
+          <tr><td><code>mechanism/</code></td><td class="n">&mdash;</td><td>the operation, its tests, and both negative results</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="say" style="margin-top:22px">Covering the three science Nobels, Copley, Turing, Fields,
-    Abel, Wolf, Crafoord, Kavli, Shaw, Breakthrough, Lasker, Templeton, Dirac, Boltzmann, Onsager and
-    others. <strong>2,221 of 2,327</strong> carry the awarding body&rsquo;s own citation; the other 106
-    never had one published.</p>
   </div>
 </section>
 
 <section id="limits">
   <div class="wrap">
-    <p class="eyebrow">Read this before using the annotations</p>
+    <p class="eyebrow">Read this before using any of it</p>
     <h2>One annotator, and it is a language model.</h2>
-    <div class="warn"><b>These are not the judgements of human domain experts.</b> Every count on this
-    page is one annotator&rsquo;s reading of the official citation text, under human direction. There is
+    <div class="warn"><b>These are not the judgements of human domain experts.</b> Every count here
+    is one annotator&rsquo;s reading of the official citation text, under human direction. There is
     exactly one annotator, so no inter-annotator agreement statistic exists &mdash; and we do not
     report a proxy for one.</div>
     <div class="limits">
       <div class="limit">
-        <h3>The soft boundary</h3>
-        <p>A paper that reports a measurement often reframes something too, and which half the
-        citation rewards is a judgement call. Read the 53% as a <em>lower bound</em> on how badly a
-        two-way split fails, not as a constant.</p>
+        <h3>The criterion was revised against known answers</h3>
+        <p>An earlier form was modified <em>eight times</em>, each after seeing a verdict we knew to
+        be wrong. That is why the results here rest on a lattice system with an independently known
+        answer, and on a controversy with no known answer at all.</p>
+      </div>
+      <div class="limit">
+        <h3>The acceptance rule does not discriminate</h3>
+        <p>&ldquo;Coverage strictly improves&rdquo; admitted <code>sin(x)</code> and
+        <code>x&sup3;</code> at 20&ndash;22% against a base of 18%. It ranks correctly but needs a
+        margin, not a strict inequality.</p>
       </div>
       <div class="limit">
         <h3>The scheme is not symmetric</h3>
-        <p>The facts column draws its own coarse distinction &mdash; facts newly in hand versus reach
-        newly extended &mdash; but encodes it as two modes rather than as a ladder. A scheme that
-        graded every column would be cleaner. We did not build one.</p>
+        <p>The facts column distinguishes facts newly in hand from reach newly extended, but encodes
+        that as two categories rather than as a ladder. A scheme that graded every column would be
+        cleaner. We did not build one.</p>
       </div>
       <div class="limit">
         <h3>Hindsight and selection</h3>
         <p>Prizes are awarded with decades of hindsight, so the corpus samples work that turned out
-        to matter, and citations justify a decision already taken. Physics and mathematics are
-        better represented than biology or the earth sciences.</p>
-      </div>
-      <div class="limit">
-        <h3>Confidence is self-reported</h3>
-        <p>Evidence grades &mdash; A (1,442), B (77), C (28) &mdash; record how directly the citation
-        supported the call. They are a confidence signal from the annotator, not a validation of it.</p>
+        to matter, and citations justify a decision already taken.</p>
       </div>
     </div>
   </div>
@@ -440,17 +596,17 @@ python3 scripts/summary.py
     <p class="eyebrow">What would help most</p>
     <h2>Re-annotate a sample. Disagree with us in public.</h2>
     <p class="say">We cannot tell from the inside whether this scheme is reproducible or whether it
-    records one system&rsquo;s habits. Only someone else applying it can settle that. A few hundred
-    events is plenty.</p>
+    records one system&rsquo;s habits. Only someone else applying it can settle that.</p>
     <ol class="steps">
       <li>Sample a few hundred events from <code>classifications.csv</code>, spread across prizes and eras.</li>
-      <li>Read <strong>only</strong> the citation text. That is all our annotator saw &mdash; do not read our labels first.</li>
+      <li>Read <strong>only</strong> the citation text. That is all our annotator saw.</li>
       <li>Assign a mode, and a depth if a description changed.</li>
-      <li>Send the labels. We will publish the agreement statistic <strong>whatever it says</strong>, including if it is bad.</li>
+      <li>Send the labels. We publish the agreement statistic <strong>whatever it says</strong>.</li>
     </ol>
-    <p class="say" style="margin-top:24px">Also useful: filling a coverage gap in biology or the earth
-    sciences, fixing a wrong record, or attacking the scheme outright. If you can design a symmetric
-    one that survives contact with 1,547 real citations, it supersedes this one and we will say so.</p>
+    <p class="say" style="margin-top:24px">Also wanted: a system that performs <strong>L1</strong>,
+    a better proposer than the one that never offered <code>sin(3x)</code>, or an attack on the
+    boundary in the section above. If you can automate a theorem-grade internal constraint, that is
+    the four-eighths this cannot reach.</p>
     <div class="cta" style="margin-bottom:0">
       <a class="btn" href="https://github.com/">Open an issue</a>
       <a class="btn ghost" href="mailto:tianyu16@illinois.edu">Email the author</a>
