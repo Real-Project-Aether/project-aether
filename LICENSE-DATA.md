@@ -21,5 +21,5 @@ redistributed here at all**. `documents_index.csv` gives the source URL of each;
 ## If you are an awarding body
 
 If you would prefer your citation text not appear in this release, contact
-tianyu16@illinois.edu and it will be removed — the corpus stays usable without it, since every
+shieldaether@outlook.com and it will be removed — the corpus stays usable without it, since every
 row keeps its `official_url`.
