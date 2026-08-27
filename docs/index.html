@@ -7,34 +7,34 @@
 <meta name="description" content="An operation for the discovery move automated systems do not make, and a measurement of how much of physics needs it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
 :root{
-  --ground:#F2F3F5; --surface:#FFFFFF; --surface-2:#E9EBEF;
-  --ink:#16181D; --ink-2:#3D434F; --muted:#5B6270;
-  --rule:#D6DAE1; --rule-soft:#E4E7EC;
-  --accent:#B4443C; --accent-ink:#8E332C; --accent-wash:#F6E7E5;
-  --quiet:#8A8F98; --on-accent:#FFFFFF;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --ground:#F2F5F6; --surface:#FFFFFF; --surface-2:#E7EDEE;
+  --ink:#10171A; --ink-2:#35464C; --muted:#5C7076;
+  --rule:#CFDBDD; --rule-soft:#E2EAEB;
+  --accent:#0E6E7A; --accent-ink:#0A545E; --accent-wash:#E2F1F3;
+  --quiet:#849699; --on-accent:#FFFFFF;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Spectral",Georgia,"Times New Roman",serif;
   --maxw:1080px;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --ground:#14161A; --surface:#1B1E24; --surface-2:#23272F;
-    --ink:#E7E9ED; --ink-2:#B6BCC7; --muted:#949BA7;
-    --rule:#2C313A; --rule-soft:#242830;
-    --accent:#D9635A; --accent-ink:#E88178; --accent-wash:#2A1E1D;
-    --quiet:#767D89; --on-accent:#1A0E0D;
+    --ground:#0D1417; --surface:#141D21; --surface-2:#1C282C;
+    --ink:#E4EDEF; --ink-2:#B0C2C6; --muted:#8AA0A5;
+    --rule:#26343A; --rule-soft:#1E2A2E;
+    --accent:#4EC9D9; --accent-ink:#6FDCEA; --accent-wash:#102A30;
+    --quiet:#6E8288; --on-accent:#06171B;
   }
 }
 :root[data-theme="dark"]{
-  --ground:#14161A; --surface:#1B1E24; --surface-2:#23272F;
-  --ink:#E7E9ED; --ink-2:#B6BCC7; --muted:#949BA7;
-  --rule:#2C313A; --rule-soft:#242830;
-  --accent:#D9635A; --accent-ink:#E88178; --accent-wash:#2A1E1D;
-  --quiet:#767D89; --on-accent:#1A0E0D;
+  --ground:#0D1417; --surface:#141D21; --surface-2:#1C282C;
+  --ink:#E4EDEF; --ink-2:#B0C2C6; --muted:#8AA0A5;
+  --rule:#26343A; --rule-soft:#1E2A2E;
+  --accent:#4EC9D9; --accent-ink:#6FDCEA; --accent-wash:#102A30;
+  --quiet:#6E8288; --on-accent:#06171B;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -72,10 +72,16 @@ header.top{border-bottom:1px solid var(--rule); background:var(--surface)}
   display:flex; flex-wrap:wrap; gap:0; margin:40px 0 0;
   border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)
 }
-.fact{flex:1 1 150px; padding:18px 20px 18px 0; border-right:1px solid var(--rule-soft)}
+.fact{
+  flex:1 1 150px; display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; padding:22px 16px; border-right:1px solid var(--rule-soft)
+}
 .fact:last-child{border-right:0}
-.fact b{display:block; font-family:var(--mono); font-size:26px; font-weight:500; letter-spacing:-.02em}
-.fact span{font-size:13px; color:var(--muted)}
+.fact b{
+  display:block; font-family:var(--mono); font-size:26px; font-weight:500; letter-spacing:-.02em;
+  color:var(--accent)
+}
+.fact span{margin-top:6px; font-size:13px; color:var(--muted); max-width:20ch; line-height:1.4}
 .cta{display:flex; flex-wrap:wrap; gap:12px; margin:32px 0 60px}
 .btn{
   font-family:var(--sans); font-size:14.5px; font-weight:500;
@@ -278,7 +284,7 @@ footer a{color:var(--ink-2)}
 
 <header class="top" id="top">
   <div class="wrap">
-    <div class="brand">Reinterpretation as an <span>Operation</span></div>
+    <div class="brand">The Quotient <span>Group</span></div>
     <nav class="topnav">
       <a href="#gap">The gap</a>
       <a href="#ladder">The ladder</a>
@@ -460,134 +466,209 @@ footer a{color:var(--ink-2)}
 
 <section id="op">
   <div class="wrap">
-    <p class="eyebrow">The operation</p>
-    <h2>Structure no measurement can see &mdash; and why you must not simply delete it.</h2>
-    <p class="say">&ldquo;Carries structure no measurement can see&rdquo; is not a metaphor. For a
-    theory predicting <code>f(x,p)</code>, the directions along which no prediction moves are the
-    <strong>null space of the prediction Jacobian</strong>. Removing them is reinterpretation.</p>
-    <p class="say">Measured against the error bars, not exactly: Lorentz&rsquo;s aether was not
-    unobservable in principle, only to the precision of the day.</p>
-    <div class="warn"><b>Applied naively, this deletes conservation laws.</b> A <em>global</em>
-    phase rotation is invisible to every probe exactly as a gauge transformation is. Quotient both
-    and you do not discover charge conservation &mdash; you erase the conserved quantity.</div>
+    <p class="eyebrow">So we tried to build one</p>
+    <h2>If nothing performs the move, can it even be written down as something a machine runs?</h2>
+    <p class="say">That is the question the rest of this page is about. A move you can only
+    recognise in hindsight, in prose, is not something you can automate. So the first job is to
+    turn &ldquo;Einstein&rsquo;s theory carried less than Lorentz&rsquo;s&rdquo; into a quantity you
+    can compute from a theory and its data, before anyone knows who was right.</p>
+
+    <dl class="levels">
+      <div><dt><b>1</b> A theory is a set of knobs</dt>
+        <dd>Write any theory as something with adjustable parts &mdash; masses, couplings,
+        whatever it takes to make a prediction. Now turn each knob a little and watch every
+        prediction it makes.</dd></div>
+
+      <div><dt><b>2</b> Some combinations of knobs move nothing</dt>
+        <dd>Sometimes you can turn a whole combination of knobs and <em>not one prediction
+        changes</em>. That combination is carrying no information about the world. It is doing no
+        work. It is an aether.
+        <span class="ex">Lorentz&rsquo;s aether velocity was exactly this: a number in the theory
+        that could take any value without altering a single measurable quantity.</span></dd></div>
+
+      <div><dt><b>3</b> Reinterpretation is deleting it</dt>
+        <dd>Einstein&rsquo;s move, stated mechanically: find the combinations that move nothing,
+        and remove them. Predictions stay identical &mdash; that is what makes it a
+        reinterpretation and not just a better fit.
+        <em>Formally these are the null directions of the prediction Jacobian; the machinery is
+        standard identifiability analysis, pointed at theory choice instead of at a fit.</em></dd></div>
+
+      <div><dt><b>4</b> Measured against the error bars, not exactly</dt>
+        <dd>Lorentz&rsquo;s aether was not undetectable <em>in principle</em> &mdash; it was
+        undetectable to the precision of the instruments of the day. So the real question is
+        whether a knob can be turned by a large amount without shifting any prediction further
+        than its own error bar.</dd></div>
+    </dl>
+
+    <div class="warn"><b>And here is the trap that nearly sank it.</b> Not everything invisible is
+    dead weight. Rotate the phase of a quantum field everywhere at once and no measurement changes
+    either &mdash; but that invisible thing is not an aether, it is <b>charge conservation</b>.
+    A machine that deletes everything it cannot see would delete the conservation laws along with
+    the junk.</div>
+
+    <p class="say">One extra question separates them, and it is about <em>locality</em>: can you
+    apply the change at each point independently, or only to the whole universe at once?</p>
+
     <div class="branch">
       <div class="brline">
-        <span class="brq">invariant applied <b>point by point</b></span>
-        <span class="bra">redundancy &rarr; quotient it <code>L1</code></span>
+        <span class="brq">invisible, and you can do it <b>point by point</b></span>
+        <span class="bra">it is genuine slack &mdash; delete it <code>L1</code></span>
       </div>
       <div class="brline">
-        <span class="brq">invariant only applied <b>uniformly</b></span>
-        <span class="bra">symmetry &rarr; keep it, read off a conserved charge <code>L4</code></span>
+        <span class="brq">invisible, but only <b>everywhere at once</b></span>
+        <span class="bra">it is a symmetry &mdash; keep it, and it hands you a conserved
+        quantity <code>L4</code></span>
       </div>
     </div>
-    <p class="mlnote">One test, two discovery operations. The second is the more productive:
-    <b>a distinction no probe can see, but only when moved everywhere at once, is a conservation
-    law.</b> Our implementation refuses to quotient at all when no locality test is available,
-    rather than guess.</p>
+
+    <p class="mlnote">One test, two discovery moves. The second is the more productive of the pair:
+    <b>a distinction no instrument can see, but only when you move it everywhere at once, is a
+    conservation law.</b> Our implementation now refuses to delete anything at all when it has no
+    way to run that locality test, rather than guess.</p>
+
+    <p class="say">One piece is still missing. This machinery can only ever <em>reject</em>
+    candidates &mdash; something has to <em>propose</em> them, and it can only find structure
+    inside the vocabulary it was handed. That is the job we give the language model, and only that
+    job: it generates, it never decides. Its own scorecard is the reason &mdash; 87% when it
+    recognised the episode, 48% when the names were stripped.</p>
   </div>
 </section>
 
 <section id="results">
   <div class="wrap">
-    <p class="eyebrow">Results</p>
-    <h2>It finds symmetries nobody named, and refuses to delete them.</h2>
-    <p class="say">On a periodic 6&times;6 lattice with a two-flavour matter field and U(1) links,
-    the mechanism is handed <strong>eight candidate generators and told nothing</strong> about which
-    are real invariances.</p>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>step</th><th>what it does</th><th>result</th></tr></thead>
-        <tbody>
-          <tr><td>1&ndash;2</td><td>null space of <code>&part;probes/&part;c</code>, applied uniformly</td><td><b>5 invariant directions found</b>; link phase, rescale and a flavour shift rejected</td></tr>
-          <tr><td>3</td><td>second null space <em>inside</em> the first, coefficient now varying by site</td><td><b>1 redundancy</b> (pure gauge) sorted from <b>4 symmetries</b></td></tr>
-          <tr><td>4</td><td>evolve, and check each emitted charge</td><td>four charges conserved to <b>1.8e-11 &ndash; 7.6e-10</b></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="say">The separation had to be done in that order: at uniform order the gauge
-    transformation and the global phase act identically, so the first null space mixes them and only
-    the local test breaks the degeneracy.</p>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>branch</th><th class="n">relative drift</th></tr></thead>
-        <tbody>
-          <tr><td>four symmetry charges</td><td class="n">1.8e-11 &ndash; 7.6e-10</td></tr>
-          <tr><td>redundancy, would-be local charge</td><td class="n"><b>8.6e-01</b></td></tr>
-          <tr><td>energy on the same trajectory</td><td class="n">1.3e-10</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="warn"><b>Without the sort, all five directions are unobservable and all five get
-    quotiented</b> &mdash; destroying four conservation laws in order to remove one redundancy.</div>
+    <p class="eyebrow">Does it work?</p>
+    <h2>Three questions, in order: does the code do what it claims, does it work on real physics,
+    and where does it fail?</h2>
+    <p class="say">Taking them out of order is how you fool yourself. So: first controls that
+    cannot pass by accident, then a real physical system, then a live scientific dispute where
+    nobody knows the answer.</p>
 
-    <p class="eyebrow" style="margin-top:52px">The proposer</p>
-    <h2>The model proposes in both worlds. Only the measurement tells them apart.</h2>
-    <p class="say">A null-space search finds only what its basis contains, so something must widen
-    it. We use the language model <em>only to generate</em>, never to decide.</p>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>world</th><th>residual</th><th class="n">proposed</th><th class="n">accepted</th></tr></thead>
-        <tbody>
-          <tr><td>A</td><td>a real missing concept, <code>0.4&middot;sin(3x)</code></td><td class="n">8</td><td class="n">2&ndash;3</td></tr>
-          <tr class="hi"><td>B</td><td><b>control</b> &mdash; pure noise, nothing to find</td><td class="n">8</td><td class="n"><b>0</b></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="mlnote">Offered the truth directly the filter is decisive &mdash; <code>sin(3x)</code>
-    reaches <b>97%</b> coverage against 68% for <code>sin(2.9x)</code> and 20% for wrong terms. So
-    <b>the proposer is the bottleneck, not the test</b>: across runs the model offered
-    <code>sin(x)</code>, <code>sin(2x)</code>, <code>x&sup3;</code> and <code>sin(&pi;x)</code>
-    &mdash; never <code>sin(3x)</code>, though the residual is a clean sine.</p>
+    <p class="eyebrow" style="margin-top:44px">First &mdash; does the code do what it says?</p>
+    <p class="say">Twenty-one checks on cases where we put the answer in ourselves. It has to find
+    hidden slack and delete it <em>without changing any prediction</em>; it has to leave an honest
+    theory alone; and it has to <strong>refuse a patch</strong> whose new part moves no
+    prediction &mdash; the property that stops &ldquo;just add a parameter&rdquo; from being free.
+    <strong>21 of 21 pass.</strong> This proves the code works, not that the idea is right.</p>
 
-    <p class="eyebrow" style="margin-top:52px">Where it goes quiet</p>
-    <h2>On a real controversy, the criterion is silent &mdash; and that is the result.</h2>
-    <p class="say">NGC 3198 from SPARC, fitted by a dark-matter halo and by MOND. No ground truth;
-    that is what makes it free of the leakage that makes historical cases worthless for testing a
-    model that has read the histories.</p>
+    <p class="eyebrow" style="margin-top:44px">Then &mdash; real physics, with nothing given away</p>
+    <p class="say">A lattice field theory: a small grid carrying a quantum field with two flavours,
+    of the kind used to study the strong force. It has both a genuine redundancy and genuine
+    symmetries, and physicists know which is which &mdash; but <strong>we tell the machine
+    nothing</strong>. It gets eight candidate transformations, most of which are not invariances
+    at all, and has to sort them out for itself.</p>
     <div class="scroll">
       <table>
-        <thead><tr><th>description</th><th class="n">concepts</th><th class="n">&chi;&sup2;/N</th><th class="n">unobservable</th></tr></thead>
+        <thead><tr><th>step</th><th>what it does</th><th>what came out</th></tr></thead>
         <tbody>
-          <tr><td>baryons + NFW halo</td><td class="n">3</td><td class="n">1.22</td><td class="n"><b>0</b></td></tr>
-          <tr><td>MOND, a&#8320; universal</td><td class="n">1</td><td class="n">9.21</td><td class="n"><b>0</b></td></tr>
-          <tr><td>MOND, a&#8320; free</td><td class="n">2</td><td class="n">1.78</td><td class="n"><b>0</b></td></tr>
+          <tr><td>1</td><td>looks for changes that move no measurement</td><td><b>finds 5</b>; correctly throws out the other 3</td></tr>
+          <tr><td>2</td><td>asks the locality question of each one</td><td>separates <b>1 piece of slack</b> from <b>4 symmetries</b></td></tr>
+          <tr><td>3</td><td>reads a conserved quantity off each symmetry</td><td><b>4 conserved charges</b></td></tr>
+          <tr><td>4</td><td>runs the system forward in time to check them</td><td>they hold to <b>1 part in 10 billion</b></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="mlnote">Neither carries structure the measurements cannot see: the halo model&rsquo;s
-    softest direction still moves the curve <b>6.4&sigma;</b> &mdash; unsurprising, since
-    SPARC&rsquo;s 3.6&nbsp;&micro;m photometry was assembled to break exactly that degeneracy.
-    <b>The Lorentz&ndash;Einstein signature needs two descriptions that agree on the data.</b> These
-    disagree at 1.22 against 9.21, and where descriptions disagree ordinary model comparison settles
-    it. The operation applies to a narrower class of disputes than we assumed.</p>
+    <p class="say">The one it deleted was the gauge redundancy. The four it kept were the flavour
+    symmetries &mdash; and their conserved quantities really are conserved: they drift by about a
+    part in ten billion, which is the accuracy of the simulation itself. The piece it deleted has
+    no such conserved quantity, and the corresponding number drifts by <strong>86%</strong>. Nine
+    orders of magnitude separate the two branches, which is what tells you the sort is real and not
+    a relabelling.</p>
+    <div class="warn"><b>Without that locality question, all five look identical &mdash; invisible
+    &mdash; and all five get deleted.</b> Four conservation laws destroyed in order to remove one
+    piece of slack. That is the single most important thing this test showed.</div>
+
+    <p class="eyebrow" style="margin-top:44px">Then &mdash; can the language model find the missing piece?</p>
+    <p class="say">Two worlds. In one, the data really is hiding a missing ingredient. In the
+    other, the leftovers are pure noise and there is genuinely nothing to find. The model is not
+    told which is which.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>world</th><th>what is actually there</th><th class="n">it proposed</th><th class="n">survived the test</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>a real missing ingredient</td><td class="n">8</td><td class="n">2&ndash;3</td></tr>
+          <tr class="hi"><td>B</td><td><b>nothing at all</b> &mdash; just noise</td><td class="n">8</td><td class="n"><b>0</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="say">It proposes eight ideas either way, with the same confidence. <strong>The
+    measurement is the only thing that tells the two worlds apart</strong> &mdash; which is exactly
+    the division of labour we wanted, and exactly why the model is never allowed to be the judge.</p>
+    <p class="mlnote">Handed the true answer directly, the test recognises it easily &mdash;
+    <b>97%</b> against 20% for the wrong ones. So the weak link here is the <b>proposer, not the
+    test</b>: the model kept suggesting near-misses and never once suggested the right one, even
+    though the leftover signal was a clean wave.</p>
+
+    <p class="eyebrow" style="margin-top:44px">Finally &mdash; a real dispute, where nobody knows the answer</p>
+    <p class="say">Galaxy rotation curves: stars at the edge of a galaxy orbit far faster than the
+    visible matter can explain. Two rival explanations have argued about this for forty years
+    &mdash; invisible dark matter, or a modification to gravity itself. We pointed the machinery at
+    real measurements of the galaxy NGC 3198 and asked which explanation carries something
+    unmeasurable.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>explanation</th><th class="n">adjustable parts</th><th class="n">fit quality</th><th class="n">unmeasurable content</th></tr></thead>
+        <tbody>
+          <tr><td>dark matter halo</td><td class="n">3</td><td class="n">1.22</td><td class="n"><b>none</b></td></tr>
+          <tr><td>modified gravity, fixed scale</td><td class="n">1</td><td class="n">9.21</td><td class="n"><b>none</b></td></tr>
+          <tr><td>modified gravity, free scale</td><td class="n">2</td><td class="n">1.78</td><td class="n"><b>none</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="say"><strong>The answer is that it has nothing to say, and that is the useful
+    result.</strong> Neither side is hiding anything unmeasurable. And the reason is worth
+    understanding: our test compares two theories that <em>agree on the data</em> and asks which
+    one carries dead weight. These two <em>disagree</em> on the data &mdash; one fits far better
+    than the other. When theories disagree, you do not need any of this; you just compare them the
+    ordinary way. The operation covers a narrower class of arguments than we assumed when we built
+    it, and finding that out cost one real controversy.</p>
   </div>
 </section>
 
 <section id="bound">
   <div class="wrap">
-    <p class="eyebrow">The boundary</p>
-    <h2>Four of eight Standard Model concepts were bought by a theorem, before any experiment.</h2>
-    <p class="say">The mechanism buys concepts with measurements. Against eight concept-forming
-    episodes in the Standard Model it accounts for <strong>two</strong>: the neutrino, and gauge
-    redundancy. The other six do not fail for want of cleverness. Four contain
-    <strong>no probe at all</strong>.</p>
-    <ul class="theorems">
-      <li><b>&Delta;<sup>++</sup></b> violated Fermi statistics. Colour was invented so the state would be <em>allowed</em>.</li>
-      <li><b>FCNC</b> were too suppressed. Charm was invented so the excess would <em>cancel</em>.</li>
-      <li><b>Gauge anomalies</b> had to sum to zero, which required <em>complete</em> generations.</li>
-      <li><b>WW scattering</b> had to stay unitary, putting the Higgs below about a TeV &mdash; and telling experimenters what to build.</li>
-    </ul>
-    <div class="warn"><b>Every one predicted a real particle. Every one was paid for by a theorem
-    first, with the experiment arriving years or decades later.</b> A framework whose founding
-    commitment is that a concept is paid for by an experiment has these exactly backwards.</div>
-    <p class="say">The prerequisite is not more data or a better search: <strong>you can only have
-    theorems if there is a formal theory to have them about</strong>, and no discovery system we know
-    of carries one. That, rather than the difficulty of reinterpretation, is what bounds automated
-    physics discovery today.</p>
-    <p class="mlnote">The weaker version of this route is already refuted here. Proposing concepts
-    from structural defects in a description was tested on three substrates and lost on all three.
-    The difference is grade, not kind: heuristics say a defect is a hint, theorems say a state is
-    forbidden or it is not.</p>
+    <p class="eyebrow">Where this stops</p>
+    <h2>The hard limit is not that reinterpretation is difficult. It is that some physics is not
+    settled by measurement at all.</h2>
+    <p class="say">Everything above buys new concepts with observations: something is invisible to
+    your instruments, so you act on it. That is one honest route to discovery. To find out how far
+    it goes, we walked it through eight moments when the Standard Model of particle physics gained
+    a genuinely new concept.</p>
+    <div class="finding" style="margin-top:34px">
+      <div>
+        <div class="bignum">2 of 8
+          <small>Standard Model concepts are reachable this way. The other six are not, and four
+          of them fail for the same reason.</small>
+        </div>
+      </div>
+      <div>
+        <p class="say" style="margin-top:0">In four cases <strong>there was no measurement
+        involved at all</strong>. The new particle was demanded by an internal contradiction
+        &mdash; the theory as written was simply not allowed to exist &mdash; and the experiment
+        confirming it arrived years or decades later.</p>
+        <ul class="theorems">
+          <li>A known particle <b>broke the rules for how identical particles combine</b>. Colour
+          charge was invented so that it would be <em>permitted</em>.</li>
+          <li>Certain rare decays were <b>far too rare</b>. The charm quark was invented so the
+          excess would <em>cancel</em>.</li>
+          <li>Certain internal quantities <b>had to sum to zero</b> or the theory was inconsistent
+          &mdash; forcing particle families to be <em>complete</em>.</li>
+          <li>Particle collisions <b>had to stay sane at high energy</b>, which placed the Higgs
+          below a certain mass &mdash; and told experimenters what machine to build.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="warn"><b>Every one of these predicted a real particle that was later found. Every
+    one was paid for by a proof, before any experiment.</b> A system whose entire principle is
+    &ldquo;a new concept must be earned by an observation&rdquo; has these precisely backwards.</div>
+    <p class="say">And the missing ingredient is not more data, or a cleverer search.
+    <strong>You can only prove things about a theory if the machine has the theory in a form it can
+    reason about</strong> &mdash; and no discovery system we know of carries one. That, rather than
+    the difficulty of reinterpretation, is what actually bounds automated physics discovery today.
+    It is also the most interesting open problem here.</p>
+    <p class="mlnote">The easy version of this shortcut is already dead. Guessing at new concepts
+    from things that merely <em>look</em> wrong in a description was tested on three different
+    problems and lost on all three. The difference is grade, not kind: a suspicious-looking
+    description is a hint, whereas a proof says a thing is forbidden or it is not.</p>
   </div>
 </section>
 
@@ -595,17 +676,17 @@ footer a{color:var(--ink-2)}
   <div class="wrap">
     <p class="eyebrow">What you get</p>
     <h2>The corpus, the mechanism, and a script that checks our arithmetic.</h2>
-    <p class="say">Every statistic here is recomputed from the shipped data by
-    <code>scripts/summary.py</code>, which exits non-zero if any published number fails to
+    <p class="say">Every number on this page is recomputed from the shipped data by
+    <code>scripts/summary.py</code>, which exits non-zero if any published figure fails to
     reproduce. Run it before you trust us.</p>
 <pre><code><span class="cmt"># all 30 published corpus statistics, recomputed from the data</span>
 python3 scripts/summary.py
 
 <span class="cmt"># the mechanism</span>
 cd mechanism
-python3 test_mechanism.py        <span class="cmt"># 21/21 engineering checks</span>
-python3 discover_symmetry.py     <span class="cmt"># finds 5 invariances, sorts 1 from 4, emits 4 charges</span>
-python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where the criterion goes silent</span></code></pre>
+python3 test_mechanism.py        <span class="cmt"># the 21 controls</span>
+python3 discover_symmetry.py     <span class="cmt"># the lattice: finds 5, sorts 1 from 4, emits 4 charges</span>
+python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where it goes quiet</span></code></pre>
     <div class="scroll">
       <table>
         <thead><tr><th>file</th><th class="n">rows</th><th>what it is</th></tr></thead>
@@ -615,7 +696,7 @@ python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where the criteri
           <tr><td><code>data/classifications.csv</code></td><td class="n">1,547</td><td>mode, depth, operators, evidence grade, justification</td></tr>
           <tr><td><code>data/papers.csv</code></td><td class="n">15,693</td><td>laureate &rarr; paper links</td></tr>
           <tr><td><code>data/documents_index.csv</code></td><td class="n">4,044</td><td>document type and source URL &mdash; text not shipped</td></tr>
-          <tr><td><code>mechanism/</code></td><td class="n">&mdash;</td><td>the operation, its tests, and both negative results</td></tr>
+          <tr><td><code>mechanism/</code></td><td class="n">&mdash;</td><td>the operation, its controls, and both negative results</td></tr>
         </tbody>
       </table>
     </div>
@@ -632,27 +713,27 @@ python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where the criteri
     report a proxy for one.</div>
     <div class="limits">
       <div class="limit">
-        <h3>The criterion was revised against known answers</h3>
-        <p>An earlier form was modified <em>eight times</em>, each after seeing a verdict we knew to
-        be wrong. That is why the results here rest on a lattice system with an independently known
-        answer, and on a controversy with no known answer at all.</p>
+        <h3>The test was tuned against answers we already knew</h3>
+        <p>An earlier version was changed <em>eight times</em>, each time after it gave a verdict
+        we knew was wrong. That is why the results here rest on a lattice system with an
+        independently known answer, and on a controversy with no known answer at all.</p>
       </div>
       <div class="limit">
-        <h3>The acceptance rule does not discriminate</h3>
-        <p>&ldquo;Coverage strictly improves&rdquo; admitted <code>sin(x)</code> and
-        <code>x&sup3;</code> at 20&ndash;22% against a base of 18%. It ranks correctly but needs a
-        margin, not a strict inequality.</p>
+        <h3>The acceptance rule is too generous</h3>
+        <p>&ldquo;Any improvement counts&rdquo; let two near-misses through at 20&ndash;22% against
+        a baseline of 18%. It ranks candidates correctly but needs a margin, not a bare
+        improvement.</p>
       </div>
       <div class="limit">
-        <h3>The scheme is not symmetric</h3>
-        <p>The facts column distinguishes facts newly in hand from reach newly extended, but encodes
-        that as two categories rather than as a ladder. A scheme that graded every column would be
-        cleaner. We did not build one.</p>
+        <h3>The scheme is lopsided</h3>
+        <p>Changes to a description get a six-rung ladder; changes to the facts get two flat
+        categories. A scheme that graded every column the same way would be cleaner. We did not
+        build one.</p>
       </div>
       <div class="limit">
         <h3>Hindsight and selection</h3>
         <p>Prizes are awarded with decades of hindsight, so the corpus samples work that turned out
-        to matter, and citations justify a decision already taken.</p>
+        to matter, and the citations justify a decision already taken.</p>
       </div>
     </div>
   </div>
@@ -660,30 +741,57 @@ python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where the criteri
 
 <section id="join">
   <div class="wrap">
-    <p class="eyebrow">What would help most</p>
-    <h2>Re-annotate a sample. Disagree with us in public.</h2>
-    <p class="say">We cannot tell from the inside whether this scheme is reproducible or whether it
-    records one system&rsquo;s habits. Only someone else applying it can settle that.</p>
+    <p class="eyebrow">Join us</p>
+    <h2>This is an open project, and it is nowhere near finished.</h2>
+    <p class="say">Everything above is one group&rsquo;s attempt at a problem that will need many.
+    We would rather be corrected early than cited late, so the data, the code and both negative
+    results are public and the failures are documented as carefully as the successes.
+    <strong>Volunteers are welcome at any level</strong> &mdash; physicists, historians of science,
+    machine-learning researchers, or anyone who just wants to argue with a label.</p>
+
+    <h3 style="margin-top:32px; font-size:19px">The single most useful thing: re-annotate a sample</h3>
+    <p class="say">We cannot tell from the inside whether our scheme is reproducible or whether it
+    simply records one system&rsquo;s habits. Only someone else applying it can settle that.</p>
     <ol class="steps">
-      <li>Sample a few hundred events from <code>classifications.csv</code>, spread across prizes and eras.</li>
+      <li>Take a few hundred events from <code>classifications.csv</code>, spread across prizes and eras.</li>
       <li>Read <strong>only</strong> the citation text. That is all our annotator saw.</li>
-      <li>Assign a mode, and a depth if a description changed.</li>
-      <li>Send the labels. We publish the agreement statistic <strong>whatever it says</strong>.</li>
+      <li>Decide what the contribution changed, and how deeply.</li>
+      <li>Send us the labels. We publish the agreement figure <strong>whatever it says</strong>.</li>
     </ol>
-    <p class="say" style="margin-top:24px">Also wanted: a system that performs <strong>L1</strong>,
-    a better proposer than the one that never offered <code>sin(3x)</code>, or an attack on the
-    boundary in the section above. If you can automate a theorem-grade internal constraint, that is
-    the four-eighths this cannot reach.</p>
-    <div class="cta" style="margin-bottom:0">
+
+    <h3 style="margin-top:34px; font-size:19px">Bigger things, if you want them</h3>
+    <div class="limits" style="margin-top:18px">
+      <div class="limit">
+        <h3>Build a better proposer</h3>
+        <p>Ours kept suggesting near-misses and never found the right answer. The test is fine; the
+        thing feeding it is the bottleneck.</p>
+      </div>
+      <div class="limit">
+        <h3>Attack the boundary</h3>
+        <p>Four of eight Standard Model concepts were bought by proof, not measurement. Give a
+        machine a theory it can reason about formally and that boundary moves.</p>
+      </div>
+      <div class="limit">
+        <h3>Break the criterion</h3>
+        <p>Find a case where it confidently gives the wrong answer. We will publish it. That is
+        worth more to us than another case where it works.</p>
+      </div>
+      <div class="limit">
+        <h3>Fill a gap in the corpus</h3>
+        <p>Biology and the earth sciences are thinner than physics and mathematics, and some
+        records are simply wrong. Small, concrete, and it makes everything else trustworthier.</p>
+      </div>
+    </div>
+    <div class="cta" style="margin-bottom:0; margin-top:34px">
       <a class="btn" href="https://github.com/">Open an issue</a>
-      <a class="btn ghost" href="mailto:tianyu16@illinois.edu">Email the author</a>
+      <a class="btn ghost" href="mailto:tianyu16@illinois.edu">Get in touch</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>Tianyu Wu &middot; Center for Biophysics and Quantitative Biology, UIUC</span>
+    <span><b>The Quotient Group</b> &mdash; an open project on automating conceptual change in physics</span>
     <span>Annotations &amp; code <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> / MIT &middot;
     citation text remains the awarding bodies&rsquo;</span>
   </div>
