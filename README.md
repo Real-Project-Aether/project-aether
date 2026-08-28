@@ -62,6 +62,16 @@ python3 discover_symmetry.py     # finds 5 invariances in a lattice gauge system
 python3 live_rotation_curve.py   # NGC 3198: where the criterion goes silent, and why
 ```
 
+Those three need only NumPy and SciPy. One script does need more:
+
+```bash
+python3 llm_propose.py           # needs a chat model on an OpenAI-compatible endpoint
+```
+
+It expects one at `http://127.0.0.1:11434/v1` serving `gpt-oss:20b` — point it elsewhere with
+`VLLM_MODEL_URL` and `VLLM_MODEL`. Without a server it will not run, but you do not need one to
+check the result: `llm_propose_out.txt` is the recorded output of the run the findings describe.
+
 On the lattice, handed eight candidate generators and told nothing about which are real, it finds
 five invariant directions, isolates the gauge redundancy, and emits four conserved charges
 accurate to 1e-10 — while the redundancy's would-be charge drifts by 0.86. Without the sort, all
