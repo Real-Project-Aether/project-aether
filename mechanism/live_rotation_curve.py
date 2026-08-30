@@ -10,13 +10,18 @@ There is no ground truth here. That is the point -- it is why this test is free 
 that makes historical cases worthless for evaluating a model that has read the histories. We
 report what the criterion measures and attach no accuracy figure to it.
 """
+from pathlib import Path
+
 import numpy as np
 from concept_space import Theory, fit, coverage, unobservable_at_noise, quotient
 
 A0 = 3700.0          # 1.2e-10 m/s^2 expressed in (km/s)^2 / kpc
 H0 = 0.07            # 70 km/s/Mpc in km/s/kpc
 
-d = np.loadtxt("data/NGC3198.txt")
+# Resolve from this file, not the caller's cwd: the script broke when run from the repo
+# root, which is how anyone cloning it would try first.
+HERE = Path(__file__).resolve().parent
+d = np.loadtxt(HERE / "data" / "NGC3198.txt")
 R, VOBS, EV, VGAS, VDISK = d.T
 EV = np.maximum(EV, 2.0)     # SPARC floors; keep errors honest and non-zero
 
