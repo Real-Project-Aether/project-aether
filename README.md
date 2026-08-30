@@ -88,6 +88,7 @@ no probe-based method can reach those.
 ```bash
 git clone https://github.com/Real-Project-Aether/project-aether.git && cd project-aether
 python3 scripts/summary.py          # reproduces every number in the paper
+python3 scripts/verify.py           # checks the repo holds together; non-zero if not
 ```
 
 ```python
