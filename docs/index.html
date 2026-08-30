@@ -270,7 +270,8 @@ footer a{color:var(--ink-2)}
     <li><a href="#gap">The gap</a></li>
     <li><a href="#ladder">The ladder</a></li>
     <li><a href="#today">What exists today</a></li>
-    <li><a href="#op">The operation</a></li>
+    <li><a href="#op">The operations</a></li>
+    <li><a href="#guard">The guard</a></li>
     <li><a href="#results">Results</a></li>
     <li><a href="#bound">The boundary</a></li>
     <li><a href="#data">Data &amp; code</a></li>
@@ -290,7 +291,8 @@ footer a{color:var(--ink-2)}
       <a href="#gap">The gap</a>
       <a href="#ladder">The ladder</a>
       <a href="#today">Prior work</a>
-      <a href="#op">The operation</a>
+      <a href="#op">The operations</a>
+      <a href="#guard">The guard</a>
       <a href="#results">Results</a>
       <a href="#bound">The boundary</a>
       <a href="#data">Data</a>
@@ -312,7 +314,7 @@ footer a{color:var(--ink-2)}
       <div class="fact"><b>65%</b><span>of physics prizes changed a description</span></div>
       <div class="fact"><b>1 in 13</b><span>depth labels are the rung ML implements</span></div>
       <div class="fact"><b>0 of 14</b><span>systems perform the move</span></div>
-      <div class="fact"><b>2 of 8</b><span>Standard Model concepts reachable</span></div>
+      <div class="fact"><b>5 of 6</b><span>times the obvious guard accepts a false answer</span></div>
     </div>
     <div class="cta">
       <a class="btn" href="paper.pdf">Read the paper (5pp)</a>
@@ -535,6 +537,60 @@ footer a{color:var(--ink-2)}
     inside the vocabulary it was handed. That is the job we give the language model, and only that
     job: it generates, it never decides. Its own scorecard is the reason &mdash; 87% when it
     recognised the episode, 48% when the names were stripped.</p>
+
+    <h3 style="margin-top:40px; font-size:20px">Three more, built the same way</h3>
+    <p class="say">The same shape &mdash; one obvious test, plus a second that makes the answer
+    pay &mdash; turns out to fit three further rungs.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>rung</th><th>the operation</th><th>and it must also&hellip;</th></tr></thead>
+        <tbody>
+          <tr><td><code>L2</code> coarse-grain</td><td>find a level where the description predicts its own future</td><td>still carry the fine measurements</td></tr>
+          <tr><td><code>L3</code> transfer</td><td>map one domain onto another so the measurements agree</td><td>hand the target a claim it can refute</td></tr>
+          <tr><td><code>L4</code> posit</td><td>name what would close a ledger that will not balance</td><td>exceed the systematic error, not just the noise</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mlnote">L4 consumes what L1 produces: the symmetry branch <b>finds</b> conserved
+    charges, and L4 <b>uses</b> one &mdash; when a found charge fails to balance, the missing
+    amount describes something not yet named. That is Pauli's move, and it recovers a hidden
+    quantity to under 1%.</p>
+  </div>
+</section>
+
+<section id="guard">
+  <div class="wrap">
+    <p class="eyebrow">What building four of them showed</p>
+    <h2>The obvious test is nearly worthless. Only the refutable one works.</h2>
+    <p class="say">Each operation was designed with a natural acceptance test. In every case that
+    test turned out to accept answers that are empty. We did not design this pattern in &mdash; it
+    showed up three times independently, and it is the most useful thing here.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>the test you would write first</th><th>how it fails</th></tr></thead>
+        <tbody>
+          <tr><td><code>L1</code></td><td>remove what no measurement can see</td><td><b>destroys conservation laws</b></td></tr>
+          <tr class="hi"><td><code>L2</code></td><td>the coarse variables predict themselves</td><td><b>2 of 3 empty answers pass</b></td></tr>
+          <tr class="hi"><td><code>L3</code></td><td>the two structures match</td><td><b>control passes 5 times in 6</b></td></tr>
+          <tr><td><code>L4</code></td><td>the imbalance is statistically significant</td><td>fires below the calibration error</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="say">The clearest case is coarse-graining. A reduction that throws away
+    <em>everything</em> predicts its own future perfectly &mdash; there is nothing left to
+    predict. So does one that keeps only the fastest-decaying parts, which all decay to zero: a
+    description of nothing, evolving correctly. Both satisfy the first test. Only the second
+    refuses them.</p>
+    <div class="warn"><b>A structural match is not evidence.</b> Any approach that finds an
+    analogy, a symmetry or a reduction and stops there is measuring almost nothing. The match has
+    to hand the target a prediction, and the target has to be able to break it. Where it does, the
+    separation is not marginal &mdash; ten orders of magnitude between the real cases and the
+    controls.</div>
+    <p class="mlnote">The same lesson turned on us. Our own second guard was wrong three times
+    &mdash; built on features that could not represent the measurements, then overfitted to a
+    perfect in-sample score on 62 samples, then swamped by scale differences. <b>Every one was
+    caught by an invariant, never by a number that looked wrong.</b> The version we kept must
+    score exactly 1.000 when the reduction keeps everything. It does.</p>
   </div>
 </section>
 
@@ -689,8 +745,11 @@ python3 scripts/summary.py
 <span class="cmt"># the mechanism</span>
 cd mechanism
 python3 test_mechanism.py        <span class="cmt"># the 21 controls</span>
-python3 discover_symmetry.py     <span class="cmt"># the lattice: finds 5, sorts 1 from 4, emits 4 charges</span>
-python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where it goes quiet</span></code></pre>
+python3 discover_symmetry.py     <span class="cmt"># L1: finds 5, sorts 1 from 4, emits 4 charges</span>
+python3 l2_slowfast.py           <span class="cmt"># L2: finds a level, refuses 3/3 empty ones</span>
+python3 l3_transfer.py           <span class="cmt"># L3: accepts the real one, refuses the control</span>
+python3 l4_posit.py              <span class="cmt"># L4: names the missing carrier</span>
+python3 live_rotation_curve.py   <span class="cmt"># where it goes quiet on a real controversy</span></code></pre>
     <div class="scroll">
       <table>
         <thead><tr><th>file</th><th class="n">rows</th><th>what it is</th></tr></thead>
@@ -700,7 +759,7 @@ python3 live_rotation_curve.py   <span class="cmt"># NGC 3198: where it goes qui
           <tr><td><code>data/classifications.csv</code></td><td class="n">1,547</td><td>mode, depth, operators, evidence grade, justification</td></tr>
           <tr><td><code>data/papers.csv</code></td><td class="n">15,693</td><td>laureate &rarr; paper links</td></tr>
           <tr><td><code>data/documents_index.csv</code></td><td class="n">4,044</td><td>document type and source URL &mdash; text not shipped</td></tr>
-          <tr><td><code>mechanism/</code></td><td class="n">&mdash;</td><td>the operation, its controls, and both negative results</td></tr>
+          <tr><td><code>mechanism/</code></td><td class="n">&mdash;</td><td>all four operations, their controls, and every negative result</td></tr>
         </tbody>
       </table>
     </div>
