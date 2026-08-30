@@ -97,8 +97,14 @@ used **only to generate**, never to decide.
 
 | world | residual | proposed | accepted |
 |---|---|---:|---:|
-| **A** | a real missing concept, `0.4*sin(3x)` | 8 | 2–3 |
+| **A** | a real missing concept, `0.4*sin(3x)` | 8 | 2–5 |
 | **B** | **control** — pure noise, nothing to find | 8 | **0** |
+
+**Replicated across three independent runs** (`llm_propose_out.txt`, `llm_propose_run1.txt`,
+`llm_propose_run2.txt`). World B accepted **0 of 8 in every run**. World A accepted 2–3, then 5,
+then 4 — the variation is the temperature, and the higher figures sharpen the limitation below:
+the acceptance rule lets over half the proposals through. The oracle check is identical in all
+three: 97% for the truth against 68% for the near miss and 20% for the wrong ones.
 
 The model proposes with equal fluency in both. Only the measurement tells them apart, and that
 is the whole arrangement: a proposal that buys fit with structure no measurement can see is
@@ -119,6 +125,7 @@ limiting component, not the criterion** — across runs gpt-oss:20b offered `sin
 `x**3` and `sin(pi*x)`, never `sin(3x)`, though the residual is a clean sine.
 
 **A weakness in our own rule, stated plainly.** "Coverage strictly improves" is too permissive:
-it admitted `sin(x)` and `x**3` at 20–22% against a base of 18%. The rule *ranks* correctly but
-does not *discriminate*; it needs a margin, not a strict inequality. Single runs at temperature
-0.8, so proposal counts vary between runs — the control accepting zero did not.
+it admitted `sin(x)` and `x**3` at 20–22% against a base of 18%, and across three runs it let
+through 2, 4 and 5 of 8 proposals. The rule *ranks* correctly but does not *discriminate*; it
+needs a margin, not a strict inequality. Proposal counts vary with temperature 0.8 — the control
+accepting zero did not, in any run.
