@@ -26,7 +26,9 @@ def check(name, ok, detail=""):
 
 # --- every entry point must run from the repository root ------------------------------------
 SCRIPTS = ["mechanism/test_mechanism.py", "mechanism/live_rotation_curve.py",
-           "mechanism/discover_symmetry.py", "scripts/summary.py"]
+           "mechanism/discover_symmetry.py", "mechanism/l2_slowfast.py",
+           "mechanism/l2_coarse.py", "mechanism/l3_transfer.py", "mechanism/l4_posit.py",
+           "scripts/summary.py"]
 for s in SCRIPTS:
     r = subprocess.run([sys.executable, s], cwd=ROOT, capture_output=True, timeout=3600)
     check(f"runs from repo root: {s}", r.returncode == 0,
@@ -49,6 +51,12 @@ merge = sum(1 for r in l2 if ops(r) & {"CLASSIFY/ENUMERATE"})
 check("L2 is defined by its dominant sub-move, not its rarest",
       coarse > merge and "level, or the quantity" in site,
       f"coarse-graining {coarse} vs merge/split {merge} of {len(l2)}")
+
+# --- the paper names four operations; all four must actually ship ------------------------------
+for f in ("l2_coarse.py", "l3_transfer.py", "l4_posit.py", "concept_space.py"):
+    check(f"the operation ships: {f}", (ROOT / "mechanism" / f).exists())
+for f in ("FINDINGS_L2.md", "FINDINGS_L3.md", "FINDINGS_L4.md", "FINDINGS_L5.md"):
+    check(f"its findings ship: {f}", (ROOT / "mechanism" / f).exists())
 
 # --- nothing may still point at a placeholder ------------------------------------------------
 check("no placeholder URLs in the site", 'https://github.com/"' not in site)

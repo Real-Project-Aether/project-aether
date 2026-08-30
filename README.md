@@ -44,10 +44,25 @@ fourteen automated-discovery systems on the same ladder, all sit on that rung or
 and **none performs L1**: take a theory that already fits, return one that fits identically while
 carrying less.
 
-`mechanism/` implements that operation. Structure no measurement can see is the null space of the
-prediction Jacobian. Removing it naively **deletes conservation laws** — a global symmetry is
-invisible to every probe too — so the operation first asks whether the invariance survives being
-applied *point by point*:
+`mechanism/` implements **four** operations, one per rung:
+
+| | operation | what it does |
+|---|---|---|
+| **L1** | `concept_space.py`, `discover_symmetry.py` | remove structure no measurement can see |
+| **L2** | `l2_coarse.py`, `l2_slowfast.py` | find the level at which a description closes |
+| **L3** | `l3_transfer.py` | carry a solved structure into a new domain |
+| **L4** | `l4_posit.py` | name an entity that makes a violated conservation law balance |
+
+**Each needed two guards, and in every case the intuitive one was nearly worthless.** Two of
+three vacuous coarse-grainings *close perfectly*; a domain built without the source's structure
+passes a structural match five times in six; and removing everything invisible destroys
+conservation laws. Only the guard that hands the system a **refutable claim** separates the real
+cases from the empty ones. See `mechanism/FINDINGS_L2.md`, `_L3`, `_L4` — and `_L5` for the one
+rung we did not attempt, and why.
+
+For L1, structure no measurement can see is the null space of the prediction Jacobian. Removing
+it naively deletes conservation laws, so the operation first asks whether the invariance survives
+being applied *point by point*:
 
 | | |
 |---|---|
@@ -57,9 +72,12 @@ applied *point by point*:
 ```bash
 cd mechanism
 python3 test_mechanism.py        # 21/21 engineering checks
-python3 discover_symmetry.py     # finds 5 invariances in a lattice gauge system,
-                                 # sorts 1 redundancy from 4 symmetries, emits 4 charges
-python3 live_rotation_curve.py   # NGC 3198: where the criterion goes silent, and why
+python3 discover_symmetry.py     # L1: finds 5 invariances, sorts 1 redundancy from 4 symmetries
+python3 l2_slowfast.py           # L2: finds a coarse level, refuses 3/3 vacuous ones
+python3 l2_coarse.py             # L2: the lattice, which has no coarse level, and says so
+python3 l3_transfer.py           # L3: accepts the real transfer, refuses the control
+python3 l4_posit.py              # L4: posits the missing carrier, silent when the books balance
+python3 live_rotation_curve.py   # where the criterion goes silent on a real controversy
 ```
 
 Those three need only NumPy and SciPy. One script does need more:
