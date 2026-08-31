@@ -1,0 +1,147 @@
+The L2 guards on systems we did not build
+dysts benchmark, 137 candidate systems; reduction keeps k = d//2 directions
+thresholds imported unchanged from l2_coarse: closes < 0.25, pays > 0.5
+
+  Aizawa                     d=3  slow:-P  fast:--  random:--  constant:C-
+  AnishchenkoAstakhov        d=3  slow:--  fast:--  random:--  constant:C-
+  Arneodo                    d=3  slow:--  fast:-P  random:--  constant:C-
+  ArnoldBeltramiChildress    d=3  slow:--  fast:--  random:--  constant:C-
+  ArnoldWeb                  d=5  slow:-P  fast:--  random:--  constant:C-
+  AtmosphericRegime          d=3  slow:--  fast:--  random:--  constant:C-
+  BeerRNN                    d=3  slow:--  fast:--  random:--  constant:C-
+  BelousovZhabotinsky        d=3  slow:--  fast:--  random:--  constant:C-
+  BickleyJet                 d=3  slow:--  fast:--  random:--  constant:C-
+  Blasius                    d=3  slow:--  fast:--  random:--  constant:C-
+  BlinkingRotlet             d=3  slow:--  fast:--  random:--  constant:--
+  BlinkingVortex             d=3  slow:--  fast:--  random:--  constant:--
+  Bouali                     d=3  slow:--  fast:--  random:--  constant:C-
+  Bouali2                    d=3  slow:--  fast:--  random:--  constant:C-
+  BurkeShaw                  d=3  slow:--  fast:--  random:--  constant:C-
+  CaTwoPlus                  d=3  slow:--  fast:--  random:--  constant:C-
+  CaTwoPlusQuasiperiodic     d=3  slow:--  fast:--  random:--  constant:C-
+  CellCycle                  d=6  slow:-P  fast:--  random:--  constant:C-
+  CellularNeuralNetwork      d=3  slow:-P  fast:-P  random:--  constant:C-
+  Chen                       d=3  slow:--  fast:--  random:--  constant:C-
+  ChenLee                    d=3  slow:--  fast:--  random:--  constant:C-
+  Chua                       d=3  slow:-P  fast:--  random:--  constant:C-
+  CircadianRhythm            d=5  slow:--  fast:--  random:-P  constant:C-
+  CoevolvingPredatorPrey     d=3  slow:--  fast:--  random:--  constant:C-
+  Colpitts                   d=3  slow:--  fast:--  random:--  constant:C-
+  Coullet                    d=3  slow:--  fast:--  random:--  constant:C-
+  Dadras                     d=3  slow:--  fast:--  random:--  constant:C-
+  DequanLi                   d=3  slow:--  fast:--  random:--  constant:C-
+  DoubleGyre                 d=3  slow:--  fast:--  random:--  constant:C-
+  DoublePendulum             d=4  slow:--  fast:--  random:--  constant:C-
+  Duffing                    d=3  slow:--  fast:--  random:--  constant:C-
+  ExcitableCell              d=3  slow:-P  fast:-P  random:--  constant:C-
+  Finance                    d=3  slow:--  fast:--  random:--  constant:C-
+  FluidTrampoline            d=3  slow:--  fast:-P  random:--  constant:C-
+  ForcedBrusselator          d=3  slow:--  fast:--  random:--  constant:C-
+  ForcedFitzHughNagumo       d=3  slow:--  fast:--  random:--  constant:C-
+  ForcedVanDerPol            d=3  slow:--  fast:-P  random:--  constant:C-
+  GenesioTesi                d=3  slow:--  fast:-P  random:--  constant:C-
+  GlycolyticOscillation      d=3  slow:-P  fast:-P  random:--  constant:C-
+  GuckenheimerHolmes         d=3  slow:--  fast:--  random:--  constant:C-
+  Hadley                     d=3  slow:--  fast:--  random:--  constant:C-
+  Halvorsen                  d=3  slow:--  fast:--  random:--  constant:C-
+  HastingsPowell             d=3  slow:-P  fast:--  random:--  constant:C-
+  HenonHeiles                d=4  slow:-P  fast:--  random:--  constant:C-
+  HindmarshRose              d=3  slow:--  fast:-P  random:--  constant:C-
+  Hopfield                   d=6  slow:-P  fast:--  random:--  constant:C-
+  HyperBao                   d=4  slow:-P  fast:-P  random:-P  constant:C-
+  HyperCai                   d=4  slow:--  fast:--  random:--  constant:C-
+  HyperJha                   d=4  slow:-P  fast:-P  random:--  constant:C-
+  HyperLorenz                d=4  slow:-P  fast:-P  random:--  constant:C-
+  HyperLu                    d=4  slow:-P  fast:--  random:--  constant:C-
+  HyperPang                  d=4  slow:--  fast:--  random:--  constant:C-
+  HyperQi                    d=4  slow:-P  fast:--  random:--  constant:C-
+  HyperRossler               d=4  slow:--  fast:--  random:--  constant:C-
+  HyperWang                  d=4  slow:-P  fast:--  random:--  constant:C-
+  HyperXu                    d=4  slow:-P  fast:--  random:--  constant:C-
+  HyperYan                   d=4  slow:-P  fast:--  random:-P  constant:C-
+  HyperYangChen              d=4  slow:--  fast:--  random:--  constant:C-
+  InteriorSquirmer           d=3  slow:--  fast:--  random:--  constant:--
+  IsothermalChemical         d=3  slow:--  fast:-P  random:--  constant:C-
+  ItikBanksTumor             d=3  slow:--  fast:--  random:--  constant:C-
+  JerkCircuit                d=3  slow:--  fast:--  random:--  constant:C-
+  KawczynskiStrizhak         d=3  slow:--  fast:-P  random:--  constant:C-
+  Laser                      d=3  slow:--  fast:--  random:--  constant:C-
+  LidDrivenCavityFlow        d=3  slow:--  fast:--  random:--  constant:C-
+  LiuChen                    d=3  slow:-P  fast:--  random:--  constant:C-
+  Lorenz                     d=3  slow:--  fast:--  random:--  constant:C-
+  Lorenz84                   d=3  slow:--  fast:--  random:--  constant:C-
+  Lorenz96                   d=4  slow:--  fast:--  random:--  constant:C-
+  LorenzBounded              d=3  slow:-P  fast:--  random:--  constant:C-
+  LorenzCoupled              d=6  slow:--  fast:-P  random:--  constant:C-
+  LorenzStenflo              d=4  slow:-P  fast:--  random:--  constant:C-
+  LuChen                     d=3  slow:--  fast:--  random:--  constant:C-
+  LuChenCheng                d=3  slow:--  fast:--  random:--  constant:C-
+  MacArthur                  d=10  slow:--  fast:--  random:--  constant:C-
+  MooreSpiegel               d=3  slow:--  fast:--  random:--  constant:C-
+  MultiChua                  d=3  slow:--  fast:--  random:--  constant:C-
+  NewtonLiepnik              d=3  slow:--  fast:--  random:--  constant:C-
+  NoseHoover                 d=3  slow:--  fast:--  random:--  constant:C-
+  NuclearQuadrupole          d=4  slow:CP  fast:--  random:--  constant:C-
+  OscillatingFlow            d=3  slow:--  fast:-P  random:--  constant:C-
+  PanXuZhou                  d=3  slow:-P  fast:--  random:--  constant:C-
+  PehlivanWei                d=3  slow:--  fast:--  random:--  constant:C-
+  Qi                         d=4  slow:-P  fast:--  random:--  constant:C-
+  QiChen                     d=3  slow:--  fast:--  random:--  constant:C-
+  RabinovichFabrikant        d=3  slow:--  fast:--  random:--  constant:C-
+  RayleighBenard             d=3  slow:--  fast:--  random:--  constant:C-
+  RikitakeDynamo             d=3  slow:--  fast:--  random:--  constant:C-
+  Rossler                    d=3  slow:--  fast:--  random:--  constant:C-
+  Rucklidge                  d=3  slow:--  fast:--  random:--  constant:C-
+  Sakarya                    d=3  slow:-P  fast:-P  random:--  constant:C-
+  SaltonSea                  d=3  slow:--  fast:--  random:--  constant:C-
+  SanUmSrisuchinwong         d=3  slow:-P  fast:--  random:--  constant:C-
+  ShimizuMorioka             d=3  slow:--  fast:--  random:--  constant:C-
+  SprottA                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottB                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottC                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottD                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottE                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottF                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottG                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottH                    d=3  slow:--  fast:--  random:-P  constant:C-
+  SprottI                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottJ                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottJerk                 d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottK                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottL                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottM                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottMore                 d=3  slow:--  fast:--  random:--  constant:C-
+  SprottN                    d=3  slow:-P  fast:--  random:--  constant:C-
+  SprottO                    d=3  slow:-P  fast:-P  random:--  constant:C-
+  SprottP                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottQ                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottR                    d=3  slow:--  fast:--  random:--  constant:C-
+  SprottS                    d=3  slow:--  fast:-P  random:--  constant:C-
+  SprottTorus                d=3  slow:--  fast:--  random:--  constant:C-
+  StickSlipOscillator        d=3  slow:--  fast:--  random:--  constant:C-
+  SwingingAtwood             d=4  slow:--  fast:-P  random:--  constant:--
+  Thomas                     d=3  slow:--  fast:--  random:--  constant:C-
+  ThomasLabyrinth            d=3  slow:--  fast:--  random:--  constant:C-
+  Torus                      d=3  slow:--  fast:--  random:--  constant:C-
+  Tsucs2                     d=3  slow:--  fast:--  random:--  constant:C-
+  TurchinHanski              d=3  slow:--  fast:--  random:--  constant:--
+  VallisElNino               d=3  slow:-P  fast:-P  random:--  constant:C-
+  WangSun                    d=3  slow:--  fast:--  random:--  constant:C-
+  WindmiReduced              d=3  slow:-P  fast:-P  random:--  constant:C-
+  YuWang                     d=3  slow:-P  fast:-P  random:--  constant:C-
+  YuWang2                    d=3  slow:-P  fast:--  random:--  constant:C-
+  ZhouChen                   d=3  slow:-P  fast:--  random:--  constant:C-
+
+ran on 129 systems; skipped 8
+
+  candidate         closes   closes+pays   what guard 2 caught
+  ----------------------------------------------------------------------
+  slow             1 (  1%)             1   0 of 1 refused by the pay guard
+  fast             0 (  0%)             0   0 of 0 refused by the pay guard
+  random           0 (  0%)             0   0 of 0 refused by the pay guard
+  constant       124 ( 96%)             0   124 of 124 refused by the pay guard
+
+  empty reductions accepted by guard 1 alone: 124 of 387  (32%)
+  empty reductions surviving both guards:     0 of 387  (0%)
+
+  skipped: DynSys(AssertionError), DynSysDelay(AssertionError), IkedaDelay(AttributeError), MackeyGlass(AttributeError), PiecewiseCircuit(AttributeError), ScrollDelay(AttributeError), SprottDelay(AttributeError), VossDelay(AttributeError)

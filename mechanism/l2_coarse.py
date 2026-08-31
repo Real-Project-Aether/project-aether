@@ -152,6 +152,22 @@ def closure_error(f, c0, C_true, dt, every):
 
 # --------------------------------------------------------------- guard 2: does it pay?
 
+def pay_score(Y, Yh):
+    """The pay guard's arithmetic, kept in one place.
+
+    Y are observables of the true fine states, Yh the same observables of the states rebuilt from
+    the coarse ones. External testbeds import this rather than restating it, so the guard cannot
+    quietly acquire a per-system threshold or a per-system denominator.
+
+        pays = 1 - || Yh - Y ||^2 / || Y - mean(Y) ||^2
+
+    The mean is taken over the ENSEMBLE of states, not along one trajectory --- see pays().
+    """
+    num = float(np.sum((Y - Yh) ** 2))
+    den = float(np.sum((Y - Y.mean(0)) ** 2))
+    return float(np.clip(1.0 - num / max(den, 1e-12), -1.0, 1.0))
+
+
 def pays(Q, U, lam, seeds_fit, seeds_test, steps, dt, every):
     """How much of the fine observables does the coarse state still carry?
 
@@ -173,10 +189,7 @@ def pays(Q, U, lam, seeds_fit, seeds_test, steps, dt, every):
         tr = trajectory(phi, U, steps, dt, lam, every)
         Y.extend(G.probes((p, U)) for p in tr)
         Yh.extend(G.probes((unflat(Q @ (Q.conj().T @ flat(p))), U)) for p in tr)
-    Y, Yh = np.array(Y), np.array(Yh)
-    num = float(np.sum((Y - Yh) ** 2))
-    den = float(np.sum((Y - Y.mean(0)) ** 2))
-    return float(np.clip(1.0 - num / max(den, 1e-12), -1.0, 1.0))
+    return pay_score(np.array(Y), np.array(Yh))
 
 
 # --------------------------------------------------------------- the operation
