@@ -1,0 +1,35 @@
+L3 -- can a solved structure be carried into a different-looking domain?
+A: a 2-component field with a known conserved charge.
+B: a 3-component system. Whether it contains A is what has to be discovered.
+
+B BUILT FROM A's STRUCTURE  (transfer should succeed)
+  1. structure  probe mismatch, in-sample   : 0.022
+     structure  probe mismatch, HELD OUT    : 0.023   PASS (needs < 0.05)
+  2. it pays    transferred charge drift     : 1.21e-11   PASS (needs < 1e-3)
+     -> TRANSFER ACCEPTED
+
+CONTROL -- B's symmetry deliberately broken (must be refused)
+  1. structure  probe mismatch, in-sample   : 0.043
+     structure  probe mismatch, HELD OUT    : 0.050   FAIL (needs < 0.05)
+  2. it pays    transferred charge drift     : 2.77e+00   FAIL (needs < 1e-3)
+     -> no transfer
+
+PASS: accepted the real transfer = True, refused the control = True
+
+
+six-seed sweep -- the numbers the paper quotes
+  seed   real in-samp  real held   real drift  ctrl in-samp  ctrl held   ctrl drift
+  ---------------------------------------------------------------------------------
+  0            0.0221     0.0228     1.21e-11        0.0432     0.0504     2.77e+00
+  1            0.0010     0.0010     1.91e-11        0.0496     0.0542     5.68e+00
+  2            0.0083     0.0090     5.83e-12        0.0401     0.0405     7.00e+00
+  3            0.0438     0.0463     1.29e-11        0.0479     0.0537     4.68e+00
+  4            0.0031     0.0033     7.09e-12        0.0566     0.0588     4.19e+00
+  5            0.0027     0.0029     5.89e-11        0.0402     0.0460     1.52e+01
+
+  structure guard, in-sample : real 6/6   control 5/6
+  structure guard, HELD OUT  : real 6/6   control 2/6   <-- the honest number
+  charge guard               : real 6/6   control 0/6
+
+  control held-out residuals span 0.0405-0.0588 against a 0.05 cut, so the
+  pass count is threshold-sensitive; the spread is the result, not the count.
