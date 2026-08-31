@@ -314,7 +314,7 @@ footer a{color:var(--ink-2)}
       <div class="fact"><b>65%</b><span>of physics prizes changed a description</span></div>
       <div class="fact"><b>1 in 13</b><span>depth labels are the rung ML implements</span></div>
       <div class="fact"><b>0 of 14</b><span>systems perform the move</span></div>
-      <div class="fact"><b>5 of 6</b><span>times the obvious guard accepts a false answer</span></div>
+      <div class="fact"><b>96%</b><span>of a public benchmark where the obvious guard accepts an empty answer</span></div>
     </div>
     <div class="cta">
       <a class="btn" href="paper.pdf">Read the paper (5pp)</a>
@@ -561,17 +561,17 @@ footer a{color:var(--ink-2)}
 <section id="guard">
   <div class="wrap">
     <p class="eyebrow">What building four of them showed</p>
-    <h2>The obvious test is nearly worthless. Only the refutable one works.</h2>
-    <p class="say">Each operation was designed with a natural acceptance test. In every case that
-    test turned out to accept answers that are empty. We did not design this pattern in &mdash; it
-    showed up three times independently, and it is the most useful thing here.</p>
+    <h2>The obvious test accepts empty answers. The refutable one is what does the work.</h2>
+    <p class="say">Each operation was designed with a natural acceptance test. In three of the four
+    that test turned out to accept answers that are empty; the fourth fails in the opposite
+    direction. We did not design this pattern in &mdash; it showed up three times independently.</p>
     <div class="scroll">
       <table>
         <thead><tr><th></th><th>the test you would write first</th><th>how it fails</th></tr></thead>
         <tbody>
           <tr><td><code>L1</code></td><td>remove what no measurement can see</td><td><b>destroys conservation laws</b></td></tr>
           <tr class="hi"><td><code>L2</code></td><td>the coarse variables predict themselves</td><td><b>2 of 3 empty answers pass</b></td></tr>
-          <tr class="hi"><td><code>L3</code></td><td>the two structures match</td><td><b>control passes 5 times in 6</b></td></tr>
+          <tr class="hi"><td><code>L3</code></td><td>the two structures match</td><td><b>control passes 2 of 6 held out</b> (5 of 6 in&nbsp;sample)</td></tr>
           <tr><td><code>L4</code></td><td>the imbalance is statistically significant</td><td>fires below the calibration error</td></tr>
         </tbody>
       </table>
@@ -581,11 +581,16 @@ footer a{color:var(--ink-2)}
     predict. So does one that keeps only the fastest-decaying parts, which all decay to zero: a
     description of nothing, evolving correctly. Both satisfy the first test. Only the second
     refuses them.</p>
-    <div class="warn"><b>A structural match is not evidence.</b> Any approach that finds an
-    analogy, a symmetry or a reduction and stops there is measuring almost nothing. The match has
-    to hand the target a prediction, and the target has to be able to break it. Where it does, the
-    separation is not marginal &mdash; ten orders of magnitude between the real cases and the
-    controls.</div>
+    <div class="warn"><b>A structural match is weak evidence, and weakest where it is easiest to
+    compute.</b> Scored on the data it was fitted to it accepted a false transfer 5 times in 6;
+    scored on held-out states, 2. An approach that finds an analogy, a symmetry or a reduction and
+    stops there should say which of those two it did. Where the match instead hands the target a
+    prediction the target can break, the separation is not marginal &mdash; ten orders of
+    magnitude.</div>
+    <p class="mlnote"><b>Corrected 31 Aug 2026.</b> An earlier version of this page reported the
+    5-of-6 figure without saying it was measured in&nbsp;sample. A reviewer asked; re-scoring on
+    held-out states gives 2 of 6. The finding stands in weaker form and the shipped code now scores
+    it held out.</p>
     <p class="mlnote">The same lesson turned on us. Our own second guard was wrong three times
     &mdash; built on features that could not represent the measurements, then overfitted to a
     perfect in-sample score on 62 samples, then swamped by scale differences. <b>Every one was
@@ -681,6 +686,29 @@ footer a{color:var(--ink-2)}
     than the other. When theories disagree, you do not need any of this; you just compare them the
     ordinary way. The operation covers a narrower class of arguments than we assumed when we built
     it, and finding that out cost one real controversy.</p>
+
+    <p class="eyebrow" style="margin-top:44px">Fourth &mdash; does any of it hold outside our own code?</p>
+    <p class="say">Everything above was measured on systems we built, which is the obvious
+    objection. So we ran the same two tests, with the thresholds imported unchanged, on
+    <strong>129 chaotic systems from a public benchmark we had nothing to do with</strong>. The
+    reduction that throws away everything satisfies the first test on <b>96%</b> of them, at a
+    closure error of exactly zero. The second test refuses it on <b>all 129</b>.</p>
+    <p class="say">A test that refuses everything would be no better, so we also built a suite
+    where the right answer is fixed by construction rather than by the test. There the pair
+    recovers <b>6 of 8</b> reductions we know are present and accepts <b>none</b> of the 24 empty
+    ones &mdash; while the first test alone still accepts <b>16 of those 24</b>. It is not
+    forgiving, though: tilt a correct reduction by a tenth of a radian and it is refused.</p>
+    <p class="say">And because the problem is about acceptance tests rather than about physics, we
+    ran the same pair on two interpretability methods. Fitting an alignment between two language
+    models on eight stimuli and scoring it in&nbsp;sample &mdash; ordinary practice &mdash;
+    <strong>accepts every one of five empty candidates</strong>; held out on 15,360 positions it
+    accepts two. On sparse-autoencoder features the correlational test refuses every empty control,
+    yet of twelve features it calls interpretable an intervention confirms only <b>eight</b>, and
+    one gets <em>better</em> at its own concept when you ablate it. <b>Passing the empty-input
+    check is necessary, not sufficient.</b></p>
+    <p class="mlnote">Our own second test needed the same medicine. Its first version preferred a
+    vacuous candidate to the real one &mdash; 0.70 against 0.39 &mdash; because any intervention
+    pushes both models toward the same common words. We only found that by running the null.</p>
   </div>
 </section>
 
@@ -815,12 +843,20 @@ python3 live_rotation_curve.py   <span class="cmt"># where it goes quiet on a re
     <h3 style="margin-top:32px; font-size:19px">The single most useful thing: re-annotate a sample</h3>
     <p class="say">We cannot tell from the inside whether our scheme is reproducible or whether it
     simply records one system&rsquo;s habits. Only someone else applying it can settle that.</p>
+    <p class="say">There is now a kit for exactly this, in
+    <code>corpus/reannotation/</code>. It takes about an hour, needs no physics background beyond
+    reading a prize citation, and runs nothing else of ours.</p>
     <ol class="steps">
-      <li>Take a few hundred events from <code>classifications.csv</code>, spread across prizes and eras.</li>
+      <li><code>python3 make_sample.py</code> draws 120 events with <strong>our labels withheld</strong>.</li>
       <li>Read <strong>only</strong> the citation text. That is all our annotator saw.</li>
-      <li>Decide what the contribution changed, and how deeply.</li>
-      <li>Send us the labels. We publish the agreement figure <strong>whatever it says</strong>.</li>
+      <li>Decide what the contribution changed, and how deeply. The definitions are in the kit&rsquo;s README.</li>
+      <li><code>python3 score.py</code> reports Cohen&rsquo;s kappa against our labels. We publish
+      the figure <strong>whatever it says</strong> &mdash; a low one tells us the ladder needs
+      re-cutting, which is worth more to us than a confirmation.</li>
     </ol>
+    <div class="cta" style="margin:22px 0 0">
+      <a class="btn" href="https://github.com/Real-Project-Aether/project-aether/tree/main/corpus/reannotation">Get the re-annotation kit</a>
+    </div>
 
     <h3 style="margin-top:34px; font-size:19px">Bigger things, if you want them</h3>
     <div class="limits" style="margin-top:18px">
