@@ -106,11 +106,15 @@ xs = ROOT / "mechanism" / "xai_sae.json"
 if xs.exists():
     d = json.loads(xs.read_text())
     R = [x for x in d["rows"] if x["real"]]
-    check("X2: guard 1 accepts every real feature, the intervention fewer",
-          sum(x["guard1"] for x in R) == 12 and sum(x["accepted"] for x in R) == 8,
-          f"{sum(x['guard1'] for x in R)}/12 vs {sum(x['accepted'] for x in R)}/12")
-    check("X2: the correlational guard refuses every vacuous control",
-          d["alpha_guard1"] == 0.0, f"alpha={d['alpha_guard1']}")
+    check("X2: guard 1 accepts every feature, the intervention 62%",
+          sum(x["guard1"] for x in R) == 600 and abs(d["rate"] - 0.625) < 0.02,
+          f"{sum(x['guard1'] for x in R)}/600 accepted, {d['rate']:.2f} confirmed")
+    check("X2: the gap holds across all four arms",
+          len({x["arm"] for x in R}) == 4 and
+          max(d["threshold_sweep"].values()) / 600 < 0.80,
+          f"{len({x['arm'] for x in R})} arms; rate never exceeds 0.80 at any threshold")
+    check("X2: alpha over the vacuity class is low but not zero",
+          abs(d["alpha_sup"] - 0.25) < 1e-9, f"alpha={d['alpha_sup']}")
 
 # --- nothing may still point at a placeholder ------------------------------------------------
 check("no placeholder URLs in the site", 'https://github.com/"' not in site)

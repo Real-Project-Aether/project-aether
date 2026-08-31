@@ -43,14 +43,15 @@ warnings.filterwarnings("ignore")
 torch.manual_seed(0)
 
 DEV      = "cuda" if torch.cuda.is_available() else "cpu"
-MODEL    = "EleutherAI/pythia-160m"
-LAYER    = 8
+ARMS = [("EleutherAI/pythia-160m",         4),
+        ("EleutherAI/pythia-160m",         8),
+        ("EleutherAI/pythia-410m-deduped", 8),
+        ("EleutherAI/pythia-410m-deduped", 16)]
 N_SEQ, SEQ_LEN = 1200, 128
 EXPAND   = 8
 TOPK     = 32          # L0, set directly
 EPOCHS   = 8
-N_FEAT   = 12          # real features examined
-DEBUG    = False
+N_FEAT   = 150         # real features examined per arm
 N_EVAL   = 240
 MIN_CONCEPT = 60       # a concept must occur this often in held-out text to be testable         # held-out sequences used for the intervention (all of them)
 
@@ -183,141 +184,184 @@ class AblateDir:
 
 
 @torch.no_grad()
-def specificity(model, ids, layer, u, concept_mask, batch=16):
-    """Ablate u. Compare the loss increase ON the concept's next tokens with everywhere else.
+def clean_logprobs(model, ids, batch=48):
+    """Log-probability the model assigns to each actual next token, with nothing ablated.
 
-    A direction that carries the concept damages it selectively. A direction that merely
-    correlates with it damages everything about equally, giving a ratio near 1.
+    Identical for every feature in an arm, so it is computed once rather than once per feature.
+    That halves the forward passes, which is what makes hundreds of features affordable.
     """
-    on, off = [], []
-    flat = concept_mask.reshape(-1).cpu()
-    pos = 0
+    out = []
     for i in range(0, len(ids), batch):
         b = ids[i:i+batch].to(DEV)
-        tgt = b[:, 1:].reshape(-1)
-        lp_clean = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
-        with AblateDir(model, layer, u):
-            lp_abl = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
-        d = (lp_clean.gather(-1, tgt[:, None, None].reshape(lp_clean.shape[0], -1, 1)).squeeze(-1)
-             - lp_abl.gather(-1, tgt[:, None, None].reshape(lp_abl.shape[0], -1, 1)).squeeze(-1))
-        d = d.reshape(-1).cpu()
-        n = b.shape[0] * SEQ_LEN
-        m = flat[pos:pos + n].reshape(b.shape[0], SEQ_LEN)[:, :-1].reshape(-1)
-        pos += n
-        on.append(d[m]); off.append(d[~m])
-    on = torch.cat(on); off = torch.cat(off)
+        tgt = b[:, 1:]
+        lp = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
+        out.append(lp.gather(-1, tgt.unsqueeze(-1)).squeeze(-1).reshape(-1).cpu())
+    return torch.cat(out)
+
+
+@torch.no_grad()
+def specificity(model, ids, layer, u, concept_mask, clean, batch=48):
+    """Ablate u. Compare the loss increase ON the concept's next tokens with everywhere else.
+
+    A direction carrying the concept damages it selectively; one that merely correlates damages
+    everything about equally, giving a ratio near 1.
+    """
+    abl = []
+    with AblateDir(model, layer, u):
+        for i in range(0, len(ids), batch):
+            b = ids[i:i+batch].to(DEV)
+            tgt = b[:, 1:]
+            lp = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
+            abl.append(lp.gather(-1, tgt.unsqueeze(-1)).squeeze(-1).reshape(-1).cpu())
+    d = clean - torch.cat(abl)
+
+    m = concept_mask.reshape(-1, SEQ_LEN)[:, :-1].reshape(-1).cpu()
+    on, off = d[m], d[~m]
     if len(on) < 30:
-        return float("nan"), float("nan"), float("nan")     # too few concept positions to judge
+        return float("nan"), float("nan"), float("nan")
     a, o = float(on.mean()), float(off.mean())
-    if abs(o) < 1e-8:                    # ablating one of 6144 directions is a small effect;
-        return float("nan"), a, o        # only a truly zero denominator is disqualifying
+    if abs(o) < 1e-8:
+        return float("nan"), a, o
     return a / o, a, o
 
 
 # ------------------------------------------------------------------ main
 
-def main():
-    rng = np.random.default_rng(0)
-    tok = AutoTokenizer.from_pretrained(MODEL)
+def wilson(k, n, z=1.96):
+    """Wilson score interval -- honest at the small n we would otherwise be quoting bare."""
+    if n == 0:
+        return (float("nan"), float("nan"))
+    ph = k / n
+    d = 1 + z*z/n
+    c = (ph + z*z/(2*n)) / d
+    h = z*((ph*(1-ph)/n + z*z/(4*n*n)) ** 0.5) / d
+    return (max(0.0, c-h), min(1.0, c+h))
+
+
+def run_arm(model_name, layer, rng):
+    """Train an SAE on one (model, layer) and score its most selective features."""
+    tok = AutoTokenizer.from_pretrained(model_name)
     ids = get_text(tok, N_SEQ, SEQ_LEN)
     n_fit = int(len(ids) * 0.8)
     ids_fit, ids_held = ids[:n_fit], ids[n_fit:]
-    model = AutoModelForCausalLM.from_pretrained(MODEL).to(DEV).eval()
+    model = AutoModelForCausalLM.from_pretrained(model_name).to(DEV).eval()
 
-    print("X2 -- does an SAE feature's meaning survive an intervention?")
-    print(f"{MODEL} layer {LAYER}; SAE {EXPAND}x; {len(ids)} x {SEQ_LEN} tokens, "
-          f"{len(ids)-n_fit} sequences held out\n")
-
-    X = resid(model, ids_fit, LAYER)
-    print(f"  training SAE on {tuple(X.shape)} activations")
+    X = resid(model, ids_fit, layer)
+    print(f"  training SAE on {tuple(X.shape)}")
     sae = train_sae(X, X.shape[1] * EXPAND)
-
-    Xh = resid(model, ids_held, LAYER)
+    Xh = resid(model, ids_held, layer)
     toks_h = ids_held.reshape(-1).to(DEV)
     with torch.no_grad():
         _, Zh = sae(Xh)
     freq = (Zh > 0).float().mean(0)
-    D = sae.dec.weight.detach()                       # (d, m) unit columns
+    D = sae.dec.weight.detach()
 
-    # Rank by how selective a feature is, restricted to firing rates where a feature can be
-    # about something. Ranking by raw frequency picks the generic always-on features, whose top
-    # token is just the corpus's most common token; that was the first version's mistake.
-    # The lower bound is set by what the INTERVENTION can measure, not by what looks
-    # interpretable: a feature whose concept appears 30 times in the held-out set gives no
-    # usable estimate of on-concept damage. 2e-3 of 30720 positions is ~60 occurrences.
     ok = ((freq > 2e-3) & (freq < 5e-2)).nonzero().flatten().tolist()
     scored = []
     for i in ok:
         e, t, _ = selectivity(Zh[:, i], toks_h)
-        scored.append((e, int(i)))
+        if t is not None:
+            scored.append((e, int(i)))
     scored.sort(reverse=True)
     reals = [i for _, i in scored[:N_FEAT]]
-    nz = (freq > 0).nonzero().flatten()
-    dead = [int(nz[int(freq[nz].argmin())])] if len(nz) else [0]
-    print(f"  {len(ok)} features fire between 0.05% and 5% of the time; "
-          f"examining the {len(reals)} most selective")
+    print(f"  {len(ok)} features fire in range; scoring the {len(reals)} most selective")
 
-    def run_one(name, u, act, is_real):
+    clean = clean_logprobs(model, ids_held[:N_EVAL])
+
+    def one(name, u, act, is_real):
         enr, ctok, mask = selectivity(act, toks_h)
         if ctok is None:
-            return dict(name=name, enrichment=0.0, guard1=False, ratio=0.0,
-                        guard2=False, accepted=False, real=is_real, token=None)
+            return None
         g1 = enr > SELECT_MIN
-        m_eval = mask[:N_EVAL * SEQ_LEN].cpu()
-        if DEBUG:
-            print(f"    [dbg] {name}: fired={int((act>0).sum())} mask_sum={int(m_eval.sum())} "
-                  f"u.shape={tuple(u.shape)} u.norm={float(u.norm()):.3f}")
-        ratio, on, off = specificity(model, ids_held[:N_EVAL], LAYER, u, m_eval)
+        ratio, on, off = specificity(model, ids_held[:N_EVAL], layer, u,
+                                     mask[:N_EVAL * SEQ_LEN], clean)
         g2 = bool(ratio > SPECIFIC_MIN) if ratio == ratio else False
-        return dict(name=name, enrichment=float(enr), guard1=bool(g1), ratio=float(ratio),
-                    on=on, off=off, guard2=bool(g2), accepted=bool(g1 and g2), real=is_real,
+        return dict(arm=f"{model_name.split('/')[-1]} L{layer}", name=name,
+                    enrichment=float(enr), guard1=bool(g1), ratio=float(ratio),
+                    guard2=g2, accepted=bool(g1 and g2), real=is_real,
                     token=tok.decode([ctok]))
 
     rows = []
-    print(f"\n  {'candidate':<26}{'enrichment':>11}{'guard 1':>9}"
-          f"{'specificity':>13}{'guard 2':>9}   verdict   top token")
-    print("  " + "-" * 92)
+    for fi in reals:
+        r = one(f"feature #{fi}", D[:, fi] / D[:, fi].norm(), Zh[:, fi], True)
+        if r: rows.append(r)
 
-    for j, fi in enumerate(reals):
-        rows.append(run_one(f"SAE feature #{fi}", D[:, fi] / D[:, fi].norm(), Zh[:, fi], True))
-
-    # ---- vacuity class
-    f0 = reals[0]
-    u0, a0 = D[:, f0] / D[:, f0].norm(), Zh[:, f0]
-    r = torch.tensor(rng.normal(size=D.shape[0]), dtype=torch.float32, device=DEV)
-    rows.append(run_one("CONTROL random direction", r / r.norm(), (Xh @ (r / r.norm())).clamp_min(0), False))
+    f0 = reals[0]; u0 = D[:, f0] / D[:, f0].norm()
+    rnd = torch.tensor(rng.normal(size=D.shape[0]), dtype=torch.float32, device=DEV)
     perm = torch.tensor(rng.permutation(D.shape[0]), device=DEV)
     us = u0[perm]
-    rows.append(run_one("CONTROL scrambled feature", us / us.norm(), (Xh @ (us / us.norm())).clamp_min(0), False))
     noise = torch.tensor(rng.normal(scale=0.6, size=D.shape[0]), dtype=torch.float32, device=DEV)
     usg = u0 + noise / noise.norm() * u0.norm() * 0.6
-    uu = usg / usg.norm()
-    rows.append(run_one("CONTROL correlated surrogate", uu, (Xh @ uu).clamp_min(0), False))
-    fd = dead[0]
-    rows.append(run_one("CONTROL near-dead feature", D[:, fd] / D[:, fd].norm(), Zh[:, fd], False))
+    nz = (freq > 0).nonzero().flatten()
+    fd = int(nz[int(freq[nz].argmin())]) if len(nz) else 0
+    for nm, u, act in (("CONTROL random direction", rnd/rnd.norm(), (Xh @ (rnd/rnd.norm())).clamp_min(0)),
+                       ("CONTROL scrambled feature", us/us.norm(), (Xh @ (us/us.norm())).clamp_min(0)),
+                       ("CONTROL correlated surrogate", usg/usg.norm(), (Xh @ (usg/usg.norm())).clamp_min(0)),
+                       ("CONTROL near-dead feature", D[:, fd]/D[:, fd].norm(), Zh[:, fd])):
+        r = one(nm, u, act, False)
+        if r: rows.append(r)
 
-    for x in rows:
-        rs = 'undefined' if x['ratio'] != x['ratio'] else f"{x['ratio']:.2f}"
-        print(f"  {x['name']:<26}{x['enrichment']:>11.1f}{'PASS' if x['guard1'] else 'fail':>9}"
-              f"{rs:>13}{'PASS' if x['guard2'] else 'fail':>9}   "
-              f"{'ACCEPT' if x['accepted'] else 'reject':<9} {str(x['token'])[:14]!r:<16}"
-              f"on={x.get('on', float('nan')):+.2e} off={x.get('off', float('nan')):+.2e}")
+    del model, sae, X, Xh, Zh
+    torch.cuda.empty_cache()
+    return rows
 
-    V = [x for x in rows if not x["real"]]
+
+def main():
+    rng = np.random.default_rng(0)
+    print("X2 -- does an SAE feature's meaning survive an intervention?")
+    print(f"{len(ARMS)} arms, up to {N_FEAT} features each, everything scored on held-out tokens\n")
+
+    rows = []
+    for model_name, layer in ARMS:
+        print(f"[{model_name} layer {layer}]")
+        rows.extend(run_arm(model_name, layer, rng))
+        print()
+
     R = [x for x in rows if x["real"]]
-    a1 = sum(x["guard1"] for x in V) / len(V)
-    a2 = sum(x["accepted"] for x in V) / len(V)
-    print(f"\n  vacuity class V = {len(V)} controls")
-    print(f"  alpha(guard 1 alone) = {a1:.2f}   <- P[correlational guard accepts something empty]")
-    print(f"  alpha(both guards)   = {a2:.2f}")
-    print(f"  real SAE features accepted: {sum(x['accepted'] for x in R)}/{len(R)}"
-          f"   (guard 1 alone would accept {sum(x['guard1'] for x in R)}/{len(R)})")
+    V = [x for x in rows if not x["real"]]
+    g1 = sum(x["guard1"] for x in R); both = sum(x["accepted"] for x in R)
+    lo, hi = wilson(both, g1)
+
+    print(f"{'arm':<26}{'features':>10}{'guard 1':>10}{'both':>8}{'rate':>9}")
+    print("-" * 64)
+    for arm in dict.fromkeys(x["arm"] for x in R):
+        a = [x for x in R if x["arm"] == arm]
+        a1 = sum(x["guard1"] for x in a); ab = sum(x["accepted"] for x in a)
+        print(f"{arm:<26}{len(a):>10}{a1:>10}{ab:>8}{(ab/max(a1,1)):>9.2f}")
+    print("-" * 64)
+    print(f"{'pooled':<26}{len(R):>10}{g1:>10}{both:>8}{(both/max(g1,1)):>9.2f}")
+    print(f"\nOf the {g1} features the correlational guard accepts, the intervention confirms "
+          f"{both} --- {100*both/max(g1,1):.0f}% (95% CI {100*lo:.0f}--{100*hi:.0f}%).")
+
+    print("\nper-control alpha, so the reader can assemble any vacuity class they like")
+    print(f"  {'control':<30}{'n':>5}{'guard 1 accepts':>18}{'alpha':>8}")
+    for nm in dict.fromkeys(x["name"] for x in V):
+        c = [x for x in V if x["name"] == nm]
+        acc = sum(x["guard1"] for x in c)
+        print(f"  {nm:<30}{len(c):>5}{acc:>18}{acc/max(len(c),1):>8.2f}")
+    a_sup = max((sum(x["guard1"] for x in V if x["name"] == nm) / max(len([y for y in V if y["name"]==nm]),1))
+                for nm in dict.fromkeys(x["name"] for x in V)) if V else 0.0
+    print(f"  {'-> alpha = sup over the class':<30}{'':>5}{'':>18}{a_sup:>8.2f}")
+
+    print("\nthreshold sensitivity of the confirmation rate")
+    rr = np.array([x["ratio"] for x in R if x["guard1"]])
+    rr = rr[~np.isnan(rr)]
+    print(f"  {'SPECIFIC_MIN':>13}{'confirmed':>12}{'rate':>8}")
+    sweep = {}
+    for t in (1.0, 1.5, 2.0, 3.0, 4.0, 6.0):
+        k = int((rr > t).sum()); sweep[t] = k
+        print(f"  {t:>13.1f}{k:>12}{k/max(len(rr),1):>8.2f}")
 
     Path(__file__).with_name("xai_sae.json").write_text(json.dumps(dict(
-        rows=rows, alpha_guard1=a1, alpha_both=a2,
-        config=dict(model=MODEL, layer=LAYER, expand=EXPAND, epochs=EPOCHS,
-                    n_seq=N_SEQ, seq_len=SEQ_LEN, select_min=SELECT_MIN,
-                    specific_min=SPECIFIC_MIN)), indent=1))
+        rows=rows, guard1=g1, both=both, rate=both/max(g1,1), ci=[lo, hi],
+        alpha_per_control={nm: sum(x["guard1"] for x in V if x["name"]==nm) /
+                               max(len([y for y in V if y["name"]==nm]),1)
+                           for nm in dict.fromkeys(x["name"] for x in V)},
+        alpha_sup=a_sup, threshold_sweep={str(k): v for k, v in sweep.items()},
+        config=dict(arms=[list(a) for a in ARMS], expand=EXPAND, topk=TOPK, epochs=EPOCHS,
+                    n_seq=N_SEQ, seq_len=SEQ_LEN, n_feat=N_FEAT, n_eval=N_EVAL,
+                    select_min=SELECT_MIN, specific_min=SPECIFIC_MIN,
+                    min_concept=MIN_CONCEPT)), indent=1))
 
 
 if __name__ == "__main__":
