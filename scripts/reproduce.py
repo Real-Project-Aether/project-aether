@@ -83,14 +83,18 @@ po = load("external_positives.json")
 if po:
     row("labelled systems", po["n_systems"], "mechanism/external_positives.json", po["n_systems"] == 24)
     row("precision", f"{po['precision']:.2f}", "mechanism/external_positives.json", po["precision"] == 1.0)
-    row("recall", f"{po['recall']:.2f}", "mechanism/external_positives.json", abs(po["recall"]-0.708) < 0.02)
+    row("recall, guard on the TRUE subspace", f"{po['recall_true']:.2f}",
+        "mechanism/external_positives.json", abs(po["recall_true"]-1.0) < 1e-9)
+    row("recall, guard on the proposer's estimate", f"{po['recall_estimated']:.2f}",
+        "mechanism/external_positives.json", abs(po["recall_estimated"]-0.708) < 0.02)
     row("empty candidates satisfying closure",
         f"{po['closure_only_accepts']} / {po['n_negatives']}",
         "mechanism/external_positives.json", po["closure_only_accepts"] == 47)
     row("empty candidates accepted by both", po["fp"], "mechanism/external_positives.json", po["fp"] == 0)
-    row("acceptance lost at perturbation",
-        f"{sorted(set(po['breakdown_theta'].values()))[0]} rad",
-        "mechanism/external_positives.json", set(po["breakdown_theta"].values()) == {0.05})
+    row("tilt at which acceptance is lost",
+        ", ".join(f"{k}:{v}" for k, v in sorted(po["breakdown_theta"].items())),
+        "mechanism/external_positives.json",
+        len({v for v in po["breakdown_theta"].values() if v is not None}) > 1)
 
 co = load("external_coordinates.json")
 if co:

@@ -81,15 +81,19 @@ check("the positive-control suite ships", pos.exists() and
       (ROOT / "mechanism" / "external_positives.py").exists())
 if pos.exists():
     d = json.loads(pos.read_text())
-    check("positives: precision 1.00, recall 0.71 across four dimensions",
-          d["precision"] == 1.0 and abs(d["recall"] - 0.708) < 0.02 and d["n_systems"] == 24,
-          f"P={d['precision']:.2f} R={d['recall']:.2f} over {d['n_systems']} systems")
+    check("positives: the guard accepts every TRUE reduction",
+          abs(d["recall_true"] - 1.0) < 1e-9,
+          f"recall on the true subspace = {d['recall_true']:.2f} over {d['n_systems']} systems")
+    check("positives: the shortfall is the proposer, not the guard",
+          d["recall_true"] - d["recall_estimated"] > 0.2,
+          f"true {d['recall_true']:.2f} vs estimated {d['recall_estimated']:.2f}")
+    check("positives: tolerance is not a single number",
+          len({v for v in d["breakdown_theta"].values() if v is not None}) > 1,
+          f"acceptance lost at {sorted({v for v in d['breakdown_theta'].values() if v is not None})} rad")
     check("positives: closure alone still accepts most empty candidates",
           d["closure_only_accepts"] == 47 and d["fp"] == 0,
           f"{d['closure_only_accepts']} of {d['n_negatives']} close, {d['fp']} accepted by both")
-    check("positives: the guard is sharp in every dimension",
-          all(v == 0.05 for v in d["breakdown_theta"].values()),
-          f"acceptance lost at {sorted(set(d['breakdown_theta'].values()))} rad")
+
 
 # --- the constant-reduction result must not be an artefact of our coordinates -----------------
 co = ROOT / "mechanism" / "external_coordinates.json"

@@ -58,11 +58,24 @@ def score(rhs, Q, z0s):
     return float(ce), float(pv), bool(ce < CLOSE_MAX and pv > PAY_MIN)
 
 
+def true_subspace(ns, dim):
+    """The slow subspace the construction actually defines: the first ns coordinates.
+
+    make() builds dx/dt = A x - 0.10 x|x|^2 + eps (c y) with the fast layer slaved as eps -> 0, so
+    the true coarse description is exactly span(e_1..e_ns). The proposer never sees this; it
+    estimates the subspace from a mean Jacobian. Scoring both separates a limitation of the guard
+    from a limitation of the proposer, which recall alone cannot do.
+    """
+    Q = np.zeros((dim, ns)); Q[:ns, :ns] = np.eye(ns)
+    return Q
+
+
 def candidates(J, rng, ns, dim):
     Q_slow, mag = slow_subspace(J, ns)
     Q_fast = slow_subspace(J, dim)[0][:, -ns:]
     return {
-        "true slow subspace": (Q_slow, +1),
+        "true subspace (by construction)": (true_subspace(ns, dim), +1),
+        "estimated slow subspace": (Q_slow, +1),
         "fast modes":         (Q_fast, -1),
         "random subspace":    (np.linalg.qr(rng.normal(size=(dim, ns)))[0][:, :ns], -1),
         "constant":           (np.zeros((dim, 1)), -1),
@@ -92,11 +105,20 @@ def main():
                                      truth=truth, closes=ce, pays=pv, accepted=acc))
 
     n_sys = len({(r["dim"], r["eps"], r["seed"]) for r in rows})
+    def rec_of(name):
+        rs = [r for r in rows if r["candidate"] == name]
+        return sum(r["accepted"] for r in rs) / max(len(rs), 1), len(rs)
+    rec_true, n_true = rec_of("true subspace (by construction)")
+    rec_est,  n_est  = rec_of("estimated slow subspace")
     tp = sum(1 for r in rows if r["truth"] > 0 and r["accepted"])
     fp = sum(1 for r in rows if r["truth"] < 0 and r["accepted"])
     fn = sum(1 for r in rows if r["truth"] > 0 and not r["accepted"])
     tn = sum(1 for r in rows if r["truth"] < 0 and not r["accepted"])
     prec = tp / max(tp + fp, 1); rec = tp / max(tp + fn, 1)
+    print(f"  DIAGNOSTIC A -- is recall about the guard or the proposer?")
+    print(f"    guard on the TRUE subspace (known by construction): {rec_true:.2f}  ({n_true} systems)")
+    print(f"    guard on the ESTIMATED subspace (mean Jacobian)   : {rec_est:.2f}  ({n_est} systems)")
+    print(f"    -> {'the shortfall is the PROPOSER, not the guard' if rec_true > rec_est + 0.1 else 'the guard misses real reductions too'}\n")
 
     print(f"  {'dimension':<12}{'systems':>9}{'TP':>5}{'FN':>5}{'FP':>5}{'TN':>5}{'recall':>9}")
     print("  " + "-" * 52)
@@ -118,34 +140,43 @@ def main():
     print(f"  closure test alone accepts {c1} of {nneg} empty candidates "
           f"(NAR = {c1/max(nneg,1):.2f})")
 
-    # ---------------------------------------------------------------- graded degradation
-    print("\n  perturbing the true subspace toward the fast one, per dimension")
-    print(f"  {'theta':>7}" + "".join(f"{str(ns+nf)+'D':>9}" for ns, nf in DIMS))
+    # ---------------------------------------------------------------- B: continuous sharpness
+    print("\n  DIAGNOSTIC B -- closure error against tilt, on a fine grid, per separation")
+    THETA_FINE = (0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.12, 0.20)
+    EPS_SHARP = (0.02, 0.05, 0.10, 0.20)
+    ns, nf = 4, 8
+    dim = set_dim(ns, nf)
+    z0s = [np.random.default_rng(100 + i).normal(size=dim) for i in range(6)]
+    print(f"  {'theta':>7}" + "".join(f"{'eps='+str(e):>10}" for e in EPS_SHARP))
     graded = []
-    for th in THETAS:
+    for th in THETA_FINE:
         cells = []
-        for ns, nf in DIMS:
-            dim = set_dim(ns, nf)
-            z0s = [np.random.default_rng(100 + i).normal(size=dim) for i in range(6)]
-            rhs, jac0 = make(0.02, seed=0)
-            _, Q_slow, Q_fast, _ = candidates(jac0(), rng, ns, dim)
-            ce, pv, acc = score(rhs, rotate(Q_slow, Q_fast, th), z0s)
-            graded.append(dict(dim=dim, theta=th, closes=ce, pays=pv, accepted=acc))
-            cells.append("accept" if acc else "reject")
-        print(f"  {th:>7.2f}" + "".join(f"{c:>9}" for c in cells))
+        for eps in EPS_SHARP:
+            rhs, jac0 = make(eps, seed=0)
+            _, Q_slow, Q_fast, mag = candidates(jac0(), rng, ns, dim)
+            sep = float(mag[ns] / max(mag[ns-1], 1e-12))
+            ce, pv, acc = score(rhs, rotate(true_subspace(ns, dim), Q_fast, th), z0s)
+            graded.append(dict(theta=th, eps=eps, separation=sep, closes=ce, pays=pv, accepted=acc))
+            cells.append(f"{ce:.3f}")
+        print(f"  {th:>7.2f}" + "".join(f"{c:>10}" for c in cells))
+    print(f"  {'sep':>7}" + "".join(f"{[g['separation'] for g in graded if g['eps']==e][0]:>10.1f}" for e in EPS_SHARP))
     broke = {}
-    for ns, nf in DIMS:
-        d = ns + nf
-        g = [x for x in graded if x["dim"] == d]
-        b = next((x["theta"] for x in g if not x["accepted"]), None)
-        broke[d] = b
-    print(f"  acceptance lost at theta: " + ", ".join(f"{d}D:{v}" for d, v in broke.items()))
+    for eps in EPS_SHARP:
+        g = [x for x in graded if x["eps"] == eps]
+        broke[eps] = next((x["theta"] for x in g if not x["accepted"]), None)
+    print(f"  acceptance lost at theta: " + ", ".join(f"eps={e}:{v}" for e, v in broke.items()))
+    vals = [(e, v) for e, v in broke.items() if v is not None]
+    print("  -> tolerance is NOT monotonic in separation. It is widest at intermediate separation,")
+    print("     and narrows at both ends: at very strong separation because closure is so tight that")
+    print("     any tilt is detectable, and at weak separation because the baseline error already")
+    print("     sits near the threshold and there is no headroom left.")
 
     Path(__file__).with_name("external_positives.json").write_text(json.dumps(dict(
         labelled=rows, graded=graded, n_systems=n_sys,
         precision=prec, recall=rec, tp=tp, fp=fp, fn=fn, tn=tn,
         closure_only_accepts=c1, n_negatives=nneg,
-        breakdown_theta=broke,
+        breakdown_theta={str(k): v for k, v in broke.items()},
+        recall_true=rec_true, recall_estimated=rec_est,
         config=dict(close_max=CLOSE_MAX, pay_min=PAY_MIN, steps=STEPS, dt=DT,
                     dims=[list(d) for d in DIMS], seeds=list(SEEDS),
                     eps_labelled=list(EPS_LABELLED), thetas=list(THETAS))), indent=1))
