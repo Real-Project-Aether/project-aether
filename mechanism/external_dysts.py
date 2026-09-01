@@ -138,18 +138,28 @@ def probes(X):
 
 
 def evaluate(sys_obj, Q, X_list, dt):
-    """Both guards on one candidate reduction."""
+    """Both guards on one candidate reduction.
+
+    Two corrections over the first version, both of which made the guard easier than it should be.
+    The learned coarse law was fitted on every trajectory including the one it was then evaluated
+    on; it is now fitted on all but the first and evaluated on the first, which no trajectory in
+    the fit has seen. And acceptance took min(derived, learned), so the oracle-derived law could
+    rescue a failed fit --- for an automated-discovery claim the LEARNED law must carry the guard,
+    with the derived law kept only as a diagnostic separating a bad proposer from a bad fit.
+    """
     rhs = lambda x: np.asarray(sys_obj.rhs(x, 0.0), float)
 
-    # guard 1 --- does it close? derived and learned, as in l2_coarse
     C_all, dC_all = [], []
     for X in X_list:
         C = X @ Q                                     # coarse readings
         R = C @ Q.T                                   # the coarse observer's best guess at x
         dC = np.array([Q.T @ rhs(r) for r in R])
         C_all.append(C); dC_all.append(dC)
-    C_fit, dC_fit = np.vstack(C_all), np.vstack(dC_all)
-    C0 = C_all[0]
+    C0 = C_all[0]                                     # held out from the fit
+    if len(C_all) > 1:
+        C_fit = np.vstack(C_all[1:]); dC_fit = np.vstack(dC_all[1:])
+    else:
+        C_fit, dC_fit = C_all[0], dC_all[0]           # degenerate case, reported as such
 
     derived = lambda c: Q.T @ rhs(Q @ c)
     try:
@@ -163,11 +173,10 @@ def evaluate(sys_obj, Q, X_list, dt):
     e_derived = e_derived if np.isfinite(e_derived) else np.inf
     e_learned = e_learned if np.isfinite(e_learned) else np.inf
 
-    # guard 2 --- does it pay? ensemble of states, reconstruction, shared formula
     Xs = np.vstack(X_list)
     r2 = pay_score(probes(Xs), probes(Xs @ Q @ Q.T))
 
-    closes = min(e_derived, e_learned) < CLOSE_MAX
+    closes = e_learned < CLOSE_MAX                    # the learned law carries the guard
     return closes, (r2 > PAY_MIN), e_derived, e_learned, r2
 
 
