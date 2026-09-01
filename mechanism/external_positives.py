@@ -26,14 +26,23 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from l2_slowfast import (NS, DIM, make, traj, slow_subspace, closes, pays)   # noqa: E402
+import l2_slowfast as LSF                                              # noqa: E402
+from l2_slowfast import make, traj, slow_subspace, closes, pays        # noqa: E402
+
+
+def set_dim(ns, nf):
+    """l2_slowfast fixes the slow/fast split as module constants; vary it without forking it."""
+    LSF.NS, LSF.NF_, LSF.DIM = ns, nf, ns + nf
+    return ns + nf
 
 CLOSE_MAX, PAY_MIN = 0.25, 0.50          # as in l2_slowfast and l2_coarse
 STEPS, DT = 400, 5e-3
-SEEDS = (0, 1, 2, 3)
+SEEDS = (0, 1, 2)
+# Round-3 review section 5.1: the suite must span dimensions and separations, not two settings.
+DIMS = ((3, 6), (4, 8), (5, 10), (6, 12))   # (slow, fast)
 EPS_LABELLED = (0.02, 0.05)              # slaving guaranteed here; these carry the labels
 EPS_SWEEP = (0.02, 0.05, 0.10, 0.20, 0.40, 0.70, 1.00)
-THETAS = (0.0, 0.1, 0.2, 0.3, 0.5, 0.8)  # radians, rotating the true subspace into the fast one
+THETAS = (0.0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.8)  # radians, tilting the true subspace into the fast
 
 
 def rotate(Q_slow, Q_fast, theta):
@@ -49,86 +58,97 @@ def score(rhs, Q, z0s):
     return float(ce), float(pv), bool(ce < CLOSE_MAX and pv > PAY_MIN)
 
 
-def candidates(J, rng):
-    Q_slow, mag = slow_subspace(J, NS)
-    Q_fast = slow_subspace(J, DIM)[0][:, -NS:]
+def candidates(J, rng, ns, dim):
+    Q_slow, mag = slow_subspace(J, ns)
+    Q_fast = slow_subspace(J, dim)[0][:, -ns:]
     return {
         "true slow subspace": (Q_slow, +1),
         "fast modes":         (Q_fast, -1),
-        "random subspace":    (np.linalg.qr(rng.normal(size=(DIM, NS)))[0], -1),
-        "constant":           (np.zeros((DIM, 1)), -1),
+        "random subspace":    (np.linalg.qr(rng.normal(size=(dim, ns)))[0][:, :ns], -1),
+        "constant":           (np.zeros((dim, 1)), -1),
     }, Q_slow, Q_fast, mag
 
 
 def main():
     rng = np.random.default_rng(0)
-    z0s = [np.random.default_rng(100 + i).normal(size=DIM) for i in range(6)]
 
     print("Are the L2 guards sensitive as well as specific?")
-    print(f"{NS} slow + {DIM-NS} fast variables; the true coarse description is the slow {NS}.")
-    print(f"Guards and thresholds imported from l2_slowfast: closes < {CLOSE_MAX}, pays > {PAY_MIN}\n")
+    print(f"Labelled suite across dimensions {DIMS} and separations {EPS_LABELLED}, "
+          f"{len(SEEDS)} seeds each.")
+    print(f"Guards and thresholds imported from l2_slowfast: closes < {CLOSE_MAX}, "
+          f"pays > {PAY_MIN}\n")
 
-    # ---------------------------------------------------------------- labelled suite
     rows = []
-    print("labelled suite -- eps where the construction guarantees a coarse level")
-    print(f"  {'eps':>5}{'seed':>5}  {'candidate':<20}{'truth':>6}{'closes':>9}{'pays':>8}{'verdict':>9}")
-    print("  " + "-" * 64)
-    for eps in EPS_LABELLED:
-        for seed in SEEDS:
-            rhs, jac0 = make(eps, seed=seed)
-            cands, _, _, _ = candidates(jac0(), rng)
-            for name, (Q, truth) in cands.items():
-                ce, pv, acc = score(rhs, Q, z0s)
-                rows.append(dict(eps=eps, seed=seed, candidate=name, truth=truth,
-                                 closes=ce, pays=pv, accepted=acc))
-                print(f"  {eps:>5.2f}{seed:>5}  {name:<20}{'+' if truth>0 else '-':>6}"
-                      f"{ce:>9.3f}{pv:>8.2f}{'ACCEPT' if acc else 'reject':>9}")
+    for ns, nf in DIMS:
+        dim = set_dim(ns, nf)
+        z0s = [np.random.default_rng(100 + i).normal(size=dim) for i in range(6)]
+        for eps in EPS_LABELLED:
+            for seed in SEEDS:
+                rhs, jac0 = make(eps, seed=seed)
+                cands, _, _, _ = candidates(jac0(), rng, ns, dim)
+                for name, (Q, truth) in cands.items():
+                    ce, pv, acc = score(rhs, Q, z0s)
+                    rows.append(dict(dim=dim, ns=ns, eps=eps, seed=seed, candidate=name,
+                                     truth=truth, closes=ce, pays=pv, accepted=acc))
 
+    n_sys = len({(r["dim"], r["eps"], r["seed"]) for r in rows})
     tp = sum(1 for r in rows if r["truth"] > 0 and r["accepted"])
     fp = sum(1 for r in rows if r["truth"] < 0 and r["accepted"])
     fn = sum(1 for r in rows if r["truth"] > 0 and not r["accepted"])
     tn = sum(1 for r in rows if r["truth"] < 0 and not r["accepted"])
-    prec = tp / max(tp + fp, 1)
-    rec = tp / max(tp + fn, 1)
-    print(f"\n  TP {tp}  FP {fp}  FN {fn}  TN {tn}")
-    print(f"  precision {prec:.2f}   recall {rec:.2f}   "
-          f"(alpha over the negatives = {fp / max(fp + tn, 1):.2f})")
+    prec = tp / max(tp + fp, 1); rec = tp / max(tp + fn, 1)
+
+    print(f"  {'dimension':<12}{'systems':>9}{'TP':>5}{'FN':>5}{'FP':>5}{'TN':>5}{'recall':>9}")
+    print("  " + "-" * 52)
+    for ns, nf in DIMS:
+        d = ns + nf
+        rs = [r for r in rows if r["dim"] == d]
+        a = sum(1 for r in rs if r["truth"] > 0 and r["accepted"])
+        b = sum(1 for r in rs if r["truth"] > 0 and not r["accepted"])
+        c = sum(1 for r in rs if r["truth"] < 0 and r["accepted"])
+        e = sum(1 for r in rs if r["truth"] < 0 and not r["accepted"])
+        print(f"  {str(d)+'D':<12}{len({(r['eps'],r['seed']) for r in rs}):>9}"
+              f"{a:>5}{b:>5}{c:>5}{e:>5}{a/max(a+b,1):>9.2f}")
+    print("  " + "-" * 52)
+    print(f"  {'pooled':<12}{n_sys:>9}{tp:>5}{fn:>5}{fp:>5}{tn:>5}{rec:>9.2f}")
+    print(f"\n  precision {prec:.2f}   recall {rec:.2f}   "
+          f"NAR over the negatives = {fp/max(fp+tn,1):.2f}")
+    c1 = sum(1 for r in rows if r["truth"] < 0 and r["closes"] < CLOSE_MAX)
+    nneg = sum(1 for r in rows if r["truth"] < 0)
+    print(f"  closure test alone accepts {c1} of {nneg} empty candidates "
+          f"(NAR = {c1/max(nneg,1):.2f})")
 
     # ---------------------------------------------------------------- graded degradation
-    print("\nperturbing the true subspace toward the fast one (eps = 0.02, seed 0)")
-    print(f"  {'theta':>7}{'closes':>10}{'pays':>8}{'verdict':>9}")
-    print("  " + "-" * 36)
-    rhs, jac0 = make(0.02, seed=0)
-    _, Q_slow, Q_fast, _ = candidates(jac0(), rng)
+    print("\n  perturbing the true subspace toward the fast one, per dimension")
+    print(f"  {'theta':>7}" + "".join(f"{str(ns+nf)+'D':>9}" for ns, nf in DIMS))
     graded = []
     for th in THETAS:
-        ce, pv, acc = score(rhs, rotate(Q_slow, Q_fast, th), z0s)
-        graded.append(dict(theta=th, closes=ce, pays=pv, accepted=acc))
-        print(f"  {th:>7.2f}{ce:>10.3f}{pv:>8.2f}{'ACCEPT' if acc else 'reject':>9}")
-    broke = next((g["theta"] for g in graded if not g["accepted"]), None)
-    print(f"  -> acceptance breaks down at theta = {broke}" if broke is not None
-          else "  -> accepted at every perturbation tested, which would be a failure of the guard")
-
-    # ---------------------------------------------------------------- separation sweep
-    print("\nthe true subspace across the separation sweep (seed 0)")
-    print(f"  {'eps':>6}{'separation':>12}{'closes':>9}{'pays':>8}{'verdict':>9}")
-    print("  " + "-" * 46)
-    sweep = []
-    for eps in EPS_SWEEP:
-        rhs, jac0 = make(eps, seed=0)
-        Q, mag = slow_subspace(jac0(), NS)
-        sep = float(mag[NS] / max(mag[NS - 1], 1e-12))
-        ce, pv, acc = score(rhs, Q, z0s)
-        sweep.append(dict(eps=eps, separation=sep, closes=ce, pays=pv, accepted=acc))
-        print(f"  {eps:>6.2f}{sep:>12.1f}{ce:>9.3f}{pv:>8.2f}{'ACCEPT' if acc else 'reject':>9}")
+        cells = []
+        for ns, nf in DIMS:
+            dim = set_dim(ns, nf)
+            z0s = [np.random.default_rng(100 + i).normal(size=dim) for i in range(6)]
+            rhs, jac0 = make(0.02, seed=0)
+            _, Q_slow, Q_fast, _ = candidates(jac0(), rng, ns, dim)
+            ce, pv, acc = score(rhs, rotate(Q_slow, Q_fast, th), z0s)
+            graded.append(dict(dim=dim, theta=th, closes=ce, pays=pv, accepted=acc))
+            cells.append("accept" if acc else "reject")
+        print(f"  {th:>7.2f}" + "".join(f"{c:>9}" for c in cells))
+    broke = {}
+    for ns, nf in DIMS:
+        d = ns + nf
+        g = [x for x in graded if x["dim"] == d]
+        b = next((x["theta"] for x in g if not x["accepted"]), None)
+        broke[d] = b
+    print(f"  acceptance lost at theta: " + ", ".join(f"{d}D:{v}" for d, v in broke.items()))
 
     Path(__file__).with_name("external_positives.json").write_text(json.dumps(dict(
-        labelled=rows, graded=graded, sweep=sweep,
+        labelled=rows, graded=graded, n_systems=n_sys,
         precision=prec, recall=rec, tp=tp, fp=fp, fn=fn, tn=tn,
+        closure_only_accepts=c1, n_negatives=nneg,
         breakdown_theta=broke,
         config=dict(close_max=CLOSE_MAX, pay_min=PAY_MIN, steps=STEPS, dt=DT,
-                    seeds=list(SEEDS), eps_labelled=list(EPS_LABELLED),
-                    eps_sweep=list(EPS_SWEEP), thetas=list(THETAS))), indent=1))
+                    dims=[list(d) for d in DIMS], seeds=list(SEEDS),
+                    eps_labelled=list(EPS_LABELLED), thetas=list(THETAS))), indent=1))
 
 
 if __name__ == "__main__":

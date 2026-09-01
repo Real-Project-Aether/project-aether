@@ -1,0 +1,254 @@
+{
+ "rows": [
+  {
+   "system": "Aizawa",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "AnishchenkoAstakhov",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Arneodo",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ArnoldBeltramiChildress",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ArnoldWeb",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "AtmosphericRegime",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "BeerRNN",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "BelousovZhabotinsky",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "BickleyJet",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Blasius",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "BlinkingRotlet",
+   "origin": NaN,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "BlinkingVortex",
+   "origin": NaN,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Bouali",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Bouali2",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "BurkeShaw",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "CaTwoPlus",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "CaTwoPlusQuasiperiodic",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "CellCycle",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "CellularNeuralNetwork",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Chen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ChenLee",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Chua",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "CircadianRhythm",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "CoevolvingPredatorPrey",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Colpitts",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Coullet",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Dadras",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "DequanLi",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "DoubleGyre",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "DoublePendulum",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Duffing",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ExcitableCell",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Finance",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "FluidTrampoline",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ForcedBrusselator",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ForcedFitzHughNagumo",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ForcedVanDerPol",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "GenesioTesi",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "GlycolyticOscillation",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "GuckenheimerHolmes",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  }
+ ],
+ "frac_origin": 0.95,
+ "frac_translated": 1.0,
+ "frac_intrinsic": 1.0,
+ "translation_invariant": false,
+ "config": {
+  "n_sys": 40,
+  "n_points": 200,
+  "close_max": 0.25,
+  "seed": 0
+ }
+}

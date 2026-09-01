@@ -81,12 +81,30 @@ check("the positive-control suite ships", pos.exists() and
       (ROOT / "mechanism" / "external_positives.py").exists())
 if pos.exists():
     d = json.loads(pos.read_text())
-    check("positives: precision 1.00, recall 0.75",
-          d["precision"] == 1.0 and abs(d["recall"] - 0.75) < 1e-9,
-          f"P={d['precision']:.2f} R={d['recall']:.2f}")
-    close1 = sum(1 for r in d["labelled"] if r["truth"] < 0 and r["closes"] < 0.25)
-    check("positives: guard 1 alone still accepts most empty candidates",
-          close1 == 16 and d["fp"] == 0, f"{close1} of 24 close, {d['fp']} accepted by both")
+    check("positives: precision 1.00, recall 0.71 across four dimensions",
+          d["precision"] == 1.0 and abs(d["recall"] - 0.708) < 0.02 and d["n_systems"] == 24,
+          f"P={d['precision']:.2f} R={d['recall']:.2f} over {d['n_systems']} systems")
+    check("positives: closure alone still accepts most empty candidates",
+          d["closure_only_accepts"] == 47 and d["fp"] == 0,
+          f"{d['closure_only_accepts']} of {d['n_negatives']} close, {d['fp']} accepted by both")
+    check("positives: the guard is sharp in every dimension",
+          all(v == 0.05 for v in d["breakdown_theta"].values()),
+          f"acceptance lost at {sorted(set(d['breakdown_theta'].values()))} rad")
+
+# --- the constant-reduction result must not be an artefact of our coordinates -----------------
+co = ROOT / "mechanism" / "external_coordinates.json"
+check("the coordinate-invariance test ships", co.exists() and
+      (ROOT / "mechanism" / "external_coordinates.py").exists())
+if co.exists():
+    import math
+    d = json.loads(co.read_text())
+    fin = [r for r in d["rows"] if math.isfinite(r["origin"]) and math.isfinite(r["translated"])]
+    check("closure is unchanged when the origin moves off the attractor",
+          all(abs(r["origin"] - r["translated"]) < 1e-9 for r in fin) and len(fin) > 30,
+          f"identical on {len(fin)} systems")
+    check("closure holds without lifting to any fine state",
+          d["frac_intrinsic"] > 0.9 and d["frac_translated"] > 0.9,
+          f"intrinsic {d['frac_intrinsic']:.2f}, translated {d['frac_translated']:.2f}")
 
 # --- the two interpretability experiments must ship, with their headline numbers ---------------
 for f in ("xai_cka.py", "xai_sae.py"):
@@ -127,12 +145,6 @@ check("the positive-control suite ships", pos.exists() and
       (ROOT / "mechanism" / "external_positives.py").exists())
 if pos.exists():
     d = json.loads(pos.read_text())
-    check("positives: precision 1.00, recall 0.75",
-          d["precision"] == 1.0 and abs(d["recall"] - 0.75) < 1e-9,
-          f"P={d['precision']:.2f} R={d['recall']:.2f}")
-    close1 = sum(1 for r in d["labelled"] if r["truth"] < 0 and r["closes"] < 0.25)
-    check("positives: guard 1 alone still accepts most empty candidates",
-          close1 == 16 and d["fp"] == 0, f"{close1} of 24 close, {d['fp']} accepted by both")
 
 # --- the two interpretability experiments must ship, with their headline numbers ---------------
 for f in ("xai_cka.py", "xai_sae.py"):

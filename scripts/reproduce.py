@@ -81,15 +81,26 @@ if ex:
 print("\nLABELLED BENCHMARK (built here; ground truth by construction)")
 po = load("external_positives.json")
 if po:
-    neg = [r for r in po["labelled"] if r["truth"] < 0]
-    c1 = sum(1 for r in neg if r["closes"] < 0.25)
+    row("labelled systems", po["n_systems"], "mechanism/external_positives.json", po["n_systems"] == 24)
     row("precision", f"{po['precision']:.2f}", "mechanism/external_positives.json", po["precision"] == 1.0)
-    row("recall", f"{po['recall']:.2f}", "mechanism/external_positives.json", abs(po["recall"]-0.75) < 1e-9)
-    row("empty candidates that satisfy closure", f"{c1} / {len(neg)}",
-        "mechanism/external_positives.json", c1 == 16)
+    row("recall", f"{po['recall']:.2f}", "mechanism/external_positives.json", abs(po["recall"]-0.708) < 0.02)
+    row("empty candidates satisfying closure",
+        f"{po['closure_only_accepts']} / {po['n_negatives']}",
+        "mechanism/external_positives.json", po["closure_only_accepts"] == 47)
     row("empty candidates accepted by both", po["fp"], "mechanism/external_positives.json", po["fp"] == 0)
-    row("acceptance lost at perturbation", f"{po['breakdown_theta']} rad",
-        "mechanism/external_positives.json", po["breakdown_theta"] == 0.1)
+    row("acceptance lost at perturbation",
+        f"{sorted(set(po['breakdown_theta'].values()))[0]} rad",
+        "mechanism/external_positives.json", set(po["breakdown_theta"].values()) == {0.05})
+
+co = load("external_coordinates.json")
+if co:
+    import math
+    fin = [r for r in co["rows"] if math.isfinite(r["origin"]) and math.isfinite(r["translated"])]
+    row("closure unchanged when the origin moves", f"{len(fin)} / {len(fin)} identical",
+        "mechanism/external_coordinates.json",
+        all(abs(r["origin"]-r["translated"]) < 1e-9 for r in fin))
+    row("closure without lifting to a fine state", f"{co['frac_intrinsic']*100:.0f}%",
+        "mechanism/external_coordinates.json", co["frac_intrinsic"] > 0.9)
 
 # ---------------------------------------------------------------- interpretability
 print("\nINTERPRETABILITY (X1 alignment, X2 sparse autoencoder)")
@@ -105,15 +116,14 @@ if a:
         "mechanism/xai_cka.json", a["rows"]["randtok"]["causal_raw"] > a["rows"]["real"]["causal_raw"])
 b = load("xai_sae.json")
 if b:
-    R = [x for x in b["rows"] if x["real"]]
-    row("X2 features scored", len(R), "mechanism/xai_sae.json", len(R) == 600)
-    row("X2 accepted by the correlational guard", f"{sum(x['guard1'] for x in R)} / {len(R)}",
-        "mechanism/xai_sae.json", sum(x["guard1"] for x in R) == 600)
-    row("X2 confirmed by intervention",
-        f"{b['both']}  ({100*b['rate']:.0f}%, CI {100*b['ci'][0]:.0f}-{100*b['ci'][1]:.0f}%)",
-        "mechanism/xai_sae.json", abs(b["rate"]-0.625) < 0.02)
-    row("X2 alpha over the vacuity class", f"{b['alpha_sup']:.2f}", "mechanism/xai_sae.json",
-        abs(b["alpha_sup"]-0.25) < 1e-9)
+    row("X2 features paired with matched controls", b["paired"], "mechanism/xai_sae.json", b["paired"] == 600)
+    row("X2 CAR, enrichment-selected", f"{b['car_selected']:.2f}  (CI {b['ci'][0]:.2f}-{b['ci'][1]:.2f})",
+        "mechanism/xai_sae.json", abs(b["car_selected"]-0.46) < 0.02)
+    row("X2 CAR, firing-rate-matched control", f"{b['car_control']:.2f}",
+        "mechanism/xai_sae.json", abs(b["car_control"]-0.07) < 0.02)
+    row("X2 delta-CAR (primary endpoint)", f"{b['delta_car']:+.2f}",
+        "mechanism/xai_sae.json", b["delta_car"] > 0.3)
+    row("X2 NAR over the null suite", f"{b['nar']:.2f}", "mechanism/xai_sae.json", b["nar"] < 0.10)
 
 # ---------------------------------------------------------------- how to regenerate
 print("""
@@ -122,11 +132,11 @@ REGENERATING THESE
   python3 mechanism/l2_slowfast.py             L2 sensitivity floor         numpy/scipy      ~2 min
   python3 mechanism/l3_transfer.py             L3, six-seed sweep           numpy/scipy     ~20 min
   python3 mechanism/l4_posit.py                L4 positing                  numpy/scipy      ~1 min
-  python3 mechanism/external_positives.py      the labelled benchmark       numpy/scipy     ~15 min
+  python3 mechanism/external_positives.py      the labelled benchmark       numpy/scipy     ~35 min\n  python3 mechanism/external_coordinates.py    coordinate invariance        + dysts          ~5 min
   python3 mechanism/external_dysts.py          the external benchmark       + dysts         ~15 min
   python3 mechanism/xai_cka.py                 X1                           + torch, GPU     ~5 min
   python3 mechanism/xai_sae.py                 X2, four arms                + torch, GPU    ~40 min
-  python3 scripts/verify.py                    41 checks over all of it     numpy/scipy     ~25 min
+  python3 scripts/verify.py                    52 checks over all of it     numpy/scipy     ~25 min
 
   torchvision in some environments is built against a different torch and fails to load;
   the xai_* scripts disable it explicitly, since they touch no images.
