@@ -16,6 +16,19 @@ None of them records whether a piece of work *reframed* something, *measured* so
 
 ---
 
+
+## Checking the paper's numbers
+
+```bash
+python3 scripts/reproduce.py     # every figure in the paper, beside the file it came from
+python3 scripts/verify.py        # 41 checks; exits non-zero on any disagreement
+```
+
+`reproduce.py` needs only numpy and scipy: it reads the shipped results rather than recomputing
+them, and lists what each experiment costs to regenerate. Two of them need extra packages —
+`dysts` for the external benchmark, `torch`/`transformers` and a GPU for the two interpretability
+experiments.
+
 ## The headline finding
 
 Most awarded work is not a change of description at all.
