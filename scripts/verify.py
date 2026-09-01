@@ -105,16 +105,49 @@ if xk.exists():
 xs = ROOT / "mechanism" / "xai_sae.json"
 if xs.exists():
     d = json.loads(xs.read_text())
-    R = [x for x in d["rows"] if x["real"]]
-    check("X2: guard 1 accepts every feature, the intervention 62%",
-          sum(x["guard1"] for x in R) == 600 and abs(d["rate"] - 0.625) < 0.02,
-          f"{sum(x['guard1'] for x in R)}/600 accepted, {d['rate']:.2f} confirmed")
-    check("X2: the gap holds across all four arms",
-          len({x["arm"] for x in R}) == 4 and
-          max(d["threshold_sweep"].values()) / 600 < 0.80,
-          f"{len({x['arm'] for x in R})} arms; rate never exceeds 0.80 at any threshold")
-    check("X2: alpha over the vacuity class is low but not zero",
-          abs(d["alpha_sup"] - 0.25) < 1e-9, f"alpha={d['alpha_sup']}")
+    check("X2: matched controls make CAR interpretable",
+          abs(d["car_selected"] - 0.46) < 0.02 and abs(d["car_control"] - 0.07) < 0.02,
+          f"CAR selected {d['car_selected']:.2f} vs matched control {d['car_control']:.2f}")
+    check("X2: delta-CAR is positive in every arm",
+          d["delta_car"] > 0.3 and all(
+              sum(r["supported"] for r in d["rows"] if r["arm"] == a and r["control"] is not None) >
+              sum(r["control_supported"] for r in d["rows"] if r["arm"] == a and r["control"] is not None)
+              for a in {r["arm"] for r in d["rows"]}),
+          f"delta-CAR = {d['delta_car']:+.2f}")
+    check("X2: enrichment guard has low NAR yet poor calibration",
+          d["nar"] < 0.10 and d["car_selected"] < 0.60,
+          f"NAR {d['nar']:.2f}, CAR {d['car_selected']:.2f}")
+    check("X2: selection flow recorded, so 150-of-N is visible",
+          all(f["N3"] > f["selected"] for f in d["flow"]),
+          "; ".join(f"{f['N3']}->{f['selected']}" for f in d["flow"]))
+
+# --- the guards must be shown sensitive, not only specific -------------------------------------
+pos = ROOT / "mechanism" / "external_positives.json"
+check("the positive-control suite ships", pos.exists() and
+      (ROOT / "mechanism" / "external_positives.py").exists())
+if pos.exists():
+    d = json.loads(pos.read_text())
+    check("positives: precision 1.00, recall 0.75",
+          d["precision"] == 1.0 and abs(d["recall"] - 0.75) < 1e-9,
+          f"P={d['precision']:.2f} R={d['recall']:.2f}")
+    close1 = sum(1 for r in d["labelled"] if r["truth"] < 0 and r["closes"] < 0.25)
+    check("positives: guard 1 alone still accepts most empty candidates",
+          close1 == 16 and d["fp"] == 0, f"{close1} of 24 close, {d['fp']} accepted by both")
+
+# --- the two interpretability experiments must ship, with their headline numbers ---------------
+for f in ("xai_cka.py", "xai_sae.py"):
+    check(f"the interpretability experiment ships: {f}", (ROOT / "mechanism" / f).exists())
+xk = ROOT / "mechanism" / "xai_cka.json"
+if xk.exists():
+    d = json.loads(xk.read_text())
+    check("X1: in-sample on 8 stimuli accepts every vacuous candidate",
+          d["alpha_structural_insample_small"] == 1.0, f"alpha={d['alpha_structural_insample_small']}")
+    check("X1: both guards refuse every vacuous candidate",
+          d["alpha_both"] == 0.0 and d["rows"]["real"]["accepted"],
+          f"alpha={d['alpha_both']}, real accepted={d['rows']['real']['accepted']}")
+    check("X1: the uncentred causal guard preferred a vacuous candidate",
+          d["rows"]["randtok"]["causal_raw"] > d["rows"]["real"]["causal_raw"],
+          f"randtok {d['rows']['randtok']['causal_raw']:.2f} vs real {d['rows']['real']['causal_raw']:.2f}")
 
 # --- nothing may still point at a placeholder ------------------------------------------------
 check("no placeholder URLs in the site", 'https://github.com/"' not in site)

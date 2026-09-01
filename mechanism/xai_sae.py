@@ -53,6 +53,7 @@ TOPK     = 32          # L0, set directly
 EPOCHS   = 8
 N_FEAT   = 150         # real features examined per arm
 N_EVAL   = 240
+MIN_ON   = 30          # concept positions required before a feature is judged
 MIN_CONCEPT = 60       # a concept must occur this often in held-out text to be testable         # held-out sequences used for the intervention (all of them)
 
 SELECT_MIN   = 4.0     # guard 1: enrichment over base rate
@@ -201,28 +202,45 @@ def clean_logprobs(model, ids, batch=48):
 
 @torch.no_grad()
 def specificity(model, ids, layer, u, concept_mask, clean, batch=48):
-    """Ablate u. Compare the loss increase ON the concept's next tokens with everywhere else.
+    """Ablate u; contrast the loss increase on the concept's next tokens with everywhere else.
 
-    A direction carrying the concept damages it selectively; one that merely correlates damages
-    everything about equally, giving a ratio near 1.
+    Returns (S, dLC, dLnC, ratio). S is the standardised difference
+
+        S = (dLC - dLnC) / SE[dLC - dLnC],   SE = sqrt(var_on/n_on + var_off/n_off),
+
+    which ANALYSIS.md fixes as the primary statistic. The ratio dLC/dLnC used in an earlier run is
+    still returned for comparability, but it is not thresholded on: it explodes when the
+    denominator is near zero, and did -- one feature scored 1644.
     """
     abl = []
     with AblateDir(model, layer, u):
         for i in range(0, len(ids), batch):
             b = ids[i:i+batch].to(DEV)
-            tgt = b[:, 1:]
             lp = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
-            abl.append(lp.gather(-1, tgt.unsqueeze(-1)).squeeze(-1).reshape(-1).cpu())
+            abl.append(lp.gather(-1, b[:, 1:].unsqueeze(-1)).squeeze(-1).reshape(-1).cpu())
     d = clean - torch.cat(abl)
-
     m = concept_mask.reshape(-1, SEQ_LEN)[:, :-1].reshape(-1).cpu()
     on, off = d[m], d[~m]
-    if len(on) < 30:
-        return float("nan"), float("nan"), float("nan")
+    if len(on) < MIN_ON:
+        return float("nan"), float("nan"), float("nan"), float("nan")
     a, o = float(on.mean()), float(off.mean())
-    if abs(o) < 1e-8:
-        return float("nan"), a, o
-    return a / o, a, o
+    se = float((on.var(unbiased=True)/len(on) + off.var(unbiased=True)/len(off)).sqrt())
+    S = (a - o) / max(se, 1e-12)
+    ratio = a / o if abs(o) > 1e-8 else float("nan")
+    return S, a, o, ratio
+
+
+def matched_control(f, freq, tops, selected, rng):
+    """A control feature from the same arm, matched on firing rate, with a different concept.
+
+    ANALYSIS.md: firing rate within +/-20%, top token different, not itself selected. Decoder-norm
+    matching is deliberately not applied -- our decoder columns are renormalised to unit norm every
+    step, so all features already share it and the match would be vacuous.
+    """
+    lo, hi = 0.8 * float(freq[f]), 1.2 * float(freq[f])
+    pool = [g for g in range(len(freq))
+            if lo <= float(freq[g]) <= hi and g not in selected and tops.get(g) not in (None, tops.get(f))]
+    return int(rng.choice(pool)) if pool else None
 
 
 # ------------------------------------------------------------------ main
@@ -239,7 +257,7 @@ def wilson(k, n, z=1.96):
 
 
 def run_arm(model_name, layer, rng):
-    """Train an SAE on one (model, layer) and score its most selective features."""
+    """Train an SAE on one (model, layer), score its most selective features and matched controls."""
     tok = AutoTokenizer.from_pretrained(model_name)
     ids = get_text(tok, N_SEQ, SEQ_LEN)
     n_fit = int(len(ids) * 0.8)
@@ -255,113 +273,154 @@ def run_arm(model_name, layer, rng):
         _, Zh = sae(Xh)
     freq = (Zh > 0).float().mean(0)
     D = sae.dec.weight.detach()
+    arm = f"{model_name.split('/')[-1]} L{layer}"
 
-    ok = ((freq > 2e-3) & (freq < 5e-2)).nonzero().flatten().tolist()
-    scored = []
-    for i in ok:
+    # ---- selection flow, recorded so that "all selected features clear the threshold" is
+    #      visibly a construction rather than a result (ANALYSIS.md section 4)
+    N0 = D.shape[1]
+    in_range = ((freq > 2e-3) & (freq < 5e-2)).nonzero().flatten().tolist()
+    N1 = len(in_range)
+    scored, tops = [], {}
+    for i in in_range:
         e, t, _ = selectivity(Zh[:, i], toks_h)
         if t is not None:
-            scored.append((e, int(i)))
+            scored.append((e, int(i))); tops[int(i)] = t
+    N2 = len(scored)
+    scored = [(e, i) for e, i in scored if e > SELECT_MIN]
+    N3 = len(scored)
     scored.sort(reverse=True)
     reals = [i for _, i in scored[:N_FEAT]]
-    print(f"  {len(ok)} features fire in range; scoring the {len(reals)} most selective")
+    flow = dict(arm=arm, N0=N0, N1=N1, N2=N2, N3=N3, selected=len(reals))
+    print(f"  flow: all {N0} -> firing range {N1} -> testable concept {N2} -> enrichment>4 {N3} "
+          f"-> selected {len(reals)}")
 
     clean = clean_logprobs(model, ids_held[:N_EVAL])
+    sel = set(reals)
 
-    def one(name, u, act, is_real):
-        enr, ctok, mask = selectivity(act, toks_h)
+    def score_on(u, mask):
+        return specificity(model, ids_held[:N_EVAL], layer, u, mask[:N_EVAL * SEQ_LEN], clean)
+
+    rows, n_nocontrol = [], 0
+    for f in reals:
+        enr, ctok, mask = selectivity(Zh[:, f], toks_h)
         if ctok is None:
-            return None
-        g1 = enr > SELECT_MIN
-        ratio, on, off = specificity(model, ids_held[:N_EVAL], layer, u,
-                                     mask[:N_EVAL * SEQ_LEN], clean)
-        g2 = bool(ratio > SPECIFIC_MIN) if ratio == ratio else False
-        return dict(arm=f"{model_name.split('/')[-1]} L{layer}", name=name,
-                    enrichment=float(enr), guard1=bool(g1), ratio=float(ratio),
-                    guard2=g2, accepted=bool(g1 and g2), real=is_real,
-                    token=tok.decode([ctok]))
+            continue
+        S, a, o, ratio = score_on(D[:, f] / D[:, f].norm(), mask)
+        g = matched_control(f, freq, tops, sel, rng)
+        if g is None:
+            n_nocontrol += 1
+            Sg = float("nan")
+        else:
+            Sg, _, _, _ = score_on(D[:, g] / D[:, g].norm(), mask)   # control, on f's concept
+        rows.append(dict(arm=arm, feature=int(f), enrichment=float(enr), token=tok.decode([ctok]),
+                         S=float(S), dLC=float(a), dLnC=float(o), ratio=float(ratio),
+                         control=(None if g is None else int(g)), S_control=float(Sg),
+                         supported=bool(S == S and S > 1.96 and a > 0),
+                         control_supported=bool(Sg == Sg and Sg > 1.96)))
+    if n_nocontrol:
+        print(f"  {n_nocontrol} feature(s) had no admissible matched control and are excluded from the pair")
 
-    rows = []
-    for fi in reals:
-        r = one(f"feature #{fi}", D[:, fi] / D[:, fi].norm(), Zh[:, fi], True)
-        if r: rows.append(r)
-
+    # ---- the null suite, unchanged
     f0 = reals[0]; u0 = D[:, f0] / D[:, f0].norm()
     rnd = torch.tensor(rng.normal(size=D.shape[0]), dtype=torch.float32, device=DEV)
-    perm = torch.tensor(rng.permutation(D.shape[0]), device=DEV)
-    us = u0[perm]
+    perm = torch.tensor(rng.permutation(D.shape[0]), device=DEV); us = u0[perm]
     noise = torch.tensor(rng.normal(scale=0.6, size=D.shape[0]), dtype=torch.float32, device=DEV)
     usg = u0 + noise / noise.norm() * u0.norm() * 0.6
     nz = (freq > 0).nonzero().flatten()
     fd = int(nz[int(freq[nz].argmin())]) if len(nz) else 0
-    for nm, u, act in (("CONTROL random direction", rnd/rnd.norm(), (Xh @ (rnd/rnd.norm())).clamp_min(0)),
-                       ("CONTROL scrambled feature", us/us.norm(), (Xh @ (us/us.norm())).clamp_min(0)),
-                       ("CONTROL correlated surrogate", usg/usg.norm(), (Xh @ (usg/usg.norm())).clamp_min(0)),
-                       ("CONTROL near-dead feature", D[:, fd]/D[:, fd].norm(), Zh[:, fd])):
-        r = one(nm, u, act, False)
-        if r: rows.append(r)
+    nulls = []
+    for nm, u, act, typ in (("random direction", rnd/rnd.norm(), (Xh @ (rnd/rnd.norm())).clamp_min(0), "randomised"),
+                            ("scrambled feature", us/us.norm(), (Xh @ (us/us.norm())).clamp_min(0), "randomised"),
+                            ("correlated surrogate", usg/usg.norm(), (Xh @ (usg/usg.norm())).clamp_min(0), "structure-preserving"),
+                            ("near-dead feature", D[:, fd]/D[:, fd].norm(), Zh[:, fd], "degenerate")):
+        enr, ctok, mask = selectivity(act, toks_h)
+        if ctok is None:
+            nulls.append(dict(arm=arm, name=nm, type=typ, enrichment=0.0, guard1=False)); continue
+        nulls.append(dict(arm=arm, name=nm, type=typ, enrichment=float(enr), guard1=bool(enr > SELECT_MIN)))
 
     del model, sae, X, Xh, Zh
     torch.cuda.empty_cache()
-    return rows
+    return rows, nulls, flow
+
+
+def hierarchical_bootstrap(rows, n=1000, seed=0):
+    """Resample arms, then features within arms, clustering features that share a top token."""
+    rng = np.random.default_rng(seed)
+    arms = sorted({r["arm"] for r in rows})
+    by_arm = {a: [r for r in rows if r["arm"] == a] for a in arms}
+    out = []
+    for _ in range(n):
+        picked = rng.choice(arms, size=len(arms), replace=True)
+        sup = tot = 0
+        for a in picked:
+            rs = by_arm[a]
+            clusters = {}
+            for r in rs:
+                clusters.setdefault(r["token"], []).append(r)
+            keys = list(clusters)
+            for k in rng.choice(keys, size=len(keys), replace=True):
+                for r in clusters[k]:
+                    tot += 1; sup += r["supported"]
+        if tot:
+            out.append(sup / tot)
+    return float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))
 
 
 def main():
     rng = np.random.default_rng(0)
-    print("X2 -- does an SAE feature's meaning survive an intervention?")
-    print(f"{len(ARMS)} arms, up to {N_FEAT} features each, everything scored on held-out tokens\n")
+    print("X2 -- does an SAE feature's meaning survive an intervention a matched control does not?")
+    print(f"{len(ARMS)} arms, up to {N_FEAT} features each; primary endpoint is CAR(selected) - "
+          f"CAR(matched), per ANALYSIS.md\n")
 
-    rows = []
+    rows, nulls, flows = [], [], []
     for model_name, layer in ARMS:
         print(f"[{model_name} layer {layer}]")
-        rows.extend(run_arm(model_name, layer, rng))
+        r, n, f = run_arm(model_name, layer, rng)
+        rows += r; nulls += n; flows.append(f)
         print()
 
-    R = [x for x in rows if x["real"]]
-    V = [x for x in rows if not x["real"]]
-    g1 = sum(x["guard1"] for x in R); both = sum(x["accepted"] for x in R)
-    lo, hi = wilson(both, g1)
+    print(f"{'stage':<34}" + "".join(f"{f['arm'][:16]:>18}" for f in flows))
+    for k, lbl in (("N0", "all SAE features"), ("N1", "firing rate in range"),
+                   ("N2", "testable concept"), ("N3", "enrichment > 4"),
+                   ("selected", "selected for intervention")):
+        print(f"  {lbl:<32}" + "".join(f"{f[k]:>18}" for f in flows))
+    print("  (all selected features clear the enrichment threshold by construction; that is not a result)\n")
 
-    print(f"{'arm':<26}{'features':>10}{'guard 1':>10}{'both':>8}{'rate':>9}")
-    print("-" * 64)
-    for arm in dict.fromkeys(x["arm"] for x in R):
-        a = [x for x in R if x["arm"] == arm]
-        a1 = sum(x["guard1"] for x in a); ab = sum(x["accepted"] for x in a)
-        print(f"{arm:<26}{len(a):>10}{a1:>10}{ab:>8}{(ab/max(a1,1)):>9.2f}")
-    print("-" * 64)
-    print(f"{'pooled':<26}{len(R):>10}{g1:>10}{both:>8}{(both/max(g1,1)):>9.2f}")
-    print(f"\nOf the {g1} features the correlational guard accepts, the intervention confirms "
-          f"{both} --- {100*both/max(g1,1):.0f}% (95% CI {100*lo:.0f}--{100*hi:.0f}%).")
+    paired = [r for r in rows if r["control"] is not None]
+    car_sel = sum(r["supported"] for r in paired) / max(len(paired), 1)
+    car_ctl = sum(r["control_supported"] for r in paired) / max(len(paired), 1)
+    lo, hi = hierarchical_bootstrap(paired)
 
-    print("\nper-control alpha, so the reader can assemble any vacuity class they like")
-    print(f"  {'control':<30}{'n':>5}{'guard 1 accepts':>18}{'alpha':>8}")
-    for nm in dict.fromkeys(x["name"] for x in V):
-        c = [x for x in V if x["name"] == nm]
-        acc = sum(x["guard1"] for x in c)
-        print(f"  {nm:<30}{len(c):>5}{acc:>18}{acc/max(len(c),1):>8.2f}")
-    a_sup = max((sum(x["guard1"] for x in V if x["name"] == nm) / max(len([y for y in V if y["name"]==nm]),1))
-                for nm in dict.fromkeys(x["name"] for x in V)) if V else 0.0
-    print(f"  {'-> alpha = sup over the class':<30}{'':>5}{'':>18}{a_sup:>8.2f}")
+    print(f"{'arm':<26}{'paired':>8}{'CAR sel':>10}{'CAR ctl':>10}{'delta':>9}")
+    print("-" * 63)
+    for a in sorted({r["arm"] for r in paired}):
+        p_ = [r for r in paired if r["arm"] == a]
+        cs = sum(r["supported"] for r in p_) / len(p_)
+        cc = sum(r["control_supported"] for r in p_) / len(p_)
+        print(f"{a:<26}{len(p_):>8}{cs:>10.2f}{cc:>10.2f}{cs-cc:>9.2f}")
+    print("-" * 63)
+    print(f"{'pooled':<26}{len(paired):>8}{car_sel:>10.2f}{car_ctl:>10.2f}{car_sel-car_ctl:>9.2f}")
+    print(f"\n  CAR(selected) = {car_sel:.2f}   hierarchical 95% CI {lo:.2f}-{hi:.2f}"
+          f"   (clustered by arm and shared top token)")
+    print(f"  CAR(matched control) = {car_ctl:.2f}")
+    print(f"  PRIMARY ENDPOINT  delta-CAR = {car_sel-car_ctl:+.2f}")
 
-    print("\nthreshold sensitivity of the confirmation rate")
-    rr = np.array([x["ratio"] for x in R if x["guard1"]])
-    rr = rr[~np.isnan(rr)]
-    print(f"  {'SPECIFIC_MIN':>13}{'confirmed':>12}{'rate':>8}")
-    sweep = {}
-    for t in (1.0, 1.5, 2.0, 3.0, 4.0, 6.0):
-        k = int((rr > t).sum()); sweep[t] = k
-        print(f"  {t:>13.1f}{k:>12}{k/max(len(rr),1):>8.2f}")
+    nm = list(dict.fromkeys(x["name"] for x in nulls))
+    nar = sum(x["guard1"] for x in nulls) / max(len(nulls), 1)
+    print(f"\n  null suite, per control:")
+    for n_ in nm:
+        c = [x for x in nulls if x["name"] == n_]
+        print(f"    {n_:<24}{c[0]['type']:<22}{sum(x['guard1'] for x in c)}/{len(c)} accepted")
+    print(f"  NAR = {nar:.2f}   AnyNullPass = {int(any(x['guard1'] for x in nulls))}")
 
     Path(__file__).with_name("xai_sae.json").write_text(json.dumps(dict(
-        rows=rows, guard1=g1, both=both, rate=both/max(g1,1), ci=[lo, hi],
-        alpha_per_control={nm: sum(x["guard1"] for x in V if x["name"]==nm) /
-                               max(len([y for y in V if y["name"]==nm]),1)
-                           for nm in dict.fromkeys(x["name"] for x in V)},
-        alpha_sup=a_sup, threshold_sweep={str(k): v for k, v in sweep.items()},
+        rows=rows, nulls=nulls, flow=flows, paired=len(paired),
+        car_selected=car_sel, car_control=car_ctl, delta_car=car_sel-car_ctl, ci=[lo, hi],
+        nar=nar, any_null_pass=int(any(x["guard1"] for x in nulls)),
         config=dict(arms=[list(a) for a in ARMS], expand=EXPAND, topk=TOPK, epochs=EPOCHS,
                     n_seq=N_SEQ, seq_len=SEQ_LEN, n_feat=N_FEAT, n_eval=N_EVAL,
-                    select_min=SELECT_MIN, specific_min=SPECIFIC_MIN,
-                    min_concept=MIN_CONCEPT)), indent=1))
+                    select_min=SELECT_MIN, min_concept=MIN_CONCEPT, min_on=MIN_ON,
+                    support_rule="S > 1.96 and dLC > 0")), indent=1))
 
 
 if __name__ == "__main__":
