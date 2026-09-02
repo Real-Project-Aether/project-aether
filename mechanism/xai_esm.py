@@ -286,7 +286,8 @@ def main():
               f"real accepted = {rows['real']['accepted']}\n"); sys.stdout.flush()
 
     if not results:
-        print("no configuration completed"); return
+        print("\nNO CONFIGURATION COMPLETED -- leaving the existing result file untouched")
+        sys.exit(1)
     allc = sorted({v for r in results.values() for v in r})
     nulls = [v for v in allc
              if next(r[v]["type"] for r in results.values() if v in r)

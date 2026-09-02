@@ -266,6 +266,7 @@ def run_config(A_name, LA, B_name, LB, log):
     A_fit, A_held = acts(A, ids_fit, LA), acts(A, ids_held, LA)
     B_fit, B_held = acts(B, ids_fit, LB), acts(B, ids_held, LB)
     B0_fit, B0_held = acts(B0, ids_fit, LB), acts(B0, ids_held, LB)
+    Aadj_fit, Aadj_held = acts(A, ids_fit, LA + 1), acts(A, ids_held, LA + 1)
     Bm_fit, Bm_held = acts(B, other[:n_fit], LB), acts(B, other[n_fit:], LB)
 
     g = torch.Generator().manual_seed(0)
@@ -293,17 +294,26 @@ def run_config(A_name, LA, B_name, LB, log):
     W_mis,   muXm, muYm = ridge_fit(A_fit, Bm_fit)
     W_untr,  muXu, muYu = ridge_fit(A_fit, B0_fit)
 
-    # name -> (effective map, means, held-out target it claims to reach, model patched, donor shift)
+    W_adj, muXa, muYa = ridge_fit(A_fit, Aadj_fit)
+    dA = A_fit.shape[1]
+
+    # name -> (map, means, held-out target claimed, model patched, LAYER patched, donor shift).
+    # The two positives make PAR measurable: without them NAR is uninterpretable, since a guard
+    # that refuses everything scores NAR 0. `identity` cannot fail unless the harness is broken,
+    # which is what it is for; `adjacent` is a real correspondence that must be found.
     CANDS = {
-        "real":             (W_real,      muX,  muY,  B_held,  B,  0),
-        "permuted_pairs":   (W_perm,      muXp, muYp, B_held,  B,  0),
-        "gaussian_matched": (W_gauss,     muXg, muYg, B_held,  B,  0),
-        "orthogonal":       (W_real @ Q,  muX,  muY,  B_held,  B,  0),
-        "donor_perm":       (W_real,      muX,  muY,  B_held,  B,  1),
-        "untrained":        (W_untr,      muXu, muYu, B0_held, B0, 0),
-        "mismatched":       (W_mis,       muXm, muYm, B_held,  B,  0),
+        "identity":         (torch.eye(dA), A_fit.mean(0, keepdim=True),
+                             A_fit.mean(0, keepdim=True), A_held, A, LA, 0),
+        "adjacent":         (W_adj,       muXa, muYa, Aadj_held, A, LA + 1, 0),
+        "real":             (W_real,      muX,  muY,  B_held,  B,  LB, 0),
+        "permuted_pairs":   (W_perm,      muXp, muYp, B_held,  B,  LB, 0),
+        "gaussian_matched": (W_gauss,     muXg, muYg, B_held,  B,  LB, 0),
+        "orthogonal":       (W_real @ Q,  muX,  muY,  B_held,  B,  LB, 0),
+        "donor_perm":       (W_real,      muX,  muY,  B_held,  B,  LB, 1),
+        "untrained":        (W_untr,      muXu, muYu, B0_held, B0, LB, 0),
+        "mismatched":       (W_mis,       muXm, muYm, B_held,  B,  LB, 0),
     }
-    TYPES = {"real": "real",
+    TYPES = {"real": "real", "identity": "positive", "adjacent": "positive",
              "permuted_pairs": "correspondence-breaking",
              "gaussian_matched": "randomised",
              "orthogonal": "correspondence-breaking",
@@ -317,19 +327,24 @@ def run_config(A_name, LA, B_name, LB, log):
 
     # --- guard 1, swept over fitting-set size
     sweep = {}
-    for v, (Wv, mx, my, Th, _mdl, _off) in CANDS.items():
+    TGT = {"identity": A_fit, "adjacent": Aadj_fit, "real": B_fit,
+           "permuted_pairs": B_fit[perm], "gaussian_matched": Bg_fit, "orthogonal": B_fit,
+           "donor_perm": B_fit, "untrained": B0_fit, "mismatched": Bm_fit}
+    for v, (Wv, mx, my, Th, _mdl, _lb, _off) in CANDS.items():
         sweep[v] = {}
-        tgt_fit = {"real": B_fit, "permuted_pairs": B_fit[perm], "gaussian_matched": Bg_fit,
-                   "orthogonal": B_fit, "donor_perm": B_fit, "untrained": B0_fit,
-                   "mismatched": Bm_fit}[v]
+        tgt_fit = TGT[v]
         for n in SWEEP:
-            Wn, mxn, myn = ridge_fit(A_fit[:n], tgt_fit[:n])
-            if v == "orthogonal":
-                Wn = Wn @ Q
+            if v == "identity":
+                Wn = torch.eye(dA)
+                mxn = myn = A_fit[:n].mean(0, keepdim=True)
+            else:
+                Wn, mxn, myn = ridge_fit(A_fit[:n], tgt_fit[:n])
+                if v == "orthogonal":
+                    Wn = Wn @ Q
             sweep[v][n] = (r2(A_fit[:n], tgt_fit[:n], Wn, mxn, myn), r2(A_held, Th, Wn, mxn, myn))
 
     full = {}
-    for v, (Wv, mx, my, Th, _mdl, _off) in CANDS.items():
+    for v, (Wv, mx, my, Th, _mdl, _lb, _off) in CANDS.items():
         full[v] = dict(W=Wv, muX=mx, muY=my,
                        r2=r2(A_held, Th, Wv, mx, my), cka=linear_cka(A_held, Th))
 
@@ -370,13 +385,13 @@ def run_config(A_name, LA, B_name, LB, log):
             sA = torch.stack(sA)
             cA = sA - sA.mean(0, keepdim=True)      # drop the generic response to being patched
 
-            for v, (Wv, mx, my, Th, mdl, off) in CANDS.items():
+            for v, (Wv, mx, my, Th, mdl, lb, off) in CANDS.items():
                 cleanB = clean_dist(mdl, recip, pos)
                 # the map's intercepts cancel in a difference, so only W acts here
                 mapped = [d @ Wv for d in dltA]
                 if off:
                     mapped = mapped[off:] + mapped[:off]
-                sB = torch.stack([added_shift(mdl, recip, LB, pos, mapped[k], cleanB)
+                sB = torch.stack([added_shift(mdl, recip, lb, pos, mapped[k], cleanB)
                                   for k in range(N_DONOR)])
                 cB = sB - sB.mean(0, keepdim=True)
                 scores[v] += [corr(cA[k], cB[k]) for k in range(N_DONOR)]
@@ -386,7 +401,8 @@ def run_config(A_name, LA, B_name, LB, log):
     del A, B, B0
     torch.cuda.empty_cache()
 
-    nulls = [v for v in CANDS if v != "real"]
+    nulls = [v for v in CANDS
+             if TYPES[v] not in ("real", "positive", "consequence-test control")]
     out = {}
     for v in CANDS:
         s = np.array(scores[v], float)
@@ -423,8 +439,18 @@ def main():
                   f"{'P' if r['guard2'] else '.':>5}  {'ACCEPT' if r['accepted'] else 'reject'}")
         n1 = sum(rows[v]["guard1"] for v in nulls) / len(nulls)
         n2 = sum(rows[v]["accepted"] for v in nulls) / len(nulls)
+        posv = [v for v in rows if rows[v]["type"] == "positive"]
+        pr = sum(rows[v]["accepted"] for v in posv) / max(len(posv), 1)
         print(f"  NAR(guard 1 alone) = {n1:.2f}   NAR(both guards) = {n2:.2f}   "
+              f"PAR(both, known positives) = {pr:.2f}   "
               f"real accepted = {rows['real']['accepted']}\n"); sys.stdout.flush()
+
+    # A run that completed no configuration must not overwrite a result file a previous run
+    # filled. An OOM from another job on the same GPU did exactly that: every configuration raised,
+    # each was caught and logged, and the run then wrote an empty result over a good one.
+    if not results:
+        print("\nNO CONFIGURATION COMPLETED -- leaving the existing result file untouched")
+        sys.exit(1)
 
     # pooled across configurations
     allc = sorted({v for r in results.values() for v in r})
@@ -441,7 +467,11 @@ def main():
         print(f"  {v:<18}{pooled[v]['accept_rate']:>13.2f}"
               f"{'  --' if not au else f'{np.median(au):>14.3f}'}")
 
-    nulls = [v for v in allc if v != "real"]
+    def typ(v):
+        return next(r[v]["type"] for r in results.values() if v in r)
+    nulls = [v for v in allc if typ(v) not in ("real", "positive", "consequence-test control")]
+    posv = [v for v in allc if typ(v) == "positive"]
+    par = float(np.mean([pooled[v]["accept_rate"] for v in posv])) if posv else float("nan")
     nar1 = float(np.mean([pooled[v]["guard1_rate"] for v in nulls]))
     nar2 = float(np.mean([pooled[v]["accept_rate"] for v in nulls]))
     small = float(np.mean([np.mean([r[v]["sweep"][str(SWEEP[0])][0] > R2_MIN
@@ -449,12 +479,14 @@ def main():
     print(f"\n  NAR(guard 1, in-sample, {SWEEP[0]} stimuli) = {small:.2f}")
     print(f"  NAR(guard 1, held out, all stimuli)      = {nar1:.2f}")
     print(f"  NAR(both guards)                         = {nar2:.2f}")
+    print(f"  PAR(both guards, known positives)        = {par:.2f}")
     print(f"  AnyNullPass(both guards)                 = "
           f"{int(any(pooled[v]['accept_rate'] > 0 for v in nulls))}")
 
     Path(__file__).with_name("xai_cka.json").write_text(json.dumps(dict(
         configs=results, pooled=pooled,
         nar_structural_heldout=nar1, nar_structural_insample_small=small, nar_both=nar2,
+        par_both=par,
         any_null_pass=int(any(pooled[v]["accept_rate"] > 0 for v in nulls)),
         sweep_n=SWEEP,
         config=dict(configs=[list(c) for c in CONFIGS], n_seq=N_SEQ, seq_len=SEQ_LEN, ridge=RIDGE,

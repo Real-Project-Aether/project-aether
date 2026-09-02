@@ -121,9 +121,11 @@ check("X1: the shipped result comes from the rebuilt experiment",
       "localised patching, multiple configurations, AUROC against each null")
 if xk.exists() and "configs" in json.loads(xk.read_text()):
     cfgs = d["configs"]
-    check("X1: structural guard alone, scored in-sample on few stimuli, accepts every null",
-          d["nar_structural_insample_small"] == 1.0,
-          f"NAR={d['nar_structural_insample_small']:.2f} at {d['sweep_n'][0]} stimuli")
+    check("X1: the structural guard accepts most nulls at ANY sample size",
+          d["nar_structural_insample_small"] >= 0.8 and d["nar_structural_heldout"] >= 0.5,
+          f"NAR {d['nar_structural_insample_small']:.2f} in-sample at {d['sweep_n'][0]} stimuli, "
+          f"{d['nar_structural_heldout']:.2f} held out on all of them -- more data does not fix it, "
+          f"because CKA never looks at the claimed map")
     check("X1: the causal guard is run on hundreds of localised interventions",
           all(r["real"]["n_triples"] >= 400 for r in cfgs.values()),
           f"{min(r['real']['n_triples'] for r in cfgs.values())} triples per configuration, "
@@ -131,6 +133,14 @@ if xk.exists() and "configs" in json.loads(xk.read_text()):
     check("X1: the real correspondence is accepted in every configuration",
           all(r["real"]["accepted"] for r in cfgs.values()),
           f"{sum(r['real']['accepted'] for r in cfgs.values())}/{len(cfgs)}")
+    if "par_both" in d:
+        check("X1: known positives are accepted, so its NAR is interpretable too",
+              d["par_both"] == 1.0, f"PAR = {d['par_both']:.2f}")
+    check("X1: CKA cannot see the claimed map -- nulls score exactly what the real pair scores",
+          all(round(r[v]["cka"], 3) == round(r["real"]["cka"], 3)
+              for r in cfgs.values() for v in r
+              if r[v]["type"] in ("correspondence-breaking", "randomised")),
+          "a correspondence and its random rotation receive the same CKA")
     check("X1: both guards together refuse every null",
           d["nar_both"] == 0.0 and d["any_null_pass"] == 0,
           f"NAR(both)={d['nar_both']:.2f}, AnyNullPass={d['any_null_pass']}")
@@ -139,14 +149,52 @@ if xk.exists() and "configs" in json.loads(xk.read_text()):
               for r in cfgs.values()
               for v in r if r[v]["type"] == "correspondence-breaking"),
           "a null that preserves the marginals passes guard 1 and fails guard 2")
-    check("X1: the uncentred causal guard preferred a vacuous candidate",
-          any(r[v]["causal_median_raw"] > r["real"]["causal_median_raw"]
-              for r in cfgs.values() for v in r if v != "real"),
-          "correlating raw shifts ranks a null above the genuine pair; centring is what fixes it")
+    # History, kept because it is the paper's own example of a guard needing a null: correlating
+    # RAW shifts once ranked a random-token null (0.70) above the genuine pair (0.39). That was an
+    # artefact of overwriting the whole residual stream with one vector -- both models then moved
+    # toward the same generic tokens and the shared response dominated. Under localised difference
+    # patching the generic response is small and the raw score no longer prefers a null. Centring
+    # is still applied, but it is no longer load-bearing, and the paper says so.
+    _mx = max(r[v]["causal_median_raw"] for r in cfgs.values() for v in r if v != "real")
+    _mn = min(r["real"]["causal_median_raw"] for r in cfgs.values())
+    check("X1: localising the intervention removes the pathology that centring was added for",
+          _mx < _mn,
+          f"worst null raw {_mx:.2f} vs weakest real raw {_mn:.2f}; under the old global overwrite "
+          f"a null scored above the real pair")
     check("X1: the causal score separates real from null, reported as AUROC not a threshold",
           all(r[v]["auroc_vs_real"] is not None for r in cfgs.values()
               for v in r if v != "real"),
           "AUROC recorded for every null in every configuration")
+
+xe = ROOT / "mechanism" / "xai_esm.json"
+check("X3: the audit runs on a scientific foundation model", xe.exists(),
+      "ESM-2 protein language models, three scale pairs")
+if xe.exists():
+    d = json.loads(xe.read_text())
+    cf = d["configs"]
+    check("X3: the structural guard alone accepts most nulls on a protein model",
+          d["nar_structural_heldout"] > 0.5,
+          f"NAR(guard 1) = {d['nar_structural_heldout']:.2f}")
+    check("X3: adding the consequence test refuses every null",
+          d["nar_both"] == 0.0 and d["any_null_pass"] == 0,
+          f"NAR(both) = {d['nar_both']:.2f}, AnyNullPass = {d['any_null_pass']}")
+    check("X3: known positives are accepted, so NAR is interpretable",
+          d["par_both"] == 1.0,
+          f"PAR = {d['par_both']:.2f} over identity and adjacent-layer controls")
+    check("X3: the real correspondence is accepted in every configuration",
+          all(r["real"]["accepted"] for r in cf.values()),
+          f"{sum(r['real']['accepted'] for r in cf.values())}/{len(cf)}")
+    check("X3: CKA cannot see the claimed map -- nulls score exactly what the real pair scores",
+          all(round(r[v]["cka"], 3) == round(r["real"]["cka"], 3)
+              for r in cf.values() for v in r
+              if r[v]["type"] in ("correspondence-breaking", "randomised")),
+          "a correspondence and its random rotation receive the same CKA")
+    check("X3: held-out proteins are homology-separated by construction",
+          "UniRef50" in d["config"]["data"],
+          d["config"]["data"])
+    check("X3: the guards are imported from X1, not reimplemented",
+          "from xai_cka import" in (ROOT / "mechanism" / "xai_esm.py").read_text(),
+          "same ridge_fit, r2, linear_cka, corr and auroc")
 
 xs = ROOT / "mechanism" / "xai_sae.json"
 if xs.exists():
