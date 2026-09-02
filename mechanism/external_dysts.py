@@ -245,7 +245,13 @@ def main():
             "res": {c: {"closes": bool(r[c][0]), "pays": bool(r[c][1]),
                         "derived": r[c][2], "learned": r[c][3], "r2": r[c][4]}
                     for c in r}} for nm, d, r in rows]
-    (Path(__file__).parent / f"external_dysts_{K_MODE}.json").write_text(json.dumps(out, indent=1))
+    # The default keep rule writes the canonical file that verify.py, reproduce.py and the macro
+    # generator all read. A non-default K_MODE writes a suffixed file instead, so a variant run
+    # cannot silently become the result the paper quotes. This file was stale for two days because
+    # every run wrote a suffixed name and nothing wrote the name the consumers read.
+    name = "external_dysts.json" if K_MODE == "half" else f"external_dysts_{K_MODE}.json"
+    (Path(__file__).parent / name).write_text(json.dumps(out, indent=1))
+    print(f"\n  wrote {name}")
     if skipped:
         print("\n  skipped: " + ", ".join(f"{n_}({w})" for n_, w in skipped[:12])
               + (" ..." if len(skipped) > 12 else ""))

@@ -152,19 +152,45 @@ def closure_error(f, c0, C_true, dt, every):
 
 # --------------------------------------------------------------- guard 2: does it pay?
 
-def pay_score(Y, Yh):
+def pay_score(Y, Yh, whiten=True):
     """The pay guard's arithmetic, kept in one place.
 
     Y are observables of the true fine states, Yh the same observables of the states rebuilt from
     the coarse ones. External testbeds import this rather than restating it, so the guard cannot
     quietly acquire a per-system threshold or a per-system denominator.
 
-        pays = 1 - || Yh - Y ||^2 / || Y - mean(Y) ||^2
+        pays = 1 - || Yh - Y ||^2_C / || Y - mean(Y) ||^2_C ,   || v ||^2_C = v' C^-1 v
 
-    The mean is taken over the ENSEMBLE of states, not along one trajectory --- see pays().
+    with C the ensemble covariance of Y. The mean and the covariance are taken over the ENSEMBLE
+    of states, not along one trajectory; see pays().
+
+    The unweighted version summed squared errors across observables of different physical units,
+    so an observable with a larger numerical scale dominated the score and the guard was not
+    invariant to rescaling one component. Whitening by C makes the score invariant under any
+    invertible linear map of the observable vector, which is the property the threshold needs if
+    it is to be carried between systems without retuning. Set whiten=False to recover the earlier
+    behaviour; both are reported by the external testbeds so the change is auditable.
+
+    Two invariants survive and are asserted below: an identity reduction scores exactly 1.000
+    (the numerator vanishes), and a reduction carrying no observable variance is driven to the
+    floor by the clip.
     """
-    num = float(np.sum((Y - Yh) ** 2))
-    den = float(np.sum((Y - Y.mean(0)) ** 2))
+    Y = np.asarray(Y, float)
+    Yh = np.asarray(Yh, float)
+    C = Y - Y.mean(0)
+    E = Y - Yh
+    if not whiten:
+        num, den = float(np.sum(E ** 2)), float(np.sum(C ** 2))
+        return float(np.clip(1.0 - num / max(den, 1e-12), -1.0, 1.0))
+    S = (C.T @ C) / max(len(C) - 1, 1)
+    d = S.shape[0]
+    S = S + 1e-8 * (np.trace(S) / max(d, 1) + 1e-30) * np.eye(d)
+    try:
+        Si = np.linalg.inv(S)
+    except np.linalg.LinAlgError:
+        Si = np.linalg.pinv(S)
+    num = float(np.einsum("ij,jk,ik->", E, Si, E))
+    den = float(np.einsum("ij,jk,ik->", C, Si, C))
     return float(np.clip(1.0 - num / max(den, 1e-12), -1.0, 1.0))
 
 

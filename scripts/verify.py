@@ -76,6 +76,25 @@ if ext.exists():
           both == 0 and const_pay < 0.50, f"max pay {const_pay:+.3f}, survivors {both}")
 
 # --- the guards must be shown sensitive, not only specific -------------------------------------
+# --- the pay guard must not depend on how the observables are scaled ------------------------
+import numpy as _np                                                              # noqa: E402
+sys.path.insert(0, str(ROOT / "mechanism"))
+try:
+    from l2_coarse import pay_score as _pay
+    _rng = _np.random.default_rng(0)
+    _Y = _rng.normal(size=(400, 3)) @ _np.diag([1.0, 50.0, 0.02])
+    _big = _Y.copy(); _big[:, 1] = _Y[:, 1].mean()
+    _small = _Y.copy(); _small[:, 2] = _Y[:, 2].mean()
+    check("the pay guard scores an identity reduction at exactly 1",
+          abs(_pay(_Y, _Y) - 1.0) < 1e-9, f"{_pay(_Y, _Y):.6f}")
+    check("the pay guard does not care which observable was damaged",
+          abs(_pay(_Y, _big) - _pay(_Y, _small)) < 0.05,
+          f"largest component {_pay(_Y, _big):.3f} vs smallest {_pay(_Y, _small):.3f}; "
+          f"unweighted they were {_pay(_Y, _big, whiten=False):.2f} and "
+          f"{_pay(_Y, _small, whiten=False):.2f}")
+except Exception as _e:                                                          # pragma: no cover
+    check("the pay guard is importable", False, f"{type(_e).__name__}: {_e}")
+
 pos = ROOT / "mechanism" / "external_positives.json"
 check("the positive-control suite ships", pos.exists() and
       (ROOT / "mechanism" / "external_positives.py").exists())

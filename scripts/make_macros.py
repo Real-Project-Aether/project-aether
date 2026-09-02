@@ -181,6 +181,16 @@ if b:
     mac("XtwoDeltaCIlo", f"{b['delta_ci'][0]:+.2f}") if "delta_ci" in b else None
     mac("XtwoDeltaCIhi", f"{b['delta_ci'][1]:+.2f}") if "delta_ci" in b else None
     mac("XtwoArms", len(b["config"]["arms"]))
+    mac("XtwoUntestable", b["untestable"])
+    mac("XtwoSelected", len(b["rows"]))
+    if "car_activate" in b:
+        mac("XtwoCARactivate", f"{b['car_activate']:.2f}")
+        mac("XtwoAgree", f"{b['agree_given_ablation']:.2f}")
+        mac("XtwoAgreeN", int(round(b["agree_given_ablation"]
+                                    * sum(r["supported"] for r in b["rows"] if r["controls"]
+                                          and len(r["per_seq"]) >= 12))))
+        mac("XtwoAblationN", sum(r["supported"] for r in b["rows"]
+                                 if r["controls"] and len(r["per_seq"]) >= 12))
     if "positive_control_rate" in b:
         mac("XtwoPositiveControl", f"{b['positive_control_rate']:.2f}")
         if "positive_defined" in b:

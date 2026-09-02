@@ -215,6 +215,40 @@ class FeatureAblate:
         self.h.remove()
 
 
+class FeatureActivate:
+    """Add one SAE feature's typical contribution where it is not firing: h <- h + a*d_f.
+
+    Ablation and activation are different claims. Ablation asks whether removing what the feature
+    contributes damages the concept; activation asks whether supplying it, at positions where the
+    feature is silent, helps the concept. A feature that carries the concept should show both. The
+    amount injected is the feature's own mean activation when it does fire, so the perturbation is
+    the size the model normally sees rather than one we chose.
+    """
+    def __init__(self, model, layer, sae, feature, amount):
+        self.block = model.gpt_neox.layers[layer - 1]
+        self.sae, self.f, self.a = sae, feature, float(amount)
+
+    def __enter__(self):
+        sae, f, a = self.sae, self.f, self.a
+
+        def hook(mod, out_in, out):
+            h = out[0] if isinstance(out, tuple) else out
+            shp = h.shape
+            flat = h.reshape(-1, shp[-1]).float()
+            pre = sae.enc(flat - sae.b_pre)
+            val, idx = torch.topk(pre, sae.k, dim=-1)
+            z = torch.zeros_like(pre).scatter_(-1, idx, torch.relu(val))
+            off = (z[:, f:f+1] <= 0).float()            # only where the feature is silent
+            h = (flat + a * off * sae.dec.weight[:, f].unsqueeze(0)).reshape(shp).to(h.dtype)
+            return (h,) + tuple(out[1:]) if isinstance(out, tuple) else h
+
+        self.h = self.block.register_forward_hook(hook)
+        return self
+
+    def __exit__(self, *a):
+        self.h.remove()
+
+
 def concept_gradient_direction(model, layer, ids, ctok, batch=8):
     """d(logit_ctok)/d(h_layer), averaged over positions whose next token is ctok.
 
@@ -270,24 +304,24 @@ def clean_logprobs(model, ids, batch=48):
 
 
 @torch.no_grad()
-def specificity(model, ids, layer, clean, concept_mask, sae=None, feature=None,
-                direction=None, batch=48):
-    """Ablate the feature (or direction) and contrast the next-token loss increase on the
-    concept against everywhere else, aggregated PER SEQUENCE.
+def _contrast(model, ids, layer, clean, concept_mask, ctx, sign=1.0, batch=48):
+    """Run one intervention and contrast its effect on the concept against everywhere else.
 
-    Returns (S, dLC, dLnC, per_sequence_contrasts). Tokens inside a sequence are strongly
-    dependent, so the contrast is formed within each sequence and the sequence is the unit of
-    resampling; an earlier version treated token positions as independent and understated the
-    uncertainty.
+    Aggregated PER SEQUENCE: tokens inside a sequence are strongly dependent, so the contrast is
+    formed within each sequence and the sequence is the unit of resampling. An earlier version
+    treated token positions as independent and understated the uncertainty.
+
+    `sign` is +1 when the intervention should HURT the concept (ablation) and -1 when it should
+    HELP it (activation), so a positive S always means the feature behaved as claimed.
     """
     abl = []
-    with FeatureAblate(model, layer, sae=sae, feature=feature, direction=direction):
+    with ctx:
         for i in range(0, len(ids), batch):
             b = ids[i:i+batch].to(DEV)
             lp = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
             abl.append(lp.gather(-1, b[:, 1:].unsqueeze(-1)).squeeze(-1).cpu())
     A = torch.cat(abl)                                   # (n_seq, SEQ_LEN-1)
-    D = clean - A                                        # loss increase per position
+    D = sign * (clean - A)                               # loss increase per position
     M = concept_mask[:len(ids)]                          # (n_seq, SEQ_LEN-1) bool
 
     per_seq = []
@@ -301,6 +335,21 @@ def specificity(model, ids, layer, clean, concept_mask, sae=None, feature=None,
     v = np.asarray(per_seq)
     se = float(v.std(ddof=1) / max(len(v) ** 0.5, 1e-12))
     return float(v.mean() / max(se, 1e-12)), a, o, per_seq
+
+
+def specificity(model, ids, layer, clean, concept_mask, sae=None, feature=None,
+                direction=None, batch=48):
+    """Ablate the feature (or direction) and contrast the concept against everywhere else."""
+    return _contrast(model, ids, layer, clean, concept_mask,
+                     FeatureAblate(model, layer, sae=sae, feature=feature, direction=direction),
+                     sign=1.0, batch=batch)
+
+
+def specificity_activate(model, ids, layer, clean, concept_mask, sae, feature, amount, batch=48):
+    """Inject the feature where it is silent and require the concept to be HELPED."""
+    return _contrast(model, ids, layer, clean, concept_mask,
+                     FeatureActivate(model, layer, sae, feature, amount),
+                     sign=-1.0, batch=batch)
 
 
 def matched_controls(f, freq, tops, selected, stats, rng, k=3):
@@ -422,12 +471,18 @@ def run_arm(model_name, layer, rng):
         # is the right causal direction only near the output. The gradient of the concept logit
         # with respect to the layer's own residual stream is the locally steepest direction for
         # that token AT that layer, so a consequence test that cannot detect it is broken.
+        # Secondary intervention, reported alongside and not folded into the frozen endpoint:
+        # inject the feature where it is silent and require the concept to be helped.
+        Sa, _, _, _ = specificity_activate(model, D_cons[:N_EVAL], layer, clean, mask_for(ctok),
+                                           sae, f, act_stats[int(f)][1])
         Wc = concept_gradient_direction(model, layer, D_cons[:GRAD_SEQ], ctok)
         Sp, _, _, _ = judge(None, None, Wc, ctok) if Wc is not None else (float("nan"),)*4
         rows.append(dict(arm=arm, feature=int(f), enrichment=float(scored[reals.index(f)][0]),
                          token=tok.decode([ctok]), concept=int(ctok),
                          S=float(S), dLC=float(a), dLnC=float(o), per_seq=per,
                          controls=[int(g) for g in ctrls], S_controls=cs,
+                         S_activate=float(Sa),
+                         activate_supported=bool(Sa == Sa and Sa > 1.96),
                          S_logit_positive=float(Sp),
                          positive_defined=bool(Sp == Sp),
                          positive_wrong_sign=bool(Sp == Sp and Sp < 0),
@@ -570,6 +625,13 @@ def main():
     print(f"  CAR@{N_FEAT} = {car:.2f}   cluster bootstrap 95% CI {lo:.2f}-{hi:.2f}")
     print(f"  matched-control rate = {carc:.2f}")
     print(f"  PRIMARY ENDPOINT  delta = {car-carc:+.2f}   95% CI {dlo:+.2f} to {dhi:+.2f}")
+    _sup = [r for r in paired if r["supported"]]
+    _both = sum(r["activate_supported"] for r in _sup)
+    _act = sum(r["activate_supported"] for r in paired)
+    print(f"\n  SECONDARY  activation intervention (not part of the frozen endpoint)")
+    print(f"    supported by activation alone: {_act/max(len(paired),1):.2f}")
+    print(f"    of the {len(_sup)} features ablation supports, activation also supports "
+          f"{_both} ({_both/max(len(_sup),1):.2f})")
     print("    -> " + ("interval excludes zero; the enrichment guard carries causal information "
                        "a matched control does not"
                        if dlo > 0 else
@@ -601,8 +663,14 @@ def main():
     Path(__file__).with_name("xai_sae.json").write_text(json.dumps(dict(
         rows=rows, nulls=nulls, flow=flows, paired=len(paired),
         untestable=n_untestable, testable=len(testable), car_curve=car_curve(paired),
+        car_activate=sum(r["activate_supported"] for r in paired) / max(len(paired), 1),
+        car_both=sum(r["supported"] and r["activate_supported"] for r in paired)
+            / max(len(paired), 1),
+        agree_given_ablation=sum(r["supported"] and r["activate_supported"] for r in paired)
+            / max(sum(r["supported"] for r in paired), 1),
         car_at_k=car, car_control=carc, delta_car=car-carc, ci=[lo, hi],
         delta_ci=[dlo, dhi], positive_control_rate=pos, positive_ci=[plo, phi],
+        positive_defined=len(posd), positive_wrong_sign=wrong,
         per_arm={a: dict(
             n=sum(r["arm"] == a for r in paired),
             car=sum(r["supported"] for r in paired if r["arm"] == a)

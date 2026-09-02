@@ -20,6 +20,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47,6 +49,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -74,6 +78,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -101,6 +107,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -128,6 +136,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -155,6 +165,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -182,6 +194,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -247,6 +261,8 @@
     -0.37222172214373767,
     0.6847364402592174
    ],
+   "S_activate": 3.7442611671395722,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -312,6 +328,8 @@
     -0.18218441592101436,
     1.7395368970445961
    ],
+   "S_activate": 4.89249314287647,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -359,6 +377,8 @@
     1.0,
     1.455211472325439
    ],
+   "S_activate": 1.2224291235951503,
+   "activate_supported": false,
    "S_logit_positive": 16.280646532293154,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -431,6 +451,8 @@
     0.7039637409279632,
     0.26049354759172416
    ],
+   "S_activate": -1.948150142019894,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -458,6 +480,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -505,6 +529,8 @@
     0.846917441545727,
     0.9174733282948825
    ],
+   "S_activate": 1.936679162043805,
+   "activate_supported": false,
    "S_logit_positive": 16.280646532293154,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -532,6 +558,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -559,6 +587,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -702,6 +732,8 @@
     -2.232231153333637,
     -1.012212628012323
    ],
+   "S_activate": 5.002764297474944,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -774,6 +806,8 @@
     -1.7854277744763838,
     0.15132395708993937
    ],
+   "S_activate": 1.962406609384897,
+   "activate_supported": true,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -917,6 +951,8 @@
     -1.556516611821034,
     3.7912138739049968
    ],
+   "S_activate": 0.9688734353991723,
+   "activate_supported": false,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -944,6 +980,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -1087,6 +1125,8 @@
     -0.8358880747937053,
     -1.6248397853308705
    ],
+   "S_activate": 4.514055865988718,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -1114,6 +1154,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -1293,6 +1335,8 @@
     -3.3361426935403853,
     2.5248212958273313
    ],
+   "S_activate": -10.626525395195822,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -1320,6 +1364,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -1463,6 +1509,8 @@
     -0.5542548256205888,
     -1.479386761116072
    ],
+   "S_activate": 4.88038764184527,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -1528,6 +1576,8 @@
     1.7395368970445961,
     0.8473458918211879
    ],
+   "S_activate": 5.8380064685972055,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -1707,6 +1757,8 @@
     -1.8742923642976261,
     -1.2326653431849603
    ],
+   "S_activate": 4.71719106489012,
+   "activate_supported": true,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -1734,6 +1786,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -1806,6 +1860,8 @@
     -0.862240562007892,
     -0.6735267414662989
    ],
+   "S_activate": 3.1185461945872905,
+   "activate_supported": true,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -1985,6 +2041,8 @@
     1.294717637722612,
     0.6280256873102259
    ],
+   "S_activate": -15.931482858938748,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2128,6 +2186,8 @@
     0.5589482368303497,
     -2.2136379518706937
    ],
+   "S_activate": 5.087301500374878,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2315,6 +2375,8 @@
     -0.2621746158431402,
     2.0525382368592715
    ],
+   "S_activate": -2.8020746248935167,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2502,6 +2564,8 @@
     0.8443665509148931,
     -0.26054648058014473
    ],
+   "S_activate": 8.209935739236906,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2567,6 +2631,8 @@
     -0.3856166319787661,
     0.017388306920411035
    ],
+   "S_activate": 6.013631750110345,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2639,6 +2705,8 @@
     -1.2966767348253208,
     -0.6916571583375728
    ],
+   "S_activate": -0.4156590710750869,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2818,6 +2886,8 @@
     -0.23444828950134108,
     -1.306343515232479
    ],
+   "S_activate": -14.985740223027438,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -2961,6 +3031,8 @@
     -1.5860351715170593,
     0.24136148158081616
    ],
+   "S_activate": 5.538003386833473,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -3140,6 +3212,8 @@
     1.8212308925263865,
     -0.8458364788683302
    ],
+   "S_activate": -6.481644002412724,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -3167,6 +3241,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -3194,6 +3270,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -3381,6 +3459,8 @@
     -0.8820285104973069,
     0.728283412792074
    ],
+   "S_activate": 6.919385942107897,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -3560,6 +3640,8 @@
     1.2952338829292807,
     -1.3278699451036362
    ],
+   "S_activate": -10.225485184233198,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -3739,6 +3821,8 @@
     -0.3177002603560294,
     -0.9688035652013776
    ],
+   "S_activate": -6.121392251915566,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -3926,6 +4010,8 @@
     2.831973021732082,
     -0.020567471247938746
    ],
+   "S_activate": 4.490899618756254,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4113,6 +4199,8 @@
     -1.3522084228570281,
     -1.1262028433378224
    ],
+   "S_activate": -0.4611380375398447,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4140,6 +4228,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -4327,6 +4417,8 @@
     1.966026500632198,
     0.44024419210125104
    ],
+   "S_activate": 3.662576780952575,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4506,6 +4598,8 @@
     0.1356876887925639,
     -2.414466771323452
    ],
+   "S_activate": -21.674481074956194,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4571,6 +4665,8 @@
     -1.5469295289168603,
     1.445721865479878
    ],
+   "S_activate": 5.910506901882147,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4618,6 +4714,8 @@
     -1.8700125338853295,
     1.7815273455454614
    ],
+   "S_activate": 1.7256455169963574,
+   "activate_supported": false,
    "S_logit_positive": 16.280646532293154,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4805,6 +4903,8 @@
     0.8545390159971417,
     -1.5617382008228402
    ],
+   "S_activate": 9.784824247628393,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -4832,6 +4932,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -5019,6 +5121,8 @@
     -0.23223112066195897,
     2.5686001868709245
    ],
+   "S_activate": 4.872342110037771,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5206,6 +5310,8 @@
     0.45665809359248244,
     0.7264166250170507
    ],
+   "S_activate": -16.573942470999146,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5233,6 +5339,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -5305,6 +5413,8 @@
     -1.1820285704904816,
     -1.4818391504889217
    ],
+   "S_activate": 0.9962021413128166,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5492,6 +5602,8 @@
     0.25522765311033985,
     0.7952141429411674
    ],
+   "S_activate": 2.6687253611828123,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5671,6 +5783,8 @@
     0.3216848726078263,
     -3.4050380636014594
    ],
+   "S_activate": -3.7538262553141495,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5718,6 +5832,8 @@
     -2.459775829069812,
     0.5182958998292161
    ],
+   "S_activate": 2.0785989274075445,
+   "activate_supported": true,
    "S_logit_positive": 16.280646532293154,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5783,6 +5899,8 @@
     -0.44132784147167425,
     0.8495469066465939
    ],
+   "S_activate": 4.67790497878389,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -5926,6 +6044,8 @@
     0.4103407383734234,
     -0.5456527160423906
    ],
+   "S_activate": 7.094871322580098,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -6105,6 +6225,8 @@
     -0.567648781774959,
     -0.4919377649843089
    ],
+   "S_activate": 1.7989913220042721,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -6292,6 +6414,8 @@
     -0.7966843423985673,
     -1.6398292348962609
    ],
+   "S_activate": 2.6057039179279893,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -6479,6 +6603,8 @@
     1.1596107243182507,
     -3.058524857283596
    ],
+   "S_activate": 0.8454556672461047,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -6506,6 +6632,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -6533,6 +6661,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -6598,6 +6728,8 @@
     -0.14410340354021864,
     1.832451687470882
    ],
+   "S_activate": 3.0230103583220607,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -6785,6 +6917,8 @@
     1.3225511032575825,
     0.6714140851553065
    ],
+   "S_activate": 12.912945422963224,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -6812,6 +6946,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -6991,6 +7127,8 @@
     -4.174837756344202,
     -1.7810661327437955
    ],
+   "S_activate": -4.053814723012306,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -7122,6 +7260,8 @@
     1.2634164251369557,
     0.09233266567912407
    ],
+   "S_activate": 3.5432171191498707,
+   "activate_supported": true,
    "S_logit_positive": 9.56993826366999,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -7149,6 +7289,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -7176,6 +7318,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -7363,6 +7507,8 @@
     -0.4696150403512785,
     -1.3404104843723648
    ],
+   "S_activate": 6.892739818253751,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -7428,6 +7574,8 @@
     -1.0825029450159114,
     -0.019295562686412228
    ],
+   "S_activate": 4.740282715331177,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -7557,6 +7705,8 @@
     1.1239837276929585,
     0.12663126492021418
    ],
+   "S_activate": 3.9906827120191286,
+   "activate_supported": true,
    "S_logit_positive": 8.053618433579144,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -7736,6 +7886,8 @@
     -1.3153819789783505,
     -0.09776771240242314
    ],
+   "S_activate": -10.545603639834528,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -7763,6 +7915,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -7790,6 +7944,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -7817,6 +7973,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -7960,6 +8118,8 @@
     -0.7701858977020803,
     0.9210445100952787
    ],
+   "S_activate": -4.689237308147287,
+   "activate_supported": false,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -8139,6 +8299,8 @@
     -0.8768245809019324,
     -0.6663516710064779
    ],
+   "S_activate": -0.720393246929133,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -8166,6 +8328,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -8193,6 +8357,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -8220,6 +8386,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -8247,6 +8415,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -8426,6 +8596,8 @@
     0.13706936975800668,
     1.0204221931307864
    ],
+   "S_activate": -8.413896316379164,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -8453,6 +8625,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -8640,6 +8814,8 @@
     0.6332530987360306,
     0.9273212431939868
    ],
+   "S_activate": -3.722541131115717,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -8705,6 +8881,8 @@
     0.5926397396841361,
     -0.15602464696997392
    ],
+   "S_activate": 3.131670554503652,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -8892,6 +9070,8 @@
     -3.1154155627446296,
     0.40254955681185695
    ],
+   "S_activate": 10.142317691029152,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -8919,6 +9099,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -8984,6 +9166,8 @@
     2.5622935613549265,
     -0.7519049522368367
    ],
+   "S_activate": 7.109533151742996,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9171,6 +9355,8 @@
     -1.4650461823920613,
     -1.5794768282301108
    ],
+   "S_activate": 4.003975111073256,
+   "activate_supported": true,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9198,6 +9384,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -9329,6 +9517,8 @@
     0.8430992200508686,
     -0.6868174746768695
    ],
+   "S_activate": 4.278207734917045,
+   "activate_supported": true,
    "S_logit_positive": 9.56993826366999,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9401,6 +9591,8 @@
     -0.4502053086251475,
     -2.163608346793333
    ],
+   "S_activate": 0.4750075495466096,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9428,6 +9620,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -9559,6 +9753,8 @@
     -0.9089684082353342,
     -0.9458303695167383
    ],
+   "S_activate": 5.556273344376267,
+   "activate_supported": true,
    "S_logit_positive": 9.56993826366999,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9586,6 +9782,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -9658,6 +9856,8 @@
     1.4524092901962629,
     -2.716450853242362
    ],
+   "S_activate": -4.1165266870842325,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9685,6 +9885,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -9732,6 +9934,8 @@
     -2.459775829069812,
     -0.30488959164500107
    ],
+   "S_activate": 1.4297958324819173,
+   "activate_supported": false,
    "S_logit_positive": 16.280646532293154,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -9759,6 +9963,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -9786,6 +9992,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -9929,6 +10137,8 @@
     0.5824831230087698,
     -1.5670434250346708
    ],
+   "S_activate": 1.86271399270766,
+   "activate_supported": false,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10001,6 +10211,8 @@
     2.7950208607154337,
     -2.735917067440495
    ],
+   "S_activate": -4.071382659173847,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10028,6 +10240,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -10093,6 +10307,8 @@
     -1.4262609554606278,
     -0.02163852554937961
    ],
+   "S_activate": 3.4303199148624692,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10165,6 +10381,8 @@
     1.3088691828936372,
     -0.18315059703815392
    ],
+   "S_activate": -0.9514563027022832,
+   "activate_supported": false,
    "S_logit_positive": 10.446253264196667,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10192,6 +10410,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -10323,6 +10543,8 @@
     -1.5628486425420802,
     -0.13618297127198462
    ],
+   "S_activate": 4.188520400165492,
+   "activate_supported": true,
    "S_logit_positive": 9.56993826366999,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10466,6 +10688,8 @@
     -1.497831308288882,
     -4.102385358776296
    ],
+   "S_activate": 1.490400994699331,
+   "activate_supported": false,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10493,6 +10717,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -10606,6 +10832,8 @@
     1.2484098487687942,
     0.0014412318717158229
    ],
+   "S_activate": -4.539367130443747,
+   "activate_supported": false,
    "S_logit_positive": 14.581240036913393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10719,6 +10947,8 @@
     0.5057384968221545,
     -1.7376122482756169
    ],
+   "S_activate": -3.5877145795856995,
+   "activate_supported": false,
    "S_logit_positive": 14.581240036913393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -10746,6 +10976,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -10773,6 +11005,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -10800,6 +11034,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -10987,6 +11223,8 @@
     -1.2783046766475088,
     -1.083083879531529
    ],
+   "S_activate": -4.2463377363747625,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11174,6 +11412,8 @@
     0.02996634557007876,
     -1.6698377251674394
    ],
+   "S_activate": 1.5914663213014424,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11265,6 +11505,8 @@
     1.936349189809163,
     0.3612255387096807
    ],
+   "S_activate": -2.2021203727855525,
+   "activate_supported": false,
    "S_logit_positive": 19.776544128531466,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11292,6 +11534,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -11471,6 +11715,8 @@
    ],
    "controls": [],
    "S_controls": [],
+   "S_activate": -19.244182565780093,
+   "activate_supported": false,
    "S_logit_positive": 24.05688986667323,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11554,6 +11800,8 @@
     -0.6722119053711217,
     0.3021043301574436
    ],
+   "S_activate": 3.0277584025212416,
+   "activate_supported": true,
    "S_logit_positive": 25.093465958642017,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11619,6 +11867,8 @@
     -0.13741380045244492,
     0.4501202486614267
    ],
+   "S_activate": 4.270152903199905,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11646,6 +11896,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -11673,6 +11925,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -11786,6 +12040,8 @@
     -1.268399789149043,
     0.6453997414274599
    ],
+   "S_activate": 2.914869351379523,
+   "activate_supported": true,
    "S_logit_positive": 14.581240036913393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -11965,6 +12221,8 @@
     -2.399533314977754,
     0.10719531054134218
    ],
+   "S_activate": -2.971079300497345,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -12096,6 +12354,8 @@
     0.6937571312142005,
     -1.3989050782761667
    ],
+   "S_activate": 7.9510333274329845,
+   "activate_supported": true,
    "S_logit_positive": 9.56993826366999,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -12123,6 +12383,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -12309,6 +12571,8 @@
     2.2055206563178507,
     -1.5067767044628089
    ],
+   "S_activate": 18.587139100277934,
+   "activate_supported": true,
    "S_logit_positive": 36.05452091956889,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -12336,6 +12600,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -12363,6 +12629,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -12390,6 +12658,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -12569,6 +12839,8 @@
     -2.782218004509147,
     1.1146119312639708
    ],
+   "S_activate": -9.19691634467239,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -12712,6 +12984,8 @@
     1.514382176469681,
     -2.1344050816404474
    ],
+   "S_activate": 2.5461270972129593,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -12891,6 +13165,8 @@
     -1.7341653842928437,
     0.5071143613157258
    ],
+   "S_activate": -2.6363582882757286,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -12918,6 +13194,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -13047,6 +13325,8 @@
     -1.1029311267615156,
     -0.7100138155424706
    ],
+   "S_activate": 6.17752663046099,
+   "activate_supported": true,
    "S_logit_positive": 8.053618433579144,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -13176,6 +13456,8 @@
     -1.2605651767142063,
     -0.8571689368504459
    ],
+   "S_activate": -5.41654274666755,
+   "activate_supported": false,
    "S_logit_positive": 8.053618433579144,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -13355,6 +13637,8 @@
     -0.8042638189267279,
     -0.9133469127719911
    ],
+   "S_activate": -5.623973551708823,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -13420,6 +13704,8 @@
     -0.2690889899705746,
     0.8686250528653033
    ],
+   "S_activate": 2.5909111648803935,
+   "activate_supported": true,
    "S_logit_positive": 3.1808598084506343,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -13599,6 +13885,8 @@
     -0.225308445505052,
     -1.0635464858771002
    ],
+   "S_activate": -2.3394903611573614,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -13626,6 +13914,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -13653,6 +13943,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -13832,6 +14124,8 @@
     -0.12447160782799487,
     -0.6885136709307953
    ],
+   "S_activate": -12.586028499170242,
+   "activate_supported": false,
    "S_logit_positive": 0.11010239799285032,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -13859,6 +14153,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -14002,6 +14298,8 @@
     -1.2025476902360426,
     -1.044549533470011
    ],
+   "S_activate": 5.83823631051548,
+   "activate_supported": true,
    "S_logit_positive": 17.93199301083751,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14148,6 +14446,8 @@
     1.1846919336588129,
     1.0226989468556338
    ],
+   "S_activate": 5.650103288994664,
+   "activate_supported": true,
    "S_logit_positive": 9.190363870721463,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14220,6 +14520,8 @@
     -2.1511011856367226,
     -0.8906937612262273
    ],
+   "S_activate": 6.880971046214329,
+   "activate_supported": true,
    "S_logit_positive": 17.782883089947976,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14247,6 +14549,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -14274,6 +14578,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -14301,6 +14607,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -14328,6 +14636,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -14393,6 +14703,8 @@
     -0.8770170270325884,
     -0.4959035130152525
    ],
+   "S_activate": 5.4801943480521835,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14458,6 +14770,8 @@
     -1.6826952435901015,
     -1.660654004417678
    ],
+   "S_activate": 4.749286009131443,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14601,6 +14915,8 @@
     -2.7763870031792983,
     0.6834265495811013
    ],
+   "S_activate": 12.72103433742305,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14628,6 +14944,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -14807,6 +15125,8 @@
     -0.9975621203159779,
     0.45803039917230776
    ],
+   "S_activate": 20.542216218804743,
+   "activate_supported": true,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -14872,6 +15192,8 @@
     1.620276949622046,
     -1.5571069515552662
    ],
+   "S_activate": 5.626031211767751,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15015,6 +15337,8 @@
     -1.0306082083977572,
     0.4641614462952564
    ],
+   "S_activate": -6.510686129201993,
+   "activate_supported": false,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15158,6 +15482,8 @@
     -1.2583242400574255,
     -1.6923417264935192
    ],
+   "S_activate": 15.299231346918438,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15185,6 +15511,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -15298,6 +15626,8 @@
     -0.9258267723223628,
     -0.5135384000364023
    ],
+   "S_activate": 9.447501091892473,
+   "activate_supported": true,
    "S_logit_positive": 20.320152690365084,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15441,6 +15771,8 @@
     -1.3960299434656265,
     -1.119621881728944
    ],
+   "S_activate": 7.359532771671394,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15628,6 +15960,8 @@
     -1.0687023912686116,
     1.4008543837759182
    ],
+   "S_activate": 29.701983223833224,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15771,6 +16105,8 @@
     0.8248812515082827,
     0.31178843657430644
    ],
+   "S_activate": 8.581114687070258,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -15958,6 +16294,8 @@
     -1.0537484348527029,
     0.8769824691296807
    ],
+   "S_activate": 25.176605172203836,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -16101,6 +16439,8 @@
     -1.3749236998415564,
     -2.4310574623836345
    ],
+   "S_activate": 2.4350372612127433,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -16230,6 +16570,8 @@
     -1.1390440311743961,
     0.8248914862832813
    ],
+   "S_activate": 15.143445115073568,
+   "activate_supported": true,
    "S_logit_positive": 20.22283817140004,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -16417,6 +16759,8 @@
     -1.6855728544574073,
     -0.24353663650960483
    ],
+   "S_activate": 25.67923325375076,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -16604,6 +16948,8 @@
     0.33660296897986053,
     1.0164187602451404
    ],
+   "S_activate": 29.048067738966555,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -16791,6 +17137,8 @@
     -2.668321503316269,
     0.011323368982536592
    ],
+   "S_activate": 5.081931179645794,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -16978,6 +17326,8 @@
     -1.110308767186469,
     -1.6399616080851152
    ],
+   "S_activate": 23.513366847306166,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17165,6 +17515,8 @@
     -1.8515178913428287,
     -2.112544623153692
    ],
+   "S_activate": 23.872033848930506,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17192,6 +17544,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -17219,6 +17573,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -17291,6 +17647,8 @@
     -0.005017818789463812,
     -0.754732312032333
    ],
+   "S_activate": 11.57461092013281,
+   "activate_supported": true,
    "S_logit_positive": 17.782883089947976,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17356,6 +17714,8 @@
     -1.7039692466028267,
     -1.140420977875069
    ],
+   "S_activate": 6.020479191171257,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17383,6 +17743,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -17562,6 +17924,8 @@
     -0.34574771249291447,
     1.7633120864232679
    ],
+   "S_activate": 20.828656266904005,
+   "activate_supported": true,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17741,6 +18105,8 @@
     -4.1043033673121565,
     -2.211172628304301
    ],
+   "S_activate": -0.9993344617560079,
+   "activate_supported": false,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17928,6 +18294,8 @@
     -1.0302434669595901,
     -2.253555807875974
    ],
+   "S_activate": 14.886289094445562,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -17955,6 +18323,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -18142,6 +18512,8 @@
     -3.87578806042311,
     -5.563794229510064
    ],
+   "S_activate": 7.68864453469972,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -18207,6 +18579,8 @@
     0.7644001715119001,
     -1.1797009287195013
    ],
+   "S_activate": 4.9726230500711,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -18386,6 +18760,8 @@
     -2.903392067441445,
     -1.4007725049553712
    ],
+   "S_activate": 13.239998965974337,
+   "activate_supported": true,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -18565,6 +18941,8 @@
     -3.74553237485374,
     -2.285642777447125
    ],
+   "S_activate": -6.448293052757616,
+   "activate_supported": false,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -18592,6 +18970,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -18619,6 +18999,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -18732,6 +19114,8 @@
     -3.303891822153068,
     1.1322424887805715
    ],
+   "S_activate": 7.066661531869648,
+   "activate_supported": true,
    "S_logit_positive": 20.320152690365084,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -18919,6 +19303,8 @@
     -0.20885278785000153,
     -1.1361390260876132
    ],
+   "S_activate": -11.870445729326404,
+   "activate_supported": false,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -19098,6 +19484,8 @@
     -0.23697545612707205,
     -1.2001460114637252
    ],
+   "S_activate": 34.22214213966936,
+   "activate_supported": true,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -19211,6 +19599,8 @@
     -0.2650490086964215,
     -4.123691282981741
    ],
+   "S_activate": 5.243529474030029,
+   "activate_supported": true,
    "S_logit_positive": 20.320152690365084,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -19238,6 +19628,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -19379,6 +19771,8 @@
     -0.7597260556802896,
     -1.6466548615675034
    ],
+   "S_activate": 14.216601582636542,
+   "activate_supported": true,
    "S_logit_positive": 29.87838591237333,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -19406,6 +19800,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -19433,6 +19829,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -19562,6 +19960,8 @@
     -0.2843959474389625,
     -1.0868822486604772
    ],
+   "S_activate": 15.404498482100701,
+   "activate_supported": true,
    "S_logit_positive": 20.22283817140004,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -19589,6 +19989,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -19776,6 +20178,8 @@
     -2.4663585767177327,
     0.16692314815799597
    ],
+   "S_activate": 18.42123144140173,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -19905,6 +20309,8 @@
     -1.1678362503348034,
     -1.0893114331157523
    ],
+   "S_activate": 5.461028505242662,
+   "activate_supported": true,
    "S_logit_positive": 20.22283817140004,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -20084,6 +20490,8 @@
     -0.16344188292609627,
     -0.8488167086403878
    ],
+   "S_activate": -1.4126320514293595,
+   "activate_supported": false,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -20263,6 +20671,8 @@
    ],
    "controls": [],
    "S_controls": [],
+   "S_activate": 7.048814000433665,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -20328,6 +20738,8 @@
     1.120702757587873,
     0.38948948272480116
    ],
+   "S_activate": 5.545359261080519,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -20355,6 +20767,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -20382,6 +20796,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -20409,6 +20825,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -20595,6 +21013,8 @@
     -1.303160247807902,
     -1.818234036747668
    ],
+   "S_activate": 37.94747153538228,
+   "activate_supported": true,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -20774,6 +21194,8 @@
    ],
    "controls": [],
    "S_controls": [],
+   "S_activate": 40.04961080412072,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -20953,6 +21375,8 @@
     0.11737850133325259,
     0.886971159184564
    ],
+   "S_activate": 5.355090780067379,
+   "activate_supported": true,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -21094,6 +21518,8 @@
     1.8036330074751752,
     -1.158193977143576
    ],
+   "S_activate": 14.794452726683692,
+   "activate_supported": true,
    "S_logit_positive": 29.87838591237333,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -21204,6 +21630,8 @@
     -1.1823764655218343,
     0.8123741458873321
    ],
+   "S_activate": -16.54736595050293,
+   "activate_supported": false,
    "S_logit_positive": 25.49066320538348,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -21335,6 +21763,8 @@
     -0.797125588334471,
     0.6997914021284747
    ],
+   "S_activate": 9.117316690451611,
+   "activate_supported": true,
    "S_logit_positive": 15.158148648557988,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -21466,6 +21896,8 @@
     -1.9947870507396952,
     -2.4831301624719404
    ],
+   "S_activate": 10.090754511710024,
+   "activate_supported": true,
    "S_logit_positive": 15.158148648557988,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -21609,6 +22041,8 @@
     -0.29991279636482576,
     1.4860889559703483
    ],
+   "S_activate": 5.055421648737776,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -21636,6 +22070,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -21663,6 +22099,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -21690,6 +22128,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -21877,6 +22317,8 @@
     0.7470329065919118,
     2.9505683365361985
    ],
+   "S_activate": -3.1770190941332834,
+   "activate_supported": false,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22056,6 +22498,8 @@
    ],
    "controls": [],
    "S_controls": [],
+   "S_activate": -7.03169105900641,
+   "activate_supported": false,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22121,6 +22565,8 @@
     -1.114673937141991,
     -2.4229431243100867
    ],
+   "S_activate": 5.565698889923416,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22267,6 +22713,8 @@
     -2.680168183473079,
     -0.647516566471627
    ],
+   "S_activate": 17.33285058287696,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22350,6 +22798,8 @@
     -0.07345120311873297,
     0.7369417401677174
    ],
+   "S_activate": 12.516069221788142,
+   "activate_supported": true,
    "S_logit_positive": 28.800850155979496,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22481,6 +22931,8 @@
     -0.7987231362604985,
     0.16049200877207204
    ],
+   "S_activate": 9.666882505586623,
+   "activate_supported": true,
    "S_logit_positive": 15.158148648557988,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22612,6 +23064,8 @@
     0.5976449491083486,
     -2.8747812351388586
    ],
+   "S_activate": 10.226344196906542,
+   "activate_supported": true,
    "S_logit_positive": 15.158148648557988,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22755,6 +23209,8 @@
     -1.4044758010139065,
     -0.15078100152478338
    ],
+   "S_activate": -4.117098110083587,
+   "activate_supported": false,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22782,6 +23238,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -22968,6 +23426,8 @@
     -1.0495568282964116,
     -0.24656815338847488
    ],
+   "S_activate": -4.593457383325673,
+   "activate_supported": false,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -22995,6 +23455,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -23124,6 +23586,8 @@
     -0.9605182630505688,
     -1.412383928491088
    ],
+   "S_activate": 11.612327417334644,
+   "activate_supported": true,
    "S_logit_positive": 20.22283817140004,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -23303,6 +23767,8 @@
     -1.1514186717888784,
     -1.008814281038731
    ],
+   "S_activate": 0.523232490310987,
+   "activate_supported": false,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -23430,6 +23896,8 @@
     -1.87281035482636,
     -1.3434510273275748
    ],
+   "S_activate": 30.950060367402063,
+   "activate_supported": true,
    "S_logit_positive": 13.495871765372657,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -23571,6 +24039,8 @@
     0.22807929209183164,
     -0.6068183174427144
    ],
+   "S_activate": 11.981099737484357,
+   "activate_supported": true,
    "S_logit_positive": 29.87838591237333,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -23714,6 +24184,8 @@
     -1.5315346168984214,
     -4.328006312270222
    ],
+   "S_activate": 10.917441274866205,
+   "activate_supported": true,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -23779,6 +24251,8 @@
     -1.506490160773359,
     -1.48945002689078
    ],
+   "S_activate": 3.157536914004576,
+   "activate_supported": true,
    "S_logit_positive": 8.078513568503565,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -23925,6 +24399,8 @@
     -0.12470911813240618,
     -2.0220476406131733
    ],
+   "S_activate": 10.147114357937925,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24071,6 +24547,8 @@
     -4.237046727888144,
     0.9889707086553136
    ],
+   "S_activate": 6.9600952293794816,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24200,6 +24678,8 @@
     -1.502782121100839,
     -1.5561178575441823
    ],
+   "S_activate": 11.567516262941371,
+   "activate_supported": true,
    "S_logit_positive": 20.22283817140004,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24253,6 +24733,8 @@
     -1.3649314614525854,
     -2.4180099503527757
    ],
+   "S_activate": 8.639276839464268,
+   "activate_supported": true,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -24439,6 +24921,8 @@
     -1.7924433002868871,
     -0.3827396774420861
    ],
+   "S_activate": 8.154419074547663,
+   "activate_supported": true,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24466,6 +24950,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -24538,6 +25024,8 @@
     -0.10583738766977518,
     -1.1660458207174464
    ],
+   "S_activate": 3.0166579713218504,
+   "activate_supported": true,
    "S_logit_positive": 17.782883089947976,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24684,6 +25172,8 @@
     -3.759446537679617,
     -4.430000691687907
    ],
+   "S_activate": 6.442412670413705,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24862,6 +25352,8 @@
     -0.6693502629361457,
     0.9497482537943572
    ],
+   "S_activate": 15.89675274072224,
+   "activate_supported": true,
    "S_logit_positive": 24.938069570644007,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -24889,6 +25381,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -24916,6 +25410,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -25057,6 +25553,8 @@
     1.2435474860959845,
     -2.136054742322971
    ],
+   "S_activate": 9.317065934656657,
+   "activate_supported": true,
    "S_logit_positive": 29.87838591237333,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -25129,6 +25627,8 @@
     -0.3179980362805827,
     -1.670787732185742
    ],
+   "S_activate": 6.745981069047182,
+   "activate_supported": true,
    "S_logit_positive": 17.782883089947976,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -25212,6 +25712,8 @@
     -0.9717522956123105,
     0.4357385402878518
    ],
+   "S_activate": 10.793625413202687,
+   "activate_supported": true,
    "S_logit_positive": 28.800850155979496,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -25328,6 +25830,8 @@
     -1.520040379478023,
     -4.2223899504747155
    ],
+   "S_activate": 9.781458392314242,
+   "activate_supported": true,
    "S_logit_positive": 41.41971095028522,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -25355,6 +25859,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -25541,6 +26047,8 @@
     0.9674104030496505,
     -1.7552972270528435
    ],
+   "S_activate": 22.132092415114908,
+   "activate_supported": true,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -25568,6 +26076,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -25755,6 +26265,8 @@
     -2.1778271175255965,
     1.694362795670129
    ],
+   "S_activate": 18.666972415615245,
+   "activate_supported": true,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -25878,6 +26390,8 @@
     -1.0905053429645302,
     0.181797263878247
    ],
+   "S_activate": 9.102166728153692,
+   "activate_supported": true,
    "S_logit_positive": 25.589451101707713,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -26019,6 +26533,8 @@
     -2.8299632506093317,
     -1.0472906767756116
    ],
+   "S_activate": -10.506123726260727,
+   "activate_supported": false,
    "S_logit_positive": 29.87838591237333,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -26072,6 +26588,8 @@
     0.7703242760870942,
     0.9999999999999998
    ],
+   "S_activate": 7.595182884775034,
+   "activate_supported": true,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -26099,6 +26617,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -26126,6 +26646,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -26269,6 +26791,8 @@
     -0.34265673519202705,
     -2.2541807482223346
    ],
+   "S_activate": -4.209063565642347,
+   "activate_supported": false,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -26481,6 +27005,8 @@
     -1.1132343706449492,
     1.1936886547178835
    ],
+   "S_activate": 19.812187118415807,
+   "activate_supported": true,
    "S_logit_positive": 22.351109640225342,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -26534,6 +27060,8 @@
     -0.31509536394635657,
     -0.18756126196545622
    ],
+   "S_activate": 8.864023836286604,
+   "activate_supported": true,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -26680,6 +27208,8 @@
     -0.2687942720040386,
     -3.759446537679617
    ],
+   "S_activate": 4.261995805359583,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -26790,6 +27320,8 @@
     -1.152099595847797,
     -0.561056445203925
    ],
+   "S_activate": -1.3091351459831866,
+   "activate_supported": false,
    "S_logit_positive": 25.49066320538348,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -26817,6 +27349,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -27003,6 +27537,8 @@
     -1.4788339643321353,
     1.0821591882643022
    ],
+   "S_activate": -15.104148469707342,
+   "activate_supported": false,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -27134,6 +27670,8 @@
     1.3582028670428403,
     0.7849744943861153
    ],
+   "S_activate": 8.699572356808888,
+   "activate_supported": true,
    "S_logit_positive": 15.158148648557988,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -27280,6 +27818,8 @@
     1.2561414774832507,
     -2.9669788924939944
    ],
+   "S_activate": 7.180204661451643,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -27459,6 +27999,8 @@
     -0.006118293760466585,
     -1.3043508733281697
    ],
+   "S_activate": -19.49814016333459,
+   "activate_supported": false,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -27588,6 +28130,8 @@
     -0.9917649718060556,
     0.5254847947880839
    ],
+   "S_activate": 6.923299434844739,
+   "activate_supported": true,
    "S_logit_positive": 20.22283817140004,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -27641,6 +28185,8 @@
     1.6044267474863547,
     -0.8429653814001545
    ],
+   "S_activate": -6.866308534399124,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -27688,6 +28234,8 @@
     -0.38579503706409374,
     0.7631904882361578
    ],
+   "S_activate": 3.9009898863812773,
+   "activate_supported": true,
    "S_logit_positive": 6.421535226708536,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -27815,6 +28363,8 @@
     -2.0296712660748044,
     -0.7479802482791666
    ],
+   "S_activate": 7.174905095272045,
+   "activate_supported": true,
    "S_logit_positive": 13.495871765372657,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -28001,6 +28551,8 @@
     1.1670829898804749,
     -1.3181005280157378
    ],
+   "S_activate": -20.781926739988783,
+   "activate_supported": false,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -28147,6 +28699,8 @@
     -1.9353934666214294,
     -0.9762222213582039
    ],
+   "S_activate": -3.263627332661482,
+   "activate_supported": false,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -28400,6 +28954,8 @@
     -1.4523894755702558,
     -2.2938308683713533
    ],
+   "S_activate": 24.46287191636034,
+   "activate_supported": true,
    "S_logit_positive": 33.43608070761022,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -28546,6 +29102,8 @@
     -3.693639020131095,
     -2.673365534445899
    ],
+   "S_activate": 3.6863834901692787,
+   "activate_supported": true,
    "S_logit_positive": 6.239406516583039,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -28673,6 +29231,8 @@
     1.750817776288287,
     -0.9831378971145169
    ],
+   "S_activate": 21.31045636556362,
+   "activate_supported": true,
    "S_logit_positive": 13.495871765372657,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -28804,6 +29364,8 @@
     -1.9836400184799903,
     1.430519507616139
    ],
+   "S_activate": 8.224344327034801,
+   "activate_supported": true,
    "S_logit_positive": 15.158148648557988,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -29016,6 +29578,8 @@
     1.7562778090533695,
     -1.0755868613541908
    ],
+   "S_activate": 18.975627510836272,
+   "activate_supported": true,
    "S_logit_positive": 22.351109640225342,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -29129,6 +29693,8 @@
     -1.6907680164007894,
     -1.4174560264917948
    ],
+   "S_activate": 5.4588805667369895,
+   "activate_supported": true,
    "S_logit_positive": 20.320152690365084,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -29201,6 +29767,8 @@
     1.4587988057750538,
     -1.28131894571404
    ],
+   "S_activate": 11.206540102446096,
+   "activate_supported": true,
    "S_logit_positive": 17.782883089947976,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -29228,6 +29796,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -29371,6 +29941,8 @@
     0.03756863174722041,
     -2.438111790512392
    ],
+   "S_activate": -9.749021636626829,
+   "activate_supported": false,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -29583,6 +30155,8 @@
     1.4991932798236236,
     -2.3075036777910363
    ],
+   "S_activate": 18.377139252960927,
+   "activate_supported": true,
    "S_logit_positive": 22.351109640225342,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -29836,6 +30410,8 @@
     -1.2031090129136561,
     0.36231938740550673
    ],
+   "S_activate": 22.46665999436401,
+   "activate_supported": true,
    "S_logit_positive": 33.43608070761022,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30015,6 +30591,8 @@
     -1.3803940185243475,
     -0.037721970611098235
    ],
+   "S_activate": -14.157423271584054,
+   "activate_supported": false,
    "S_logit_positive": 7.015021197833378,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30042,6 +30620,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -30155,6 +30735,8 @@
     -1.2397345910058797,
     0.2247821072673597
    ],
+   "S_activate": 9.570667952965328,
+   "activate_supported": true,
    "S_logit_positive": 20.320152690365084,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30282,6 +30864,8 @@
     1.0000000000000002,
     1.0457810078281027
    ],
+   "S_activate": -15.314987328609304,
+   "activate_supported": false,
    "S_logit_positive": 13.495871765372657,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30468,6 +31052,8 @@
     -0.9213555897381113,
     -2.3644328472031972
    ],
+   "S_activate": 16.836540101775885,
+   "activate_supported": true,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30584,6 +31170,8 @@
     -0.5631927066543239,
     -1.4911361689325604
    ],
+   "S_activate": 29.558669202926204,
+   "activate_supported": true,
    "S_logit_positive": 41.41971095028522,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30771,6 +31359,8 @@
     1.065959638271724,
     -1.898601167472819
    ],
+   "S_activate": -8.405028221621187,
+   "activate_supported": false,
    "S_logit_positive": 20.27628411829695,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -30798,6 +31388,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -30984,6 +31576,8 @@
     -1.2742957183182764,
     -2.2036212957042136
    ],
+   "S_activate": 24.79297395077608,
+   "activate_supported": true,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -31170,6 +31764,8 @@
     -1.5027472068941776,
     -2.1388359615056345
    ],
+   "S_activate": -14.91533968915156,
+   "activate_supported": false,
    "S_logit_positive": 2.607075987904369,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -31313,6 +31909,8 @@
     -1.0170113722828729,
     -2.4871194273907893
    ],
+   "S_activate": -0.16932139150793782,
+   "activate_supported": false,
    "S_logit_positive": 21.193596186384994,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -31340,6 +31938,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31367,6 +31967,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31394,6 +31996,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31459,6 +32063,8 @@
     -1.6879808235185139,
     -0.9742872116071596
    ],
+   "S_activate": 2.628897573034369,
+   "activate_supported": true,
    "S_logit_positive": -2.513666085392352,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -31486,6 +32092,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31558,6 +32166,8 @@
     -0.3632428450313609,
     -0.39330574239118005
    ],
+   "S_activate": 1.5043615049003263,
+   "activate_supported": false,
    "S_logit_positive": -9.822749299463261,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -31585,6 +32195,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31612,6 +32224,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31639,6 +32253,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31704,6 +32320,8 @@
     0.10564550831909808,
     -0.2410864849003084
    ],
+   "S_activate": 1.9513721628536285,
+   "activate_supported": false,
    "S_logit_positive": -2.513666085392352,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -31731,6 +32349,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31844,6 +32464,8 @@
     -0.4860859611946581,
     0.18040816373060403
    ],
+   "S_activate": 6.02031791244908,
+   "activate_supported": true,
    "S_logit_positive": 6.297756623733392,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -31916,6 +32538,8 @@
     -1.1344121088478594,
     1.4244730462581385
    ],
+   "S_activate": -1.6276588762699793,
+   "activate_supported": false,
    "S_logit_positive": -9.822749299463261,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -31943,6 +32567,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31970,6 +32596,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -31997,6 +32625,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32024,6 +32654,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32051,6 +32683,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32123,6 +32757,8 @@
     1.542499586552019,
     1.7065139828334928
    ],
+   "S_activate": 2.3160253022897375,
+   "activate_supported": true,
    "S_logit_positive": -9.822749299463261,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -32302,6 +32938,8 @@
     1.9578228647894174,
     -1.781979191436237
    ],
+   "S_activate": -4.124068099813608,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -32329,6 +32967,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32376,6 +33016,8 @@
     -1.046782826140354,
     -0.2844743515831148
    ],
+   "S_activate": 0.23616182712638126,
+   "activate_supported": false,
    "S_logit_positive": 7.704126386911399,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -32403,6 +33045,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32468,6 +33112,8 @@
     0.02222859074221689,
     0.6987440222894664
    ],
+   "S_activate": 2.7764743076780665,
+   "activate_supported": true,
    "S_logit_positive": -2.513666085392352,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -32611,7 +33257,9 @@
     -2.1546012385645956,
     0.1903403757539779
    ],
-   "S_logit_positive": -1.027300485288453,
+   "S_activate": 2.48335517850246,
+   "activate_supported": true,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -32638,6 +33286,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32781,7 +33431,9 @@
     -0.6522993522797567,
     -2.1726714909809313
    ],
-   "S_logit_positive": -1.0273130697341626,
+   "S_activate": 1.9476382453359944,
+   "activate_supported": false,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -32808,6 +33460,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -32951,7 +33605,9 @@
     0.6829404155250822,
     0.9919714478920738
    ],
-   "S_logit_positive": -1.0273865609516655,
+   "S_activate": 2.651441294968681,
+   "activate_supported": true,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -32978,6 +33634,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -33121,7 +33779,9 @@
     -0.7610368987140652,
     1.0660891710167146
    ],
-   "S_logit_positive": -1.027355601783506,
+   "S_activate": -3.7748548245590823,
+   "activate_supported": false,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -33300,6 +33960,8 @@
     -0.21404033228297112,
     1.1974643974865409
    ],
+   "S_activate": -0.29470923200426424,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -33443,6 +34105,8 @@
     -0.23155887228852529,
     0.4360185630623433
    ],
+   "S_activate": 4.900576432222111,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -33586,6 +34250,8 @@
     -1.571183716318878,
     -1.8210585204447867
    ],
+   "S_activate": 1.5098984927037569,
+   "activate_supported": false,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -33729,7 +34395,9 @@
     -1.9703499388221601,
     1.6222040911169866
    ],
-   "S_logit_positive": -1.0273130697341626,
+   "S_activate": 4.697721645281756,
+   "activate_supported": true,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -33916,7 +34584,9 @@
     -1.0530914205622373,
     0.3127503644129762
    ],
-   "S_logit_positive": -16.759559098991293,
+   "S_activate": 8.039682664266698,
+   "activate_supported": true,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -33988,6 +34658,8 @@
     -1.5362164427975031,
     1.172555295812191
    ],
+   "S_activate": 0.6248698014719675,
+   "activate_supported": false,
    "S_logit_positive": -9.822749299463261,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -34175,6 +34847,8 @@
     -0.9779603625451909,
     0.23087228166705193
    ],
+   "S_activate": 4.163819929665833,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -34318,6 +34992,8 @@
     -0.5168125405429308,
     0.6378525121388905
    ],
+   "S_activate": 3.080248200341354,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -34497,6 +35173,8 @@
     2.252648707321089,
     0.6973673131674917
    ],
+   "S_activate": -13.5064140088089,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -34676,6 +35354,8 @@
     -2.1954388467258177,
     -2.0870173254956024
    ],
+   "S_activate": -4.775937210489257,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -34741,6 +35421,8 @@
     -2.5385319635530355,
     -1.9917165119669553
    ],
+   "S_activate": 2.3321780033759616,
+   "activate_supported": true,
    "S_logit_positive": -2.513666085392352,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -34928,6 +35610,8 @@
     -2.5867895019715696,
     1.4324961139542163
    ],
+   "S_activate": -17.245638308838384,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -35115,7 +35799,9 @@
     -2.698875740520273,
     0.23087228166705193
    ],
-   "S_logit_positive": -16.759910088937673,
+   "S_activate": -14.896246369064894,
+   "activate_supported": false,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -35302,6 +35988,8 @@
     -2.6601997163462756,
     1.5108537527641719
    ],
+   "S_activate": -4.959263840143464,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -35481,7 +36169,9 @@
     -1.1415575955697463,
     -0.6685286762942118
    ],
-   "S_logit_positive": -9.71397084056684,
+   "S_activate": -9.356736149845691,
+   "activate_supported": false,
+   "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -35660,6 +36350,8 @@
     1.4805791654573444,
     1.018088650076065
    ],
+   "S_activate": 8.987149024898313,
+   "activate_supported": true,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -35803,6 +36495,8 @@
     0.20450657936180636,
     -0.8277902433807465
    ],
+   "S_activate": 2.421407742431177,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -35946,6 +36640,8 @@
     -0.5994249732455701,
     -1.3041645842134169
    ],
+   "S_activate": 4.2750189650674715,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -36125,6 +36821,8 @@
     -1.9086108986272814,
     0.41608797867477715
    ],
+   "S_activate": -1.5276070685035716,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -36312,6 +37010,8 @@
     -0.9058909165457084,
     1.0052970412414055
    ],
+   "S_activate": 5.212065773790985,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -36499,6 +37199,8 @@
     0.7319592460569887,
     0.051286460783457326
    ],
+   "S_activate": 4.75652560627113,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -36526,6 +37228,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -36713,6 +37417,8 @@
     1.554793024248886,
     0.689193759691024
    ],
+   "S_activate": 9.623793243854768,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -36900,6 +37606,8 @@
     -1.1562706223089914,
     0.41049361831947073
    ],
+   "S_activate": 5.109985025226917,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -37087,6 +37795,8 @@
     0.4095063872753854,
     -2.6069151373679906
    ],
+   "S_activate": 3.8818405823122526,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -37114,6 +37824,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -37293,7 +38005,9 @@
     -3.3728436697914916,
     -0.7517720972201642
    ],
-   "S_logit_positive": -9.7139060935866,
+   "S_activate": -1.82675402524865,
+   "activate_supported": false,
+   "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -37480,6 +38194,8 @@
     0.9206961570025013,
     -0.7707684699201898
    ],
+   "S_activate": -7.911479316189422,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -37659,6 +38375,8 @@
     -2.0702093938667043,
     -1.3366486634133081
    ],
+   "S_activate": 2.7003391864898347,
+   "activate_supported": true,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -37838,6 +38556,8 @@
     -0.7081122514636835,
     0.6857074478923292
    ],
+   "S_activate": 0.4844471537850094,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -38025,6 +38745,8 @@
     2.065813631206424,
     -0.2778093881711903
    ],
+   "S_activate": -3.377601736518446,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -38212,7 +38934,9 @@
     0.6833765244015868,
     -1.5138951629214594
    ],
-   "S_logit_positive": -16.75983961984264,
+   "S_activate": -9.489749073724354,
+   "activate_supported": false,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -38399,6 +39123,8 @@
     -0.1507772927115435,
     -3.3958689066454335
    ],
+   "S_activate": -12.14366334054793,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -38586,6 +39312,8 @@
     0.6861260040721804,
     -1.642635928188325
    ],
+   "S_activate": 1.7214341064057166,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -38773,6 +39501,8 @@
     -0.47858742025353584,
     0.22896194512490062
    ],
+   "S_activate": -3.3887214277973454,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -38960,6 +39690,8 @@
     0.541084397898553,
     -2.15526897644375
    ],
+   "S_activate": 7.684310874067617,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -39025,6 +39757,8 @@
     1.1570686924669051,
     -1.229713565222556
    ],
+   "S_activate": 1.3787081262346457,
+   "activate_supported": false,
    "S_logit_positive": -2.513666085392352,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -39212,6 +39946,8 @@
     1.912926394039228,
     1.012752068848971
    ],
+   "S_activate": 5.916013147792794,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -39399,6 +40135,8 @@
     0.9998247112587122,
     2.3360104312132255
    ],
+   "S_activate": -1.8668659027264156,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -39586,6 +40324,8 @@
     0.6512911465467729,
     -0.6951895731478085
    ],
+   "S_activate": 2.517223185854904,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -39765,6 +40505,8 @@
     3.1657622963967667,
     5.412237867582317
    ],
+   "S_activate": 0.14707746514298362,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -39952,7 +40694,9 @@
     1.4060474344643128,
     -1.0990021996143022
    ],
-   "S_logit_positive": -16.75983961984264,
+   "S_activate": 11.430467452976272,
+   "activate_supported": true,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -40139,6 +40883,8 @@
     -1.4867698448343227,
     2.6600846024507945
    ],
+   "S_activate": -10.590042145381547,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -40166,6 +40912,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -40193,6 +40941,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -40372,6 +41122,8 @@
     -2.076559546635099,
     1.6262244640986627
    ],
+   "S_activate": -6.046119762526724,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -40559,6 +41311,8 @@
     -0.9792036302942276,
     1.2553684488007544
    ],
+   "S_activate": -5.212988001879545,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -40702,6 +41456,8 @@
     -0.4332998605169282,
     -1.4638305783587775
    ],
+   "S_activate": 4.797465005963994,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -40889,7 +41645,9 @@
     -1.5104970947182708,
     -1.5306279358560866
    ],
-   "S_logit_positive": -16.759641057795815,
+   "S_activate": 0.0339688774000854,
+   "activate_supported": false,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -41076,7 +41834,9 @@
     -1.4089134902314244,
     -1.0630775650304758
    ],
-   "S_logit_positive": -16.759577258950184,
+   "S_activate": 4.695767447055944,
+   "activate_supported": true,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -41263,6 +42023,8 @@
     1.21555589301511,
     -0.20110528457633892
    ],
+   "S_activate": 10.468504733724762,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -41290,6 +42052,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -41317,6 +42081,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -41496,7 +42262,9 @@
     -2.7508598214189446,
     -0.7960318665568848
    ],
-   "S_logit_positive": -9.714050674658889,
+   "S_activate": -9.24721509868407,
+   "activate_supported": false,
+   "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -41523,6 +42291,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -41710,6 +42480,8 @@
     0.23769894957387613,
     -2.240769328660991
    ],
+   "S_activate": -0.7025832003756799,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -41737,6 +42509,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -41916,6 +42690,8 @@
     -0.06878365942248182,
     -1.2597447685890737
    ],
+   "S_activate": -4.585193955703975,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -42095,6 +42871,8 @@
     -0.3924055981768048,
     0.9885346974742747
    ],
+   "S_activate": 6.539495740416149,
+   "activate_supported": true,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -42122,6 +42900,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -42149,6 +42929,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -42292,6 +43074,8 @@
     -0.6649034849370741,
     -0.21558064937188803
    ],
+   "S_activate": -1.8120122865053596,
+   "activate_supported": false,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -42319,6 +43103,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -42346,6 +43132,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -42533,6 +43321,8 @@
     -1.79369856597487,
     -0.6599433543070746
    ],
+   "S_activate": -0.017207695077557886,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -42712,6 +43502,8 @@
     -1.843204581921224,
     0.7632504011061416
    ],
+   "S_activate": 6.296677818822472,
+   "activate_supported": true,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -42739,6 +43531,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -42926,6 +43720,8 @@
     1.2264026374782726,
     -1.455154343352994
    ],
+   "S_activate": 5.60960137826792,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -43039,6 +43835,8 @@
     -1.6764388534722845,
     1.6255344612270373
    ],
+   "S_activate": -5.0485599492415965,
+   "activate_supported": false,
    "S_logit_positive": 6.297756623733392,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -43066,6 +43864,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -43093,6 +43893,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -43236,6 +44038,8 @@
     0.3944948079375716,
     -0.864015524940187
    ],
+   "S_activate": 7.795322342291358,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -43423,6 +44227,8 @@
     -2.4501542271971863,
     0.6656561252695736
    ],
+   "S_activate": -3.809910081259312,
+   "activate_supported": false,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -43566,7 +44372,9 @@
     1.201840742223836,
     1.135228601171222
    ],
-   "S_logit_positive": -1.027355601783506,
+   "S_activate": 2.4771171085888795,
+   "activate_supported": true,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -43593,6 +44401,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -43620,6 +44430,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -43733,6 +44545,8 @@
     -1.5352427002441196,
     -0.4061539176747479
    ],
+   "S_activate": 2.0694320176448,
+   "activate_supported": true,
    "S_logit_positive": 6.297756623733392,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -43876,6 +44690,8 @@
     -0.032148557613284674,
     1.5610200734637139
    ],
+   "S_activate": 3.8640198876275873,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -43903,6 +44719,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -44046,7 +44864,9 @@
     -0.40409217982249274,
     -0.9628905855287317
    ],
-   "S_logit_positive": -1.0273197313154476,
+   "S_activate": 5.700832166651009,
+   "activate_supported": true,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -44073,6 +44893,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -44100,6 +44922,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -44287,7 +45111,9 @@
     2.448025677405662,
     2.9718735511627075
    ],
-   "S_logit_positive": -16.759559098991293,
+   "S_activate": 9.194695947912901,
+   "activate_supported": true,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -44474,7 +45300,9 @@
     1.0479169467593952,
     0.7200507065455513
    ],
-   "S_logit_positive": -16.75983961984264,
+   "S_activate": 4.422426897614269,
+   "activate_supported": true,
+   "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -44653,6 +45481,8 @@
     0.09010678396885814,
     -1.9238259970978502
    ],
+   "S_activate": -0.12691955843717131,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -44680,6 +45510,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -44823,6 +45655,8 @@
     0.7904525090487773,
     2.3358127939700193
    ],
+   "S_activate": 2.6769062014398557,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -44952,6 +45786,8 @@
     -0.8990032270224241,
     -0.5208754095600457
    ],
+   "S_activate": 7.418960839948203,
+   "activate_supported": true,
    "S_logit_positive": -3.44411603902438,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -45062,6 +45898,8 @@
     -1.1299233707011582,
     0.9465890488010498
    ],
+   "S_activate": 6.994715970916721,
+   "activate_supported": true,
    "S_logit_positive": -13.484178509322176,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -45205,7 +46043,9 @@
     1.8379314928299637,
     1.2992134210437207
    ],
-   "S_logit_positive": -1.027321259883489,
+   "S_activate": 2.6755268402019676,
+   "activate_supported": true,
+   "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -45318,6 +46158,8 @@
     -0.8120323105569319,
     0.7307022306723692
    ],
+   "S_activate": -1.8217105604502146,
+   "activate_supported": false,
    "S_logit_positive": 6.297756623733392,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -45345,6 +46187,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -45372,6 +46216,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -45399,6 +46245,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -45578,6 +46426,8 @@
     -0.8322796837521238,
     -3.2424121600462543
    ],
+   "S_activate": 2.184008576040508,
+   "activate_supported": true,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -45721,6 +46571,8 @@
     1.0551572195215433,
     -1.8084784991414928
    ],
+   "S_activate": 0.012740937409509219,
+   "activate_supported": false,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -45900,7 +46752,9 @@
     -0.08186874896134613,
     -2.622159740430289
    ],
-   "S_logit_positive": -9.713732935117715,
+   "S_activate": 0.16410929846800895,
+   "activate_supported": false,
+   "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -45927,6 +46781,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -46040,6 +46896,8 @@
     1.8236198233168774,
     -1.439934739758609
    ],
+   "S_activate": 4.3713322352940835,
+   "activate_supported": true,
    "S_logit_positive": 6.297756623733392,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -46067,6 +46925,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -46094,6 +46954,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -46121,6 +46983,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -46264,6 +47128,8 @@
     -0.49989907820966545,
     -0.27027833298827
    ],
+   "S_activate": -4.806641190413203,
+   "activate_supported": false,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -46393,6 +47259,8 @@
     1.726987249742984,
     1.4953840680816706
    ],
+   "S_activate": 4.963635280842744,
+   "activate_supported": true,
    "S_logit_positive": -3.44411603902438,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -46536,6 +47404,8 @@
     -1.5064973492320535,
     -0.2648682175852367
    ],
+   "S_activate": 6.505391864829446,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -46667,6 +47537,8 @@
     1.470381615218845,
     -4.275517417125983
    ],
+   "S_activate": 5.1377139397428655,
+   "activate_supported": true,
    "S_logit_positive": -3.1547265963795055,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -46732,6 +47604,8 @@
     0.7337526772661986,
     -0.6802922287956551
    ],
+   "S_activate": -0.9595917933166733,
+   "activate_supported": false,
    "S_logit_positive": -2.513666085392352,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -46845,6 +47719,8 @@
     -1.4168524567266851,
     1.3177262269400547
    ],
+   "S_activate": -0.5729305262379942,
+   "activate_supported": false,
    "S_logit_positive": 6.297756623733392,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -47024,6 +47900,8 @@
     -1.1804361746398462,
     -3.217649799308064
    ],
+   "S_activate": 5.855062372145844,
+   "activate_supported": true,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -47167,6 +48045,8 @@
     -0.32668190357580235,
     -0.1577313452359328
    ],
+   "S_activate": 4.0087513698687784,
+   "activate_supported": true,
    "S_logit_positive": -1.027289727350506,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -47354,6 +48234,8 @@
     0.3928771656627593,
     0.7712670690817209
    ],
+   "S_activate": 6.728598764530778,
+   "activate_supported": true,
    "S_logit_positive": -16.759706547452215,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -47381,6 +48263,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47408,6 +48292,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47539,7 +48425,9 @@
     -0.8675422060903976,
     1.4511834592439212
    ],
-   "S_logit_positive": -3.154670483018936,
+   "S_activate": 3.1780631343000594,
+   "activate_supported": true,
+   "S_logit_positive": -3.1547265963795055,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": true,
@@ -47680,6 +48568,8 @@
     -0.04881967534715464,
     -1.7601655917929613
    ],
+   "S_activate": 8.82245663754814,
+   "activate_supported": true,
    "S_logit_positive": -5.275136041430479,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -47707,6 +48597,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47734,6 +48626,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47913,6 +48807,8 @@
     -2.1227902750329357,
     -1.8233310341335687
    ],
+   "S_activate": -0.42277477229224664,
+   "activate_supported": false,
    "S_logit_positive": -9.713890029641943,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -47940,6 +48836,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47967,6 +48865,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -47994,6 +48894,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -48021,6 +48923,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -48048,6 +48952,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -48075,6 +48981,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -48188,6 +49096,8 @@
     -1.9974432277349246,
     1.8870558944109674
    ],
+   "S_activate": 6.503752593798842,
+   "activate_supported": true,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -48215,6 +49125,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -48242,6 +49154,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -48314,6 +49228,8 @@
     -1.8745818436653818,
     0.43931413458932933
    ],
+   "S_activate": 5.254551548470826,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -48457,6 +49373,8 @@
     -1.5242834180607614,
     -0.19519948757785527
    ],
+   "S_activate": 8.565583354221085,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -48600,6 +49518,8 @@
     -1.403848142003922,
     -0.9442707054751011
    ],
+   "S_activate": 9.620777474624417,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -48672,6 +49592,8 @@
     1.464220866242105,
     -0.9057272877176211
    ],
+   "S_activate": 8.63634894395069,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -48815,6 +49737,8 @@
     3.112817189102273,
     -3.440147286181436
    ],
+   "S_activate": 3.842822546965823,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -48958,6 +49882,8 @@
     0.0710917494733362,
     -3.942981800024699
    ],
+   "S_activate": 6.4578946102410075,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49030,6 +49956,8 @@
     0.45176922804644976,
     -0.2748490531662249
    ],
+   "S_activate": 4.822841946653964,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49102,6 +50030,8 @@
     -1.8346274475416007,
     -1.1472883567901926
    ],
+   "S_activate": 7.616174172375979,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49215,6 +50145,8 @@
     -0.23268560789270454,
     -1.1955628384755268
    ],
+   "S_activate": 4.495499250225203,
+   "activate_supported": true,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49358,6 +50290,8 @@
     -1.794540136933266,
     -1.2145510782372344
    ],
+   "S_activate": 7.34964917082416,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49537,6 +50471,8 @@
     -0.8568789838213009,
     0.10755206392397974
    ],
+   "S_activate": -4.402201493194565,
+   "activate_supported": false,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -49602,6 +50538,8 @@
     -1.0651684870776665,
     -2.5669942251917597
    ],
+   "S_activate": 3.8579903436826526,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49667,6 +50605,8 @@
     -1.9213592888889977,
     -2.235907836363007
    ],
+   "S_activate": 5.048693712772742,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49694,6 +50634,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -49766,6 +50708,8 @@
     -1.3566353700853884,
     1.6329612020760118
    ],
+   "S_activate": 6.306328941055005,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49793,6 +50737,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -49820,6 +50766,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -49847,6 +50795,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -49874,6 +50824,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -49939,6 +50891,8 @@
     -1.5105562883685464,
     0.3238110747399173
    ],
+   "S_activate": 3.3769547159414044,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -49966,6 +50920,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -49993,6 +50949,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -50136,6 +51094,8 @@
     0.9084274873042766,
     -1.558758459982177
    ],
+   "S_activate": 1.003933505170584,
+   "activate_supported": false,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -50279,6 +51239,8 @@
     -1.9673002774399104,
     -0.46679514090794977
    ],
+   "S_activate": 4.921198760364456,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -50326,6 +51288,8 @@
     -0.659367005407544,
     1.761403870068622
    ],
+   "S_activate": 0.6263586243192082,
+   "activate_supported": false,
    "S_logit_positive": 4.434772447809829,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -50353,6 +51317,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -50496,6 +51462,8 @@
     -0.6910298966098399,
     0.697741362259837
    ],
+   "S_activate": 7.441871925776882,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -50683,6 +51651,8 @@
     0.7145022359301642,
     1.4733175154513634
    ],
+   "S_activate": 23.685377585014145,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -50870,6 +51840,8 @@
     -0.7446695379122545,
     1.1191328084514363
    ],
+   "S_activate": 3.780431842392654,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -51057,6 +52029,8 @@
     -0.3410824460303611,
     -1.6152773258464506
    ],
+   "S_activate": -3.987704051053251,
+   "activate_supported": false,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -51084,6 +52058,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -51263,6 +52239,8 @@
     -1.927199148039766,
     2.028164523565288
    ],
+   "S_activate": 12.592768293257885,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -51328,6 +52306,8 @@
     -1.504152745240789,
     -0.29153165755568133
    ],
+   "S_activate": 1.8852188124612932,
+   "activate_supported": false,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -51355,6 +52335,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -51382,6 +52364,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -51525,6 +52509,8 @@
     -0.2035496993947657,
     -0.2713457046567985
    ],
+   "S_activate": 2.383050821848685,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -51712,6 +52698,8 @@
     1.1519564342565667,
     0.7145022359301642
    ],
+   "S_activate": 23.95911201847414,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -51899,7 +52887,9 @@
     0.1360993125485797,
     1.823492355009293
    ],
-   "S_logit_positive": 0.4779567216170615,
+   "S_activate": 0.09515423383245739,
+   "activate_supported": false,
+   "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": false,
@@ -52086,6 +53076,8 @@
     1.4429317173608862,
     -1.3622256884563917
    ],
+   "S_activate": 19.845536125829646,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -52273,6 +53265,8 @@
     1.938847255354541,
     -1.9808671592328049
    ],
+   "S_activate": 17.79245734968104,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -52460,6 +53454,8 @@
     -1.4523984222959156,
     -0.641786884447411
    ],
+   "S_activate": 8.711211389847012,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -52487,6 +53483,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -52597,6 +53595,8 @@
     1.0,
     0.1305805467191255
    ],
+   "S_activate": 15.947813833528715,
+   "activate_supported": true,
    "S_logit_positive": 1.7577209436735748,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -52624,6 +53624,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -52767,6 +53769,8 @@
     -1.26147952201338,
     -1.8034818592201853
    ],
+   "S_activate": 3.431648336329565,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -52946,6 +53950,8 @@
     -0.31329442438446164,
     -3.002339018145154
    ],
+   "S_activate": 17.60520265881269,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -52993,6 +53999,8 @@
     1.1763903765519468,
     0.5026114617215102
    ],
+   "S_activate": 4.108088513934767,
+   "activate_supported": true,
    "S_logit_positive": 4.434772447809829,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -53020,6 +54028,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -53199,6 +54209,8 @@
     1.0680042129837026,
     0.1863831013969308
    ],
+   "S_activate": -6.468077219885279,
+   "activate_supported": false,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -53386,6 +54398,8 @@
     1.2786904847929583,
     -2.0555412142080516
    ],
+   "S_activate": 11.153584081536314,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -53413,6 +54427,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -53440,6 +54456,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -53627,6 +54645,8 @@
     1.5547693319180027,
     -0.9055808888674173
    ],
+   "S_activate": 21.003322322905895,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -53692,6 +54712,8 @@
     -0.2991469026864545,
     1.1298468574546952
    ],
+   "S_activate": 3.1062211005728315,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -53879,7 +54901,9 @@
     1.0577303678615553,
     0.5423053116021275
    ],
-   "S_logit_positive": 0.47779915633263453,
+   "S_activate": -2.6686422631012494,
+   "activate_supported": false,
+   "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": true,
@@ -53944,6 +54968,8 @@
     -1.0386187955663329,
     -1.3760193849043443
    ],
+   "S_activate": 4.335535934826065,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -54123,6 +55149,8 @@
     -0.4456721815224556,
     0.40570816909274826
    ],
+   "S_activate": 2.208965860706244,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -54310,6 +55338,8 @@
     0.1870462446819022,
     -2.3373084965807958
    ],
+   "S_activate": 12.14748522409848,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -54453,6 +55483,8 @@
     -0.045266944537939266,
     1.6785730974380477
    ],
+   "S_activate": -6.226702199177237,
+   "activate_supported": false,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -54566,6 +55598,8 @@
     1.526756340523137,
     1.0044627282304275
    ],
+   "S_activate": 7.561158423509924,
+   "activate_supported": true,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -54753,6 +55787,8 @@
     0.7893261346022675,
     -1.1037192975042789
    ],
+   "S_activate": 13.515602706494114,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -54780,6 +55816,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -54959,6 +55997,8 @@
     -2.672101784896302,
     1.5435450849856989
    ],
+   "S_activate": 16.81809755144668,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -55138,6 +56178,8 @@
     -3.161116515849981,
     0.27077858245928627
    ],
+   "S_activate": -5.755353378013907,
+   "activate_supported": false,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -55325,6 +56367,8 @@
     0.3346746669287329,
     -0.8950964611741944
    ],
+   "S_activate": 10.458329626175875,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -55512,6 +56556,8 @@
     -0.5829712922860537,
     -2.5671965017624645
    ],
+   "S_activate": 9.748898886476047,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -55655,7 +56701,9 @@
     -2.143624213907584,
     -0.045266944537939266
    ],
-   "S_logit_positive": 18.925671549697096,
+   "S_activate": 2.269881819166912,
+   "activate_supported": true,
+   "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": false,
@@ -55842,6 +56890,8 @@
     1.099130087455872,
     -1.099849666321656
    ],
+   "S_activate": 12.949979801706707,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -56029,6 +57079,8 @@
     1.543540885745279,
     -0.6197441395040031
    ],
+   "S_activate": 20.913410789073065,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -56056,6 +57108,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -56235,6 +57289,8 @@
     -1.4316628704123013,
     1.5284779741710819
    ],
+   "S_activate": 2.48713125117384,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -56422,6 +57478,8 @@
     -3.260425145022875,
     -0.5909889152050377
    ],
+   "S_activate": -1.6798632305438304,
+   "activate_supported": false,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -56609,6 +57667,8 @@
     -1.1480986434923968,
     1.457870866802798
    ],
+   "S_activate": 23.91161190677322,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -56796,7 +57856,9 @@
     1.6066561967341502,
     0.39282444142935036
    ],
-   "S_logit_positive": 0.4779567216170615,
+   "S_activate": 19.804378508876667,
+   "activate_supported": true,
+   "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": true,
@@ -56975,6 +58037,8 @@
     -1.2416406146403216,
     1.0680042129837026
    ],
+   "S_activate": 24.164419958975603,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -57154,6 +58218,8 @@
     -1.7053154250829141,
     -1.9989055789425274
    ],
+   "S_activate": 14.096138709570855,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -57333,6 +58399,8 @@
     -0.6669670797700933,
     1.111119647369485
    ],
+   "S_activate": 20.65415574844718,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -57360,6 +58428,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -57503,6 +58573,8 @@
     -1.3478291989810962,
     -1.584327091277328
    ],
+   "S_activate": 2.436578624567253,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -57646,6 +58718,8 @@
     -2.6052016544368266,
     -1.0712121454085464
    ],
+   "S_activate": -2.0332301841197884,
+   "activate_supported": false,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -57789,7 +58863,9 @@
     0.4387588499538853,
     -0.501308137578918
    ],
-   "S_logit_positive": 18.925671549697096,
+   "S_activate": 5.389824565758644,
+   "activate_supported": true,
+   "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": true,
@@ -57976,6 +59052,8 @@
     0.8168042039906416,
     1.5970160651670113
    ],
+   "S_activate": 18.111434346295756,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58003,6 +59081,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -58030,6 +59110,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -58077,6 +59159,8 @@
     0.183991324823298,
     0.7996814219408305
    ],
+   "S_activate": 2.8866872452829737,
+   "activate_supported": true,
    "S_logit_positive": 4.434772447809829,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58104,6 +59188,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -58176,6 +59262,8 @@
     0.34825030589821404,
     -2.4573038667178717
    ],
+   "S_activate": 3.917932563126112,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58289,6 +59377,8 @@
     1.6298095419482264,
     -1.236730442046245
    ],
+   "S_activate": 4.000642387782641,
+   "activate_supported": true,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58361,6 +59451,8 @@
     -1.6951709620964523,
     1.3054932159784158
    ],
+   "S_activate": 8.594654322560995,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58474,6 +59566,8 @@
     -0.7023155239744553,
     -3.681516515471991
    ],
+   "S_activate": 4.643799297821994,
+   "activate_supported": true,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58521,6 +59615,8 @@
     1.2135905443595731,
     -0.4710729406093335
    ],
+   "S_activate": 1.0458099172267412,
+   "activate_supported": false,
    "S_logit_positive": 4.434772447809829,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58548,6 +59644,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -58727,7 +59825,9 @@
     -3.4470689565106434,
     1.5752313838869025
    ],
-   "S_logit_positive": -4.993156685346138,
+   "S_activate": -3.3763815523560883,
+   "activate_supported": false,
+   "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -58792,6 +59892,8 @@
     0.2899209455861217,
     -1.3559110867010506
    ],
+   "S_activate": 2.35475565727425,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58857,6 +59959,8 @@
     0.28830514824685366,
     0.7362415398878113
    ],
+   "S_activate": 3.380922665758371,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -58884,6 +59988,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -58911,6 +60017,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59090,6 +60198,8 @@
     -0.22405220678029167,
     0.9243730137242417
    ],
+   "S_activate": -6.307040961777064,
+   "activate_supported": false,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -59117,6 +60227,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59296,6 +60408,8 @@
     -1.1791280591094149,
     1.4912609048316119
    ],
+   "S_activate": 13.190662861439744,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -59323,6 +60437,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59436,6 +60552,8 @@
     -0.5149064539161191,
     -1.1130786975499922
    ],
+   "S_activate": 3.8915855850530705,
+   "activate_supported": true,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -59463,6 +60581,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59510,6 +60630,8 @@
     0.03458636632282805,
     -0.3283532771970478
    ],
+   "S_activate": -0.28626118539919615,
+   "activate_supported": false,
    "S_logit_positive": 4.434772447809829,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -59641,6 +60763,8 @@
     -1.6016901465505813,
     -0.4608177925307614
    ],
+   "S_activate": -1.5121663076031968,
+   "activate_supported": false,
    "S_logit_positive": 13.94410270031282,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -59668,6 +60792,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59847,6 +60973,8 @@
     2.0079493908017554,
     -1.7376715050778682
    ],
+   "S_activate": -8.679546241696219,
+   "activate_supported": false,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -59874,6 +61002,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59901,6 +61031,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59928,6 +61060,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59955,6 +61089,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -59982,6 +61118,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -60009,6 +61147,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -60036,6 +61176,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -60167,6 +61309,8 @@
     0.4619518733810641,
     -1.5821323172971802
    ],
+   "S_activate": 5.9874548537990115,
+   "activate_supported": true,
    "S_logit_positive": 13.94410270031282,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -60310,6 +61454,8 @@
     -0.44717164194880515,
     1.3014930762748784
    ],
+   "S_activate": 2.2515431134916786,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -60453,6 +61599,8 @@
     -1.1322335104624153,
     -0.5664910045265382
    ],
+   "S_activate": 1.8811887421492237,
+   "activate_supported": false,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -60596,7 +61744,9 @@
     -1.0655610421597803,
     0.8266630619408403
    ],
-   "S_logit_positive": 18.925671549697096,
+   "S_activate": 3.5849513514910902,
+   "activate_supported": true,
+   "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": true,
@@ -60783,7 +61933,9 @@
     0.6993763762675183,
     -0.9682746152868119
    ],
-   "S_logit_positive": 0.4777350662999784,
+   "S_activate": 16.878704682775606,
+   "activate_supported": true,
+   "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": true,
@@ -60810,6 +61962,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -60951,6 +62105,8 @@
     -1.755378394695036,
     1.6867658065073903
    ],
+   "S_activate": 8.381256145312978,
+   "activate_supported": true,
    "S_logit_positive": 22.358557257944774,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -61130,7 +62286,9 @@
     1.2915335638033298,
     -1.143693992554697
    ],
-   "S_logit_positive": -4.9931785586792,
+   "S_activate": 4.2666728222018415,
+   "activate_supported": true,
+   "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
    "supported": false,
@@ -61157,6 +62315,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -61336,6 +62496,8 @@
     0.7194422404059698,
     -3.2972601473628775
    ],
+   "S_activate": -3.2114228096987634,
+   "activate_supported": false,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -61408,6 +62570,8 @@
     -2.0213770325011473,
     1.8157953782285083
    ],
+   "S_activate": 4.770142187591582,
+   "activate_supported": true,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -61595,7 +62759,9 @@
     0.1360993125485797,
     -0.9047208907969322
    ],
-   "S_logit_positive": 0.47779915633263453,
+   "S_activate": -8.73896954331703,
+   "activate_supported": false,
+   "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
    "supported": false,
@@ -61738,6 +62904,8 @@
     1.7072202986221632,
     -1.4353881452642931
    ],
+   "S_activate": -1.5216968126345838,
+   "activate_supported": false,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -61765,6 +62933,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -61792,6 +62962,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -61933,6 +63105,8 @@
     1.8595939281280391,
     0.5082436305501031
    ],
+   "S_activate": 10.169121104934952,
+   "activate_supported": true,
    "S_logit_positive": 22.358557257944774,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -62074,6 +63248,8 @@
     -0.020525108041104807,
     1.706746291997789
    ],
+   "S_activate": 13.582600791139715,
+   "activate_supported": true,
    "S_logit_positive": 22.358557257944774,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -62146,6 +63322,8 @@
     1.9032991123004017,
     -2.516262175352197
    ],
+   "S_activate": -4.340864422720733,
+   "activate_supported": false,
    "S_logit_positive": 16.507845459857393,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -62325,6 +63503,8 @@
     -2.409716489224424,
     -0.5216623647266796
    ],
+   "S_activate": 8.380362550586737,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -62512,6 +63692,8 @@
     -1.9677999921675935,
     -1.0669405029385841
    ],
+   "S_activate": -2.9620344537777203,
+   "activate_supported": false,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -62699,6 +63881,8 @@
     -1.5086472806157103,
     0.6979252259494586
    ],
+   "S_activate": -0.9350755262090994,
+   "activate_supported": false,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -62764,6 +63948,8 @@
     0.18013850211736496,
     0.8170415192237015
    ],
+   "S_activate": 3.1617692754046294,
+   "activate_supported": true,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -62791,6 +63977,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -62934,6 +64122,8 @@
     -1.7535085240380017,
     0.6155714470144786
    ],
+   "S_activate": 6.315428003916064,
+   "activate_supported": true,
    "S_logit_positive": 18.925555800899673,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -63113,6 +64303,8 @@
     1.5763485224709104,
     -2.2129365604893687
    ],
+   "S_activate": 22.508144920687286,
+   "activate_supported": true,
    "S_logit_positive": -4.993199981156531,
    "positive_defined": true,
    "positive_wrong_sign": true,
@@ -63178,6 +64370,8 @@
     0.6270243376681289,
     -1.197074696953839
    ],
+   "S_activate": -0.8582565700738233,
+   "activate_supported": false,
    "S_logit_positive": 3.9432970378634167,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -63365,6 +64559,8 @@
     0.38617819841044365,
     -0.425781454234197
    ],
+   "S_activate": 21.025963979889706,
+   "activate_supported": true,
    "S_logit_positive": 0.4778958123459446,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -63478,6 +64674,8 @@
     -0.5408609658565424,
     -0.021866091933327364
    ],
+   "S_activate": -6.913861956051946,
+   "activate_supported": false,
    "S_logit_positive": 11.534813141127692,
    "positive_defined": true,
    "positive_wrong_sign": false,
@@ -63505,6 +64703,8 @@
     NaN,
     NaN
    ],
+   "S_activate": NaN,
+   "activate_supported": false,
    "S_logit_positive": NaN,
    "positive_defined": false,
    "positive_wrong_sign": false,
@@ -63662,6 +64862,38 @@
   }
  ],
  "paired": 405,
+ "untestable": 191,
+ "testable": 409,
+ "car_curve": {
+  "10": {
+   "n": 40,
+   "car": 0.55,
+   "control": 0.0
+  },
+  "25": {
+   "n": 100,
+   "car": 0.55,
+   "control": 0.0
+  },
+  "50": {
+   "n": 200,
+   "car": 0.52,
+   "control": 0.0
+  },
+  "100": {
+   "n": 392,
+   "car": 0.45408163265306123,
+   "control": 0.00510204081632653
+  },
+  "150": {
+   "n": 405,
+   "car": 0.45185185185185184,
+   "control": 0.0049382716049382715
+  }
+ },
+ "car_activate": 0.6469135802469136,
+ "car_both": 0.4,
+ "agree_given_ablation": 0.8852459016393442,
  "car_at_k": 0.45185185185185184,
  "car_control": 0.0049382716049382715,
  "delta_car": 0.4469135802469136,
@@ -63748,35 +64980,6 @@
   "splits": "60/20/20 D_sae/D_guard/D_cons",
   "support_rule": "S > 1.96 on sequence-level contrasts and dLC > 0"
  },
- "testable": 409,
- "untestable": 191,
  "positive_defined": 405,
- "positive_wrong_sign": 0.2740740740740741,
- "car_curve": {
-  "10": {
-   "n": 40,
-   "car": 0.55,
-   "control": 0.0
-  },
-  "25": {
-   "n": 100,
-   "car": 0.55,
-   "control": 0.0
-  },
-  "50": {
-   "n": 200,
-   "car": 0.52,
-   "control": 0.0
-  },
-  "100": {
-   "n": 392,
-   "car": 0.45408163265306123,
-   "control": 0.00510204081632653
-  },
-  "150": {
-   "n": 405,
-   "car": 0.45185185185185184,
-   "control": 0.0049382716049382715
-  }
- }
+ "positive_wrong_sign": 0.2740740740740741
 }

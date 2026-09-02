@@ -75,7 +75,11 @@ if ex:
         "mechanism/external_dysts.json", cl == 124)
     row("empty reduction pays", pay, "mechanism/external_dysts.json", pay == 0)
     row("its best pay score", f"{mx:+.3f}", "mechanism/external_dysts.json", mx < 0.50)
-    row("real candidate closes", f"{sl} / {len(ex)}", "mechanism/external_dysts.json", sl == 1)
+    # Was 1 of 129 while acceptance took min(derived, learned); under the learned-only rule the
+    # one system that closed (NuclearQuadrupole, learned 0.272 against a 0.25 threshold) no
+    # longer does. The proposer, not the guard: a linear projection onto slow eigen-directions
+    # is the wrong object for a chaotic attractor.
+    row("real candidate closes", f"{sl} / {len(ex)}", "mechanism/external_dysts.json", sl == 0)
 
 # ---------------------------------------------------------------- labelled benchmark
 print("\nLABELLED BENCHMARK (built here; ground truth by construction)")

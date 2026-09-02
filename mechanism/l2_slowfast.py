@@ -19,6 +19,11 @@ from __future__ import annotations
 
 import numpy as np
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from l2_coarse import pay_score          # noqa: E402
+
 NS, NF_ = 4, 8                     # slow variables, fast variables
 DIM = NS + NF_
 
@@ -86,16 +91,18 @@ def observables(z):
 
 
 def pays(rhs, Q, z0s, steps, dt):
-    """Guard 2 -- does the coarse state still carry the fine observables? Fit-free."""
+    """Guard 2 -- does the coarse state still carry the fine observables? Fit-free.
+
+    The arithmetic is imported from l2_coarse rather than restated, so this testbed and the
+    external ones cannot drift apart. It had its own copy until the score was whitened.
+    """
     Y, Yh = [], []
     for z0 in z0s:
         T = traj(rhs, z0, steps, dt)
         for z in T:
             Y.append(observables(z))
             Yh.append(observables(np.real(Q @ (Q.conj().T @ z))))
-    Y, Yh = np.array(Y), np.array(Yh)
-    den = float(np.sum((Y - Y.mean(0))**2))
-    return float(np.clip(1 - float(np.sum((Y-Yh)**2)) / max(den, 1e-12), -1, 1))
+    return pay_score(np.array(Y), np.array(Yh))
 
 
 if __name__ == "__main__":
