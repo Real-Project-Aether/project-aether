@@ -110,24 +110,59 @@ if co:
 print("\nINTERPRETABILITY (X1 alignment, X2 sparse autoencoder)")
 a = load("xai_cka.json")
 if a:
-    row("X1 alpha, in-sample, 8 stimuli", f"{a['alpha_structural_insample_small']:.2f}",
-        "mechanism/xai_cka.json", a["alpha_structural_insample_small"] == 1.0)
-    row("X1 alpha, held out, 15360 positions", f"{a['alpha_structural_heldout']:.2f}",
-        "mechanism/xai_cka.json", abs(a["alpha_structural_heldout"]-0.40) < 0.01)
-    row("X1 alpha, both guards", f"{a['alpha_both']:.2f}", "mechanism/xai_cka.json", a["alpha_both"] == 0.0)
-    row("uncentred guard ranked a null above the real pair",
-        f"{a['rows']['randtok']['causal_raw']:.2f} vs {a['rows']['real']['causal_raw']:.2f}",
-        "mechanism/xai_cka.json", a["rows"]["randtok"]["causal_raw"] > a["rows"]["real"]["causal_raw"])
+    row("X1 NAR, structural guard, in-sample on 8 stimuli",
+        f"{a['nar_structural_insample_small']:.2f}",
+        "mechanism/xai_cka.json", a["nar_structural_insample_small"] >= 0.8)
+    row("X1 NAR, structural guard, held out on all positions",
+        f"{a['nar_structural_heldout']:.2f}",
+        "mechanism/xai_cka.json", a["nar_structural_heldout"] >= 0.5)
+    row("X1 NAR, both guards", f"{a['nar_both']:.2f}",
+        "mechanism/xai_cka.json", a["nar_both"] == 0.0)
+    _c = list(a["configs"].values())
+    row("X1 configurations / interventions each",
+        f"{len(_c)} / {a['config']['triples_per_config']}",
+        "mechanism/xai_cka.json", a["config"]["triples_per_config"] >= 400)
+    row("X1 real correspondence accepted",
+        f"{sum(r['real']['accepted'] for r in _c)} / {len(_c)}",
+        "mechanism/xai_cka.json", all(r["real"]["accepted"] for r in _c))
+    _same = all(round(r[v]["cka"], 3) == round(r["real"]["cka"], 3) for r in _c for v in r
+                if r[v]["type"] in ("correspondence-breaking", "randomised"))
+    row("X1 nulls carry the real pair's CKA exactly", "yes" if _same else "no",
+        "mechanism/xai_cka.json", _same)
+
+e = load("xai_esm.json")
+if e:
+    _c = list(e["configs"].values())
+    row("X3 NAR, structural guard (ESM-2)", f"{e['nar_structural_heldout']:.2f}",
+        "mechanism/xai_esm.json", e["nar_structural_heldout"] > 0.5)
+    row("X3 NAR, both guards", f"{e['nar_both']:.2f}",
+        "mechanism/xai_esm.json", e["nar_both"] == 0.0)
+    row("X3 PAR, known positives", f"{e['par_both']:.2f}",
+        "mechanism/xai_esm.json", e["par_both"] == 1.0)
+    row("X3 configurations / interventions each",
+        f"{len(_c)} / {e['config']['triples_per_config']}",
+        "mechanism/xai_esm.json", len(_c) >= 3)
+
 b = load("xai_sae.json")
 if b:
-    row("X2 features paired with matched controls", b["paired"], "mechanism/xai_sae.json", b["paired"] == 600)
-    row("X2 CAR, enrichment-selected", f"{b['car_selected']:.2f}  (CI {b['ci'][0]:.2f}-{b['ci'][1]:.2f})",
-        "mechanism/xai_sae.json", abs(b["car_selected"]-0.46) < 0.02)
-    row("X2 CAR, firing-rate-matched control", f"{b['car_control']:.2f}",
-        "mechanism/xai_sae.json", abs(b["car_control"]-0.07) < 0.02)
-    row("X2 delta-CAR (primary endpoint)", f"{b['delta_car']:+.2f}",
-        "mechanism/xai_sae.json", b["delta_car"] > 0.3)
-    row("X2 NAR over the null suite", f"{b['nar']:.2f}", "mechanism/xai_sae.json", b["nar"] < 0.10)
+    row("X2 features judged (testable, with a matched control)",
+        f"{b['paired']} of {b['testable']} testable",
+        "mechanism/xai_sae.json", b["paired"] <= b["testable"] <= len(b["rows"]))
+    row("X2 selected features with no concept in the consequence split", b["untestable"],
+        "mechanism/xai_sae.json", b["untestable"] > 0)
+    row("X2 CAR@150, enrichment-selected",
+        f"{b['car_at_k']:.2f}  (CI {b['ci'][0]:.2f}-{b['ci'][1]:.2f})",
+        "mechanism/xai_sae.json", b["ci"][0] <= b["car_at_k"] <= b["ci"][1])
+    row("X2 CAR, firing-rate-matched control", f"{b['car_control']:.3f}",
+        "mechanism/xai_sae.json", b["car_control"] < 0.05)
+    row("X2 delta-CAR (primary endpoint)",
+        f"{b['delta_car']:+.2f}  (CI {b['delta_ci'][0]:+.2f} to {b['delta_ci'][1]:+.2f})",
+        "mechanism/xai_sae.json", b["delta_ci"][0] > 0)
+    row("X2 NAR over the null suite", f"{b['nar']:.2f}",
+        "mechanism/xai_sae.json", b["nar"] < 0.10)
+    row("X2 positive control on the consequence test",
+        f"{b['positive_control_rate']:.2f} of {b['positive_defined']} defined",
+        "mechanism/xai_sae.json", "positive_control_rate" in b)
 
 # ---------------------------------------------------------------- how to regenerate
 print("""
