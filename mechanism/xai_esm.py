@@ -24,8 +24,8 @@ Guards, both imported from `xai_cka` rather than reimplemented, so this is the s
 Candidates are typed. Nulls must be refused; positives must be accepted, which is what makes NAR
 interpretable -- a guard that refuses everything scores NAR 0 and is useless:
 
-    identity          POSITIVE   the same model and layer, W = I. Cannot fail unless the
-                                 harness is broken, which is what it is there to check.
+    identity          POSITIVE   the same model and layer, W = I. Fails only if the harness
+                                 is broken, so it serves as a harness check.
     adjacent          POSITIVE   the same model, next layer. Must be accepted.
     real              the claim under test: a genuine correspondence between two scales
     permuted_pairs    NULL       W fitted on shuffled residue pairings: same marginals, no pairing

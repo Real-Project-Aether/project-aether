@@ -299,8 +299,8 @@ def run_config(A_name, LA, B_name, LB, log):
 
     # name -> (map, means, held-out target claimed, model patched, LAYER patched, donor shift).
     # The two positives make PAR measurable: without them NAR is uninterpretable, since a guard
-    # that refuses everything scores NAR 0. `identity` cannot fail unless the harness is broken,
-    # which is what it is for; `adjacent` is a real correspondence that must be found.
+    # that refuses everything scores NAR 0. The identity map fails only if the harness is broken,
+    # so it checks the harness; the adjacent layer is a real correspondence that must be found.
     CANDS = {
         "identity":         (torch.eye(dA), A_fit.mean(0, keepdim=True),
                              A_fit.mean(0, keepdim=True), A_held, A, LA, 0),

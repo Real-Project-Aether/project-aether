@@ -166,6 +166,27 @@ if xk.exists() and "configs" in json.loads(xk.read_text()):
               for v in r if v != "real"),
           "AUROC recorded for every null in every configuration")
 
+xf = ROOT / "mechanism" / "xai_families.json"
+check("null families are run, not only hand-written nulls", xf.exists(),
+      "fresh draws from each correspondence-breaking family")
+if xf.exists():
+    d = json.loads(xf.read_text())
+    rows = [r for v in d["pairs"].values() for r in v["rows"]]
+    check("families: the structural guard accepts every draw",
+          all(r["guard1"] for r in rows),
+          f"{sum(r['guard1'] for r in rows)}/{len(rows)} draws pass guard 1")
+    check("families: the pair accepts no draw",
+          not any(r["accepted"] for r in rows),
+          f"AnyNullPass = {max(v['any_null_pass'] for v in d['pairs'].values())} "
+          f"over {len(rows)} draws")
+    check("families: no null approaches the causal threshold",
+          max(r["causal_median"] for r in rows) < 0.20,
+          f"best null {max(r['causal_median'] for r in rows):.3f} against a 0.20 threshold")
+    check("families: enough draws per family to be a rate",
+          d["n_draw_per_family"] >= 20 and len(d["pairs"]) >= 2,
+          f"{d['n_draw_per_family']} draws x {len(d['config']['families'])} families "
+          f"x {len(d['pairs'])} model pairs")
+
 xe = ROOT / "mechanism" / "xai_esm.json"
 check("X3: the audit runs on a scientific foundation model", xe.exists(),
       "ESM-2 protein language models, three scale pairs")
@@ -205,8 +226,8 @@ if xs.exists():
     check("X2: the interval contains its own point estimate",
           d["ci"][0] <= d["car_at_k"] <= d["ci"][1],
           f"CAR {d['car_at_k']:.2f} in [{d['ci'][0]:.2f}, {d['ci'][1]:.2f}]")
-    # ANALYSIS.md, section 7: treating the features as independent Bernoulli trials was wrong and
-    # "the new interval will be wider and that is the correct direction". This asserts that.
+    # ANALYSIS.md section 7 requires the clustered interval to be wider than the interval that
+    # treats the features as independent Bernoulli trials.
     _p, _n = d["car_at_k"], d["paired"]
     _naive = 1.96 * (_p * (1 - _p) / _n) ** 0.5
     check("X2: clustering widens the interval, as the frozen spec said it must",
@@ -247,8 +268,8 @@ check("the model-server requirement is stated", "11434" in readme and "VLLM_MODE
 
 # --- this file must not repeat itself ---------------------------------------------------------
 # Three times a block was spliced into this file twice over, once silently swallowing the
-# positive-suite assertions in between. A duplicated check is worse than a missing one: it inflates
-# the count while testing nothing new.
+# positive-suite assertions in between. A duplicated check inflates the count while testing
+# nothing new.
 import re as _re, collections as _c                                              # noqa: E402
 _names = _re.findall(r'check\(\s*(f?"[^"]*")', pathlib.Path(__file__).read_text())
 _dups = sorted(n for n, c in _c.Counter(_names).items() if c > 1)

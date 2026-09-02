@@ -138,6 +138,19 @@ if co:
     mac("coordIdentical", len(fin))
     mac("coordTranslatedPct", f"{100*co['frac_translated']:.0f}\\%")
 
+fam = load("xai_families.json")
+if fam:
+    _rows = [r for v in fam["pairs"].values() for r in v["rows"]]
+    mac("FamDraws", len(_rows))
+    mac("FamPerFamily", fam["n_draw_per_family"])
+    mac("FamFamilies", len(fam["config"]["families"]))
+    mac("FamPairs", len(fam["pairs"]))
+    mac("FamInterventions", fam["config"]["interventions_per_draw"])
+    mac("FamNARone", f"{sum(r['guard1'] for r in _rows)/len(_rows):.2f}")
+    mac("FamNARboth", f"{sum(r['accepted'] for r in _rows)/len(_rows):.2f}")
+    mac("FamWorstCausal", f"{max(r['causal_median'] for r in _rows):.2f}")
+    mac("FamAnyNullPass", max(v["any_null_pass"] for v in fam["pairs"].values()))
+
 e = load("xai_esm.json")
 if e and "configs" in e:
     corr_audit(e, "Xthree")

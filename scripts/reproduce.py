@@ -143,6 +143,20 @@ if e:
         f"{len(_c)} / {e['config']['triples_per_config']}",
         "mechanism/xai_esm.json", len(_c) >= 3)
 
+f = load("xai_families.json")
+if f:
+    _r = [r for v in f["pairs"].values() for r in v["rows"]]
+    row("null-family draws (3 families x 2 model pairs)", len(_r),
+        "mechanism/xai_families.json", len(_r) >= 100)
+    row("families: NAR, structural guard",
+        f"{sum(r['guard1'] for r in _r)/len(_r):.2f}",
+        "mechanism/xai_families.json", all(r["guard1"] for r in _r))
+    row("families: NAR, both guards", f"{sum(r['accepted'] for r in _r)/len(_r):.2f}",
+        "mechanism/xai_families.json", not any(r["accepted"] for r in _r))
+    row("families: best causal score by any null",
+        f"{max(r['causal_median'] for r in _r):.3f}",
+        "mechanism/xai_families.json", max(r["causal_median"] for r in _r) < 0.20)
+
 b = load("xai_sae.json")
 if b:
     row("X2 features judged (testable, with a matched control)",
