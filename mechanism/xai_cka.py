@@ -170,6 +170,51 @@ class PatchAt:
         self.h.remove()
 
 
+class AddAt:
+    """Add a per-recipient delta to the residual stream at ONE position.
+
+    Difference patching: rather than overwriting B's state with a mapped donor state -- which asks
+    W to reconstruct an absolute activation, and so confounds the causal test with the structural
+    one it is meant to be independent of -- we add the mapped DIFFERENCE. B keeps its own state and
+    receives a controlled perturbation, which stays in distribution and tests exactly the claim:
+    does the correspondence carry a causal change from one model to the other?
+
+    The map's intercepts cancel in a difference, so only W is needed here, not the means.
+    """
+    def __init__(self, model, layer, pos, delta):
+        self.block = model.gpt_neox.layers[layer - 1]
+        self.pos, self.delta = pos, delta
+
+    def __enter__(self):
+        pos, dl = self.pos, self.delta
+
+        def hook(mod, inp, out):
+            tup = isinstance(out, tuple)
+            h = (out[0] if tup else out).clone()
+            h[:, pos, :] = h[:, pos, :] + dl.to(h.device, h.dtype)
+            return ((h,) + tuple(out[1:])) if tup else h
+
+        self.h = self.block.register_forward_hook(hook)
+        return self
+
+    def __exit__(self, *a):
+        self.h.remove()
+
+
+@torch.no_grad()
+def added_shift(model, ids, layer, pos, delta, clean):
+    with AddAt(model, layer, pos, delta):
+        p = torch.softmax(model(ids.to(DEV)).logits[:, pos].float(), -1).mean(0).cpu()
+    return p - clean
+
+
+@torch.no_grad()
+def hidden_at(model, ids, layer, pos):
+    """Clean residual stream at `pos` for each sequence in the batch."""
+    h = model(ids.to(DEV), output_hidden_states=True).hidden_states[layer][:, pos, :]
+    return h.float().cpu()
+
+
 @torch.no_grad()
 def clean_dist(model, ids, pos):
     return torch.softmax(model(ids.to(DEV)).logits[:, pos].float(), -1).mean(0).cpu()
@@ -238,39 +283,65 @@ def run_config(A_name, LA, B_name, LB, log):
     perm = torch.randperm(len(B_fit), generator=g)
     Q, _ = torch.linalg.qr(torch.randn(dB, dB, generator=g))    # random orthogonal rotation
 
-    # (targets for fitting, targets for scoring, model to patch into, donor offset, post-map)
+    # Each candidate is a CLAIM: "this map carries A's state at LA into B's at LB". Guard 1 must
+    # therefore be scored with the map the candidate actually claims, against the target that
+    # candidate is claimed to reach. An earlier version scored `orthogonal` and `donor_perm` with
+    # the REAL map, so both reported R^2 identical to the real pair -- flattering and wrong.
+    W_real,  muX,  muY  = ridge_fit(A_fit, B_fit)
+    W_perm,  muXp, muYp = ridge_fit(A_fit, B_fit[perm])
+    W_gauss, muXg, muYg = ridge_fit(A_fit, Bg_fit)
+    W_mis,   muXm, muYm = ridge_fit(A_fit, Bm_fit)
+    W_untr,  muXu, muYu = ridge_fit(A_fit, B0_fit)
+
+    # name -> (effective map, means, held-out target it claims to reach, model patched, donor shift)
     CANDS = {
-        "real":             (B_fit,      B_held,   B,  0, None),
-        "permuted_pairs":   (B_fit[perm], B_held,  B,  0, None),
-        "gaussian_matched": (Bg_fit,     Bg_held,  B,  0, None),
-        "orthogonal":       (B_fit,      B_held,   B,  0, Q),
-        "donor_perm":       (B_fit,      B_held,   B,  1, None),
-        "untrained":        (B0_fit,     B0_held,  B0, 0, None),
-        "mismatched":       (Bm_fit,     Bm_held,  B,  0, None),
+        "real":             (W_real,      muX,  muY,  B_held,  B,  0),
+        "permuted_pairs":   (W_perm,      muXp, muYp, B_held,  B,  0),
+        "gaussian_matched": (W_gauss,     muXg, muYg, B_held,  B,  0),
+        "orthogonal":       (W_real @ Q,  muX,  muY,  B_held,  B,  0),
+        "donor_perm":       (W_real,      muX,  muY,  B_held,  B,  1),
+        "untrained":        (W_untr,      muXu, muYu, B0_held, B0, 0),
+        "mismatched":       (W_mis,       muXm, muYm, B_held,  B,  0),
     }
-    TYPES = {"real": "real", "permuted_pairs": "correspondence-breaking",
-             "gaussian_matched": "randomised", "orthogonal": "correspondence-breaking",
-             "donor_perm": "correspondence-breaking", "untrained": "degenerate",
+    TYPES = {"real": "real",
+             "permuted_pairs": "correspondence-breaking",
+             "gaussian_matched": "randomised",
+             "orthogonal": "correspondence-breaking",
+             # donor_perm does not propose a different map: it holds the real correspondence fixed
+             # and permutes which donor B receives, so it is a control on the CONSEQUENCE TEST
+             # rather than a candidate for guard 1. Its guard-1 row is the real map's by
+             # construction and is reported as such.
+             "donor_perm": "consequence-test control",
+             "untrained": "degenerate",
              "mismatched": "task-confounded"}
 
     # --- guard 1, swept over fitting-set size
     sweep = {}
-    for v, (Tf, Th, *_ ) in CANDS.items():
+    for v, (Wv, mx, my, Th, _mdl, _off) in CANDS.items():
         sweep[v] = {}
+        tgt_fit = {"real": B_fit, "permuted_pairs": B_fit[perm], "gaussian_matched": Bg_fit,
+                   "orthogonal": B_fit, "donor_perm": B_fit, "untrained": B0_fit,
+                   "mismatched": Bm_fit}[v]
         for n in SWEEP:
-            W, muX, muY = ridge_fit(A_fit[:n], Tf[:n])
-            sweep[v][n] = (r2(A_fit[:n], Tf[:n], W, muX, muY), r2(A_held, Th, W, muX, muY))
+            Wn, mxn, myn = ridge_fit(A_fit[:n], tgt_fit[:n])
+            if v == "orthogonal":
+                Wn = Wn @ Q
+            sweep[v][n] = (r2(A_fit[:n], tgt_fit[:n], Wn, mxn, myn), r2(A_held, Th, Wn, mxn, myn))
 
     full = {}
-    for v, (Tf, Th, *_ ) in CANDS.items():
-        W, muX, muY = ridge_fit(A_fit, Tf)
-        full[v] = dict(W=W, muX=muX, muY=muY,
-                       r2=r2(A_held, Th, W, muX, muY), cka=linear_cka(A_held, Th))
+    for v, (Wv, mx, my, Th, _mdl, _off) in CANDS.items():
+        full[v] = dict(W=Wv, muX=mx, muY=my,
+                       r2=r2(A_held, Th, Wv, mx, my), cka=linear_cka(A_held, Th))
 
     # --- guard 2, over donor x position x recipient triples
     recip = ids_held[:N_RECIP]
     donors_pool = ids_held[N_RECIP:]
     scores = {v: [] for v in CANDS}
+    # The UNCENTRED score is kept because it is a finding, not a discard: correlating raw shifts
+    # ranked a trained model reading random tokens ABOVE the genuine pair, since any patch pushes
+    # both models toward the same common tokens and that shared generic response dominates. The
+    # rebuild must still be able to reproduce it.
+    raw = {v: [] for v in CANDS}
 
     for seed in range(SEEDS):
         rs = np.random.default_rng(100 + seed)
@@ -287,23 +358,29 @@ def run_config(A_name, LA, B_name, LB, log):
             dstates = torch.stack(dstates)
 
         for pos in positions:
+            # A's own clean state at the patched position, one per recipient: the difference is
+            # taken against the recipient it is applied to, not against a pooled mean.
+            HA = hidden_at(A, recip, LA, pos)                       # (R, dA)
             cleanA = clean_dist(A, recip, pos)
-            sA = torch.stack([patched_shift(A, recip, LA, pos, dstates[k].to(DEV), cleanA)
-                              for k in range(N_DONOR)])
+            sA, dltA = [], []
+            for k in range(N_DONOR):
+                d = dstates[k].unsqueeze(0) - HA                    # (R, dA) per-recipient delta
+                dltA.append(d)
+                sA.append(added_shift(A, recip, LA, pos, d, cleanA))
+            sA = torch.stack(sA)
             cA = sA - sA.mean(0, keepdim=True)      # drop the generic response to being patched
 
-            for v, (Tf, Th, mdl, off, post) in CANDS.items():
-                W, muX, muY = full[v]["W"], full[v]["muX"], full[v]["muY"]
-                mapped = (dstates - muX) @ W + muY
-                if post is not None:
-                    mapped = (mapped - muY) @ post + muY
-                if off:
-                    mapped = torch.roll(mapped, off, dims=0)
+            for v, (Wv, mx, my, Th, mdl, off) in CANDS.items():
                 cleanB = clean_dist(mdl, recip, pos)
-                sB = torch.stack([patched_shift(mdl, recip, LB, pos, mapped[k].to(DEV), cleanB)
+                # the map's intercepts cancel in a difference, so only W acts here
+                mapped = [d @ Wv for d in dltA]
+                if off:
+                    mapped = mapped[off:] + mapped[:off]
+                sB = torch.stack([added_shift(mdl, recip, LB, pos, mapped[k], cleanB)
                                   for k in range(N_DONOR)])
                 cB = sB - sB.mean(0, keepdim=True)
                 scores[v] += [corr(cA[k], cB[k]) for k in range(N_DONOR)]
+                raw[v] += [corr(sA[k], sB[k]) for k in range(N_DONOR)]
         log(f"    seed {seed}: {len(scores['real'])} triples so far")
 
     del A, B, B0
@@ -317,12 +394,13 @@ def run_config(A_name, LA, B_name, LB, log):
             type=TYPES[v], r2=full[v]["r2"], cka=full[v]["cka"],
             guard1=bool(full[v]["r2"] > R2_MIN or full[v]["cka"] > CKA_MIN),
             causal_median=float(np.median(s)), causal_mean=float(s.mean()),
+            causal_median_raw=float(np.median(raw[v])),
             causal_q=[float(x) for x in np.percentile(s, [5, 25, 75, 95])],
             n_triples=len(s), guard2=bool(np.median(s) > CAUSAL_MIN),
             auroc_vs_real=(None if v == "real" else auroc(scores["real"], scores[v])),
             sweep={str(k): list(val) for k, val in sweep[v].items()})
         out[v]["accepted"] = bool(out[v]["guard1"] and out[v]["guard2"])
-    return out, nulls, scores
+    return out, nulls, scores, raw
 
 
 def main():
@@ -331,8 +409,8 @@ def main():
         key = f"{A_name.split('/')[-1]} L{LA} -> {B_name.split('/')[-1]} L{LB}"
         print(f"[{key}]"); sys.stdout.flush()
         try:
-            rows, nulls, scores = run_config(A_name, LA, B_name, LB,
-                                             lambda m: (print(m), sys.stdout.flush()))
+            rows, nulls, scores, raw = run_config(A_name, LA, B_name, LB,
+                                                  lambda m: (print(m), sys.stdout.flush()))
         except Exception as e:
             print(f"  FAILED: {type(e).__name__}: {str(e)[:120]}"); continue
         results[key] = rows
@@ -383,7 +461,7 @@ def main():
                     seeds=SEEDS, n_donor=N_DONOR, n_pos=N_POS, n_recip=N_RECIP,
                     triples_per_config=SEEDS * N_POS * N_DONOR,
                     r2_min=R2_MIN, cka_min=CKA_MIN, causal_min=CAUSAL_MIN,
-                    patch="single position, read at that position")), indent=1))
+                    patch="difference patching at a single position, read at that position")), indent=1))
 
 
 if __name__ == "__main__":

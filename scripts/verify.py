@@ -139,6 +139,10 @@ if xk.exists() and "configs" in json.loads(xk.read_text()):
               for r in cfgs.values()
               for v in r if r[v]["type"] == "correspondence-breaking"),
           "a null that preserves the marginals passes guard 1 and fails guard 2")
+    check("X1: the uncentred causal guard preferred a vacuous candidate",
+          any(r[v]["causal_median_raw"] > r["real"]["causal_median_raw"]
+              for r in cfgs.values() for v in r if v != "real"),
+          "correlating raw shifts ranks a null above the genuine pair; centring is what fixes it")
     check("X1: the causal score separates real from null, reported as AUROC not a threshold",
           all(r[v]["auroc_vs_real"] is not None for r in cfgs.values()
               for v in r if v != "real"),

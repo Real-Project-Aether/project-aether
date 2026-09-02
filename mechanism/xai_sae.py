@@ -494,6 +494,29 @@ def cluster_bootstrap(rows, stat, n=2000, seed=0):
     return (float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5)))
 
 
+def car_curve(paired, ks=(10, 25, 50, 100, 150)):
+    """CAR as a function of K, the rank cutoff by enrichment.
+
+    CAR is not a property of the guard alone: it depends on which accepted candidates are put to
+    the consequence test. We select the top 150 by enrichment per arm, so the quantity is CAR@150
+    and it must be named that way. Reporting the curve says how much of the shortfall is the cutoff
+    -- if CAR fell steeply with K, the guard would be well calibrated at the top and poorly further
+    down, which is a different diagnosis from being uncalibrated throughout.
+    """
+    out = {}
+    for k in ks:
+        sel = []
+        for a in sorted({r["arm"] for r in paired}):
+            q = sorted([r for r in paired if r["arm"] == a],
+                       key=lambda r: -r["enrichment"])[:k]
+            sel += q
+        if sel:
+            out[str(k)] = dict(n=len(sel),
+                               car=sum(r["supported"] for r in sel) / len(sel),
+                               control=sum(bool(r["control_supported"]) for r in sel) / len(sel))
+    return out
+
+
 SUPPORTED = lambda r: float(r["supported"])
 DELTA     = lambda r: float(r["supported"]) - float(bool(r["control_supported"]))
 POSITIVE  = lambda r: float(r["positive_detected"])
@@ -516,10 +539,18 @@ def main():
                    ("N2","testable concept"),("N3","enrichment > 4"),("selected","selected")):
         print(f"  {lbl:<30}" + "".join(f"{f[k]:>17}" for f in flows))
 
-    paired = [r for r in rows if r["controls"]]
+    # ANALYSIS.md section 8 excludes "features with fewer than 30 concept positions in the
+    # evaluation set". That threshold was being applied to the split features are SELECTED on, not
+    # to the disjoint split they are JUDGED on, so a feature whose concept never occurs in D_cons
+    # entered the denominator as a failure -- its consequence test was not computable at all. The
+    # boundary is not a judgement call: the excluded features have exactly ZERO concept positions
+    # there and the next smallest has 19, so any threshold between 1 and 19 gives the same set.
+    testable = [r for r in rows if len(r["per_seq"]) >= MIN_SEQ]
+    n_untestable = len(rows) - len(testable)
+    paired = [r for r in testable if r["controls"]]
     car   = sum(r["supported"] for r in paired) / max(len(paired), 1)
     carc  = sum(r["control_supported"] for r in paired) / max(len(paired), 1)
-    posd  = [r for r in rows if r["positive_defined"]]
+    posd  = [r for r in testable if r["positive_defined"]]
     pos   = sum(r["positive_detected"] for r in posd) / max(len(posd), 1)
     wrong = sum(r["positive_wrong_sign"] for r in posd) / max(len(posd), 1)
     lo, hi   = cluster_bootstrap(paired, SUPPORTED)
@@ -534,7 +565,9 @@ def main():
         print(f"{a:<26}{len(q):>8}{cs:>10.2f}{cc:>8.2f}{cs-cc:>9.2f}")
     print("-" * 61)
     print(f"{'pooled':<26}{len(paired):>8}{car:>10.2f}{carc:>8.2f}{car-carc:>9.2f}")
-    print(f"\n  CAR@{N_FEAT} = {car:.2f}   cluster bootstrap 95% CI {lo:.2f}-{hi:.2f}")
+    print(f"\n  {n_untestable} of {len(rows)} selected features have no concept position in the "
+          f"consequence split and are excluded (ANALYSIS.md \u00a78); {len(paired)} are judged")
+    print(f"  CAR@{N_FEAT} = {car:.2f}   cluster bootstrap 95% CI {lo:.2f}-{hi:.2f}")
     print(f"  matched-control rate = {carc:.2f}")
     print(f"  PRIMARY ENDPOINT  delta = {car-carc:+.2f}   95% CI {dlo:+.2f} to {dhi:+.2f}")
     print("    -> " + ("interval excludes zero; the enrichment guard carries causal information "
@@ -567,6 +600,7 @@ def main():
 
     Path(__file__).with_name("xai_sae.json").write_text(json.dumps(dict(
         rows=rows, nulls=nulls, flow=flows, paired=len(paired),
+        untestable=n_untestable, testable=len(testable), car_curve=car_curve(paired),
         car_at_k=car, car_control=carc, delta_car=car-carc, ci=[lo, hi],
         delta_ci=[dlo, dhi], positive_control_rate=pos, positive_ci=[plo, phi],
         per_arm={a: dict(
@@ -575,13 +609,13 @@ def main():
                 / max(sum(r["arm"] == a for r in paired), 1),
             control=sum(bool(r["control_supported"]) for r in paired if r["arm"] == a)
                 / max(sum(r["arm"] == a for r in paired), 1),
-            positive=sum(r["positive_detected"] for r in rows
+            positive=sum(r["positive_detected"] for r in testable
                          if r["arm"] == a and r["positive_defined"])
-                / max(sum(r["arm"] == a and r["positive_defined"] for r in rows), 1),
-            positive_defined=sum(r["arm"] == a and r["positive_defined"] for r in rows),
-            positive_wrong_sign=sum(r["positive_wrong_sign"] for r in rows
+                / max(sum(r["arm"] == a and r["positive_defined"] for r in testable), 1),
+            positive_defined=sum(r["arm"] == a and r["positive_defined"] for r in testable),
+            positive_wrong_sign=sum(r["positive_wrong_sign"] for r in testable
                                     if r["arm"] == a and r["positive_defined"])
-                / max(sum(r["arm"] == a and r["positive_defined"] for r in rows), 1))
+                / max(sum(r["arm"] == a and r["positive_defined"] for r in testable), 1))
             for a in sorted({r["arm"] for r in rows})},
         nar=nar,
         any_null_pass=int(any(x["guard1"] for x in nulls)),
@@ -592,47 +626,65 @@ def main():
                     support_rule="S > 1.96 on sequence-level contrasts and dLC > 0")), indent=1))
 
 
-def recompute_ci():
-    """Recompute the intervals from the shipped rows, without re-running the models.
+def reanalyse():
+    """Re-derive every headline number from the shipped rows, without re-running the models.
 
     The per-feature verdicts, their sequence contrasts, the matched controls and the positive
-    control are all in the JSON, and the intervals are a function of those alone. This exists
-    because a bootstrap defect was found after the GPU run; re-deriving the intervals from the
-    recorded verdicts is the same computation the run would do, and is checkable against them.
+    control are all recorded, so the analysis is a function of the JSON alone. This exists because
+    two analysis defects were found after the GPU run -- a bootstrap that counted sequence noise
+    twice, and an exclusion applied to the wrong split -- and re-deriving is the same computation
+    the run would do, checkable against the recorded verdicts.
     """
     f = Path(__file__).with_name("xai_sae.json")
     d = json.loads(f.read_text())
-    rows = d["rows"]; paired = [r for r in rows if r["controls"]]
+    rows = d["rows"]
+
+    testable = [r for r in rows if len(r["per_seq"]) >= MIN_SEQ]
+    paired = [r for r in testable if r["controls"]]
+    defined = [r for r in testable
+               if r.get("positive_defined", r["S_logit_positive"] == r["S_logit_positive"])]
+
     car  = sum(r["supported"] for r in paired) / len(paired)
     carc = sum(r["control_supported"] for r in paired) / len(paired)
-    defined = [r for r in rows
-               if r.get("positive_defined", r["S_logit_positive"] == r["S_logit_positive"])]
     pos  = sum(r["positive_detected"] for r in defined) / max(len(defined), 1)
-    assert abs(car - d["car_at_k"]) < 1e-9, "recomputed CAR disagrees with the shipped value"
-    d["ci"]          = list(cluster_bootstrap(paired, SUPPORTED))
-    d["delta_ci"]    = list(cluster_bootstrap(paired, DELTA))
-    d["positive_ci"] = list(cluster_bootstrap(defined, POSITIVE))
-    d["positive_defined"] = len(defined)
-    d["per_arm"] = {a: dict(
-        n=sum(r["arm"] == a for r in paired),
-        car=sum(r["supported"] for r in paired if r["arm"] == a) / sum(r["arm"] == a for r in paired),
-        control=sum(bool(r["control_supported"]) for r in paired if r["arm"] == a)
-            / sum(r["arm"] == a for r in paired),
-        positive=sum(r["positive_detected"] for r in defined if r["arm"] == a)
-            / max(sum(r["arm"] == a for r in defined), 1),
-        positive_defined=sum(r["arm"] == a for r in defined))
-        for a in sorted({r["arm"] for r in rows})}
+    wrong = sum(r.get("positive_wrong_sign", False) for r in defined) / max(len(defined), 1)
+
+    d.update(paired=len(paired), testable=len(testable), untestable=len(rows) - len(testable),
+             car_at_k=car, car_control=carc, delta_car=car - carc,
+             positive_control_rate=pos, positive_defined=len(defined),
+             positive_wrong_sign=wrong,
+             car_curve=car_curve(paired),
+             ci=list(cluster_bootstrap(paired, SUPPORTED)),
+             delta_ci=list(cluster_bootstrap(paired, DELTA)),
+             positive_ci=list(cluster_bootstrap(defined, POSITIVE)))
+    d["per_arm"] = {}
+    for a in sorted({r["arm"] for r in rows}):
+        pa = [r for r in paired if r["arm"] == a]
+        da = [r for r in defined if r["arm"] == a]
+        d["per_arm"][a] = dict(
+            n=len(pa),
+            car=sum(r["supported"] for r in pa) / max(len(pa), 1),
+            control=sum(bool(r["control_supported"]) for r in pa) / max(len(pa), 1),
+            positive=sum(r["positive_detected"] for r in da) / max(len(da), 1),
+            positive_defined=len(da),
+            positive_wrong_sign=sum(r.get("positive_wrong_sign", False) for r in da)
+                / max(len(da), 1))
     f.write_text(json.dumps(d, indent=1))
-    print(f"CAR   {car:.3f}  95% CI {d['ci'][0]:.3f}-{d['ci'][1]:.3f}")
+
+    print(f"{d['untestable']} of {len(rows)} selected features have no concept position in the "
+          f"consequence split and are excluded (ANALYSIS.md \u00a78)")
+    print(f"CAR   {car:.3f}  95% CI {d['ci'][0]:.3f}-{d['ci'][1]:.3f}   over {len(paired)} judged")
     print(f"ctrl  {carc:.3f}")
     print(f"delta {car-carc:+.3f}  95% CI {d['delta_ci'][0]:+.3f} to {d['delta_ci'][1]:+.3f}")
-    print(f"pos   {pos:.3f} over {len(defined)} defined  95% CI {d['positive_ci'][0]:.3f}-{d['positive_ci'][1]:.3f}")
+    print(f"pos   {pos:.3f}  over {len(defined)} defined; wrong-signed {wrong:.3f}")
     for a, v in d["per_arm"].items():
-        print(f"  {a:<30}n={v['n']:<5}CAR={v['car']:.2f}  ctrl={v['control']:.2f}  pos={v['positive']:.2f}")
+        print(f"  {a:<28}n={v['n']:<5}CAR={v['car']:.2f}  ctrl={v['control']:.2f}  "
+              f"pos={v['positive']:.2f} (n={v['positive_defined']}, "
+              f"wrong {v['positive_wrong_sign']:.2f})")
 
 
 if __name__ == "__main__":
-    if "--ci-only" in sys.argv:
-        recompute_ci()
+    if "--reanalyse" in sys.argv:
+        reanalyse()
     else:
         main()
