@@ -26,7 +26,8 @@ Everything is scored on held-out tokens.
 Requires torch, transformers and datasets, and a GPU for comfort. That is why verify.py
 does not run it; its results ship alongside as JSON.
 """
-import json, warnings
+import json
+import sys, warnings
 from pathlib import Path
 import numpy as np
 
@@ -52,8 +53,11 @@ EXPAND   = 8
 TOPK     = 32          # L0, set directly
 EPOCHS   = 8
 N_FEAT   = 150         # real features examined per arm
+N_CTRL   = 3           # matched control features per selected feature
 N_EVAL   = 240
 MIN_ON   = 30          # concept positions required before a feature is judged
+GRAD_SEQ   = 160          # sequences used for the gradient positive control
+MIN_SEQ  = 12          # sequences carrying the concept, since the sequence is the unit of resampling
 MIN_CONCEPT = 60       # a concept must occur this often in held-out text to be testable         # held-out sequences used for the intervention (all of them)
 
 SELECT_MIN   = 4.0     # guard 1: enrichment over base rate
@@ -137,7 +141,7 @@ def train_sae(X, m, k=TOPK, epochs=EPOCHS, bs=4096, lr=1e-3):
 
 # ------------------------------------------------------------------ guard 1: correlational
 
-def selectivity(act, toks, min_concept=MIN_CONCEPT):
+def selectivity(act, next_toks, min_concept=MIN_CONCEPT):
     """Enrichment of the feature's firings on its own top token type, as a likelihood ratio
 
         P(token = t | feature fires) / P(token = t).
@@ -154,12 +158,16 @@ def selectivity(act, toks, min_concept=MIN_CONCEPT):
     fired = act > 0
     if fired.sum() < 40:
         return 0.0, None, None
-    t = toks[fired]
+    # The concept is the token the model must PREDICT at t+1 when the feature fires at t, not the
+    # token already present at t. The loss we measure is a next-token loss, and an earlier version
+    # bound the concept to the current token instead, so guard and consequence test referred to
+    # different claims.
+    t = next_toks[fired]
     ids, counts = torch.unique(t, return_counts=True)
     order = torch.argsort(counts, descending=True)
     for j in order.tolist():
         cand = ids[j]
-        mask = (toks == cand)
+        mask = (next_toks == cand)
         if int(mask.sum()) < min_concept:
             continue                        # concept too rare to test; try the next token type
         share = float(counts[j]) / float(fired.sum())
@@ -170,18 +178,80 @@ def selectivity(act, toks, min_concept=MIN_CONCEPT):
 
 # ------------------------------------------------------------------ guard 2: interventional
 
-class AblateDir:
-    def __init__(self, model, layer, u):
-        self.block = model.gpt_neox.layers[layer - 1]; self.u = u.to(DEV)
+class FeatureAblate:
+    """Remove one SAE feature's contribution: h <- h - z_f(h) d_f.
+
+    The earlier version did h <- h - (h.u)u, which erases ALL residual-stream information along
+    the decoder direction, including information the feature did not put there. That is a
+    direction-erasure intervention, not a feature ablation, and the paper claimed the latter.
+    Here z_f is the feature's own post-TopK activation at each position, so only what the feature
+    contributed is removed.
+
+    Passing a raw direction instead of a feature index (sae=None) reproduces the old behaviour and
+    is kept only for the random-direction control, where there is no feature to ablate.
+    """
+    def __init__(self, model, layer, sae=None, feature=None, direction=None):
+        self.block = model.gpt_neox.layers[layer - 1]
+        self.sae, self.f = sae, feature
+        self.u = None if direction is None else direction.to(DEV)
+
     def __enter__(self):
-        u = self.u
-        def hook(mod, inp, out):
+        sae, f, u = self.sae, self.f, self.u
+        def hook(mod, out_in, out):
             h = out[0] if isinstance(out, tuple) else out
-            h = h - (h @ u).unsqueeze(-1) * u
+            if sae is not None:
+                shp = h.shape
+                flat = h.reshape(-1, shp[-1]).float()
+                pre = sae.enc(flat - sae.b_pre)
+                val, idx = torch.topk(pre, sae.k, dim=-1)
+                z = torch.zeros_like(pre).scatter_(-1, idx, torch.relu(val))
+                h = (flat - z[:, f:f+1] * sae.dec.weight[:, f].unsqueeze(0)).reshape(shp).to(h.dtype)
+            else:
+                h = h - (h @ u).unsqueeze(-1) * u
             return (h,) + tuple(out[1:]) if isinstance(out, tuple) else h
         self.h = self.block.register_forward_hook(hook); return self
+
     def __exit__(self, *a):
         self.h.remove()
+
+
+def concept_gradient_direction(model, layer, ids, ctok, batch=8):
+    """d(logit_ctok)/d(h_layer), averaged over positions whose next token is ctok.
+
+    By construction the locally most causal direction for that token at that layer. Used only as a
+    positive control on the consequence test: if H cannot detect this, H detects nothing.
+    """
+    block = model.gpt_neox.layers[layer - 1]
+    grads = []
+    for i in range(0, len(ids), batch):
+        b = ids[i:i+batch].to(DEV)
+        stash = {}
+        def hook(mod, inp, out):
+            h = out[0] if isinstance(out, tuple) else out
+            h.retain_grad(); stash["h"] = h
+            return out
+        hd = block.register_forward_hook(hook)
+        try:
+            logits = model(b).logits
+            tgt = b[:, 1:]
+            m = (tgt == ctok)
+            if int(m.sum()) == 0:
+                continue
+            sel = logits[:, :-1, ctok][m].sum()
+            model.zero_grad(set_to_none=True)
+            sel.backward()
+            g = stash["h"].grad
+            if g is not None:
+                grads.append(g.detach().reshape(-1, g.shape[-1]).float().mean(0).cpu())
+        except Exception:
+            pass
+        finally:
+            hd.remove()
+    if not grads:
+        return None
+    v = torch.stack(grads).mean(0)
+    n = float(v.norm())
+    return (v / n).to(DEV) if n > 1e-8 else None
 
 
 @torch.no_grad()
@@ -194,43 +264,63 @@ def clean_logprobs(model, ids, batch=48):
     out = []
     for i in range(0, len(ids), batch):
         b = ids[i:i+batch].to(DEV)
-        tgt = b[:, 1:]
         lp = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
-        out.append(lp.gather(-1, tgt.unsqueeze(-1)).squeeze(-1).reshape(-1).cpu())
-    return torch.cat(out)
+        out.append(lp.gather(-1, b[:, 1:].unsqueeze(-1)).squeeze(-1).cpu())
+    return torch.cat(out)                       # (n_seq, SEQ_LEN-1), sequence structure kept
 
 
 @torch.no_grad()
-def specificity(model, ids, layer, u, concept_mask, clean, batch=48):
-    """Ablate u; contrast the loss increase on the concept's next tokens with everywhere else.
+def specificity(model, ids, layer, clean, concept_mask, sae=None, feature=None,
+                direction=None, batch=48):
+    """Ablate the feature (or direction) and contrast the next-token loss increase on the
+    concept against everywhere else, aggregated PER SEQUENCE.
 
-    Returns (S, dLC, dLnC, ratio). S is the standardised difference
-
-        S = (dLC - dLnC) / SE[dLC - dLnC],   SE = sqrt(var_on/n_on + var_off/n_off),
-
-    which ANALYSIS.md fixes as the primary statistic. The ratio dLC/dLnC used in an earlier run is
-    still returned for comparability, but it is not thresholded on: it explodes when the
-    denominator is near zero, and did -- one feature scored 1644.
+    Returns (S, dLC, dLnC, per_sequence_contrasts). Tokens inside a sequence are strongly
+    dependent, so the contrast is formed within each sequence and the sequence is the unit of
+    resampling; an earlier version treated token positions as independent and understated the
+    uncertainty.
     """
     abl = []
-    with AblateDir(model, layer, u):
+    with FeatureAblate(model, layer, sae=sae, feature=feature, direction=direction):
         for i in range(0, len(ids), batch):
             b = ids[i:i+batch].to(DEV)
             lp = torch.log_softmax(model(b).logits.float()[:, :-1], -1)
-            abl.append(lp.gather(-1, b[:, 1:].unsqueeze(-1)).squeeze(-1).reshape(-1).cpu())
-    d = clean - torch.cat(abl)
-    m = concept_mask.reshape(-1, SEQ_LEN)[:, :-1].reshape(-1).cpu()
-    on, off = d[m], d[~m]
-    if len(on) < MIN_ON:
-        return float("nan"), float("nan"), float("nan"), float("nan")
-    a, o = float(on.mean()), float(off.mean())
-    se = float((on.var(unbiased=True)/len(on) + off.var(unbiased=True)/len(off)).sqrt())
-    S = (a - o) / max(se, 1e-12)
-    ratio = a / o if abs(o) > 1e-8 else float("nan")
-    return S, a, o, ratio
+            abl.append(lp.gather(-1, b[:, 1:].unsqueeze(-1)).squeeze(-1).cpu())
+    A = torch.cat(abl)                                   # (n_seq, SEQ_LEN-1)
+    D = clean - A                                        # loss increase per position
+    M = concept_mask[:len(ids)]                          # (n_seq, SEQ_LEN-1) bool
+
+    per_seq = []
+    for i in range(len(D)):
+        on, off = D[i][M[i]], D[i][~M[i]]
+        if len(on) >= 1 and len(off) >= 1:
+            per_seq.append(float(on.mean() - off.mean()))
+    if len(per_seq) < MIN_SEQ or int(M.sum()) < MIN_ON:
+        return float("nan"), float("nan"), float("nan"), []
+    a = float(D[M].mean()); o = float(D[~M].mean())
+    v = np.asarray(per_seq)
+    se = float(v.std(ddof=1) / max(len(v) ** 0.5, 1e-12))
+    return float(v.mean() / max(se, 1e-12)), a, o, per_seq
 
 
-def matched_control(f, freq, tops, selected, rng):
+def matched_controls(f, freq, tops, selected, stats, rng, k=3):
+    """k control features matched on firing rate AND mean nonzero activation, different concept.
+
+    One control was not enough: a single draw cannot separate a feature-specific effect from the
+    spread of effects that comparable features have. Decoder-norm matching is not applied because
+    our decoder columns are renormalised to unit norm every step, so it is vacuous.
+    """
+    fr, mu, _ = stats.get(f, (float(freq[f]), 0.0, 0.0))
+    pool = [g for g in stats
+            if g not in selected and tops.get(g) not in (None, tops.get(f))
+            and 0.8 * fr <= stats[g][0] <= 1.2 * fr
+            and (mu == 0 or 0.5 * mu <= stats[g][1] <= 2.0 * mu)]
+    if not pool:
+        return []
+    return [int(x) for x in rng.choice(pool, size=min(k, len(pool)), replace=False)]
+
+
+def _unused_matched_control(f, freq, tops, selected, rng):
     """A control feature from the same arm, matched on firing rate, with a different concept.
 
     ANALYSIS.md: firing rate within +/-20%, top token different, not itself selected. Decoder-norm
@@ -257,70 +347,99 @@ def wilson(k, n, z=1.96):
 
 
 def run_arm(model_name, layer, rng):
-    """Train an SAE on one (model, layer), score its most selective features and matched controls."""
+    """One (model, layer) arm, on three disjoint partitions.
+
+    D_sae trains the autoencoder, D_guard selects features and fixes their concepts, and
+    D_cons measures the intervention. An earlier version used one held-out split for both
+    selection and measurement, so the concept was chosen on the same data that scored it.
+    """
     tok = AutoTokenizer.from_pretrained(model_name)
     ids = get_text(tok, N_SEQ, SEQ_LEN)
-    n_fit = int(len(ids) * 0.8)
-    ids_fit, ids_held = ids[:n_fit], ids[n_fit:]
+    n1, n2 = int(len(ids) * 0.6), int(len(ids) * 0.8)
+    D_sae, D_guard, D_cons = ids[:n1], ids[n1:n2], ids[n2:]
     model = AutoModelForCausalLM.from_pretrained(model_name).to(DEV).eval()
-
-    X = resid(model, ids_fit, layer)
-    print(f"  training SAE on {tuple(X.shape)}")
-    sae = train_sae(X, X.shape[1] * EXPAND)
-    Xh = resid(model, ids_held, layer)
-    toks_h = ids_held.reshape(-1).to(DEV)
-    with torch.no_grad():
-        _, Zh = sae(Xh)
-    freq = (Zh > 0).float().mean(0)
-    D = sae.dec.weight.detach()
     arm = f"{model_name.split('/')[-1]} L{layer}"
 
-    # ---- selection flow, recorded so that "all selected features clear the threshold" is
-    #      visibly a construction rather than a result (ANALYSIS.md section 4)
+    X = resid(model, D_sae, layer)
+    print(f"  SAE on {tuple(X.shape)} from D_sae ({len(D_sae)} seq); "
+          f"guard on {len(D_guard)}, consequence on {len(D_cons)}")
+    sae = train_sae(X, X.shape[1] * EXPAND)
+
+    # ---- selection, on D_guard only
+    Xg = resid(model, D_guard, layer)
+    nxt_g = D_guard[:, 1:].reshape(-1).to(DEV)
+    keep = torch.ones(len(D_guard), SEQ_LEN, dtype=torch.bool); keep[:, -1] = False
+    with torch.no_grad():
+        _, Zg = sae(Xg)
+    Zg = Zg[keep.reshape(-1)]                      # align activations with next-token targets
+    freq = (Zg > 0).float().mean(0)
+    D = sae.dec.weight.detach()
+
     N0 = D.shape[1]
     in_range = ((freq > 2e-3) & (freq < 5e-2)).nonzero().flatten().tolist()
     N1 = len(in_range)
-    scored, tops = [], {}
+    scored, tops, act_stats = [], {}, {}
     for i in in_range:
-        e, t, _ = selectivity(Zh[:, i], toks_h)
+        e, t, _ = selectivity(Zg[:, i], nxt_g)
         if t is not None:
             scored.append((e, int(i))); tops[int(i)] = t
+            z = Zg[:, i]; nz = z[z > 0]
+            act_stats[int(i)] = (float(freq[i]), float(nz.mean()), float(nz.std()))
     N2 = len(scored)
     scored = [(e, i) for e, i in scored if e > SELECT_MIN]
-    N3 = len(scored)
-    scored.sort(reverse=True)
+    N3 = len(scored); scored.sort(reverse=True)
     reals = [i for _, i in scored[:N_FEAT]]
     flow = dict(arm=arm, N0=N0, N1=N1, N2=N2, N3=N3, selected=len(reals))
-    print(f"  flow: all {N0} -> firing range {N1} -> testable concept {N2} -> enrichment>4 {N3} "
-          f"-> selected {len(reals)}")
+    print(f"  flow: {N0} -> firing {N1} -> testable {N2} -> enrichment>4 {N3} -> selected {len(reals)}")
 
-    clean = clean_logprobs(model, ids_held[:N_EVAL])
+    # ---- measurement, on D_cons only
+    clean = clean_logprobs(model, D_cons[:N_EVAL])
+    nxt_c = D_cons[:N_EVAL, 1:]                    # (n_seq, SEQ_LEN-1) next-token targets
     sel = set(reals)
 
-    def score_on(u, mask):
-        return specificity(model, ids_held[:N_EVAL], layer, u, mask[:N_EVAL * SEQ_LEN], clean)
+    def mask_for(ctok):
+        return (nxt_c == ctok)
+
+    def judge(sae_, feat, direction, ctok):
+        S, a, o, per = specificity(model, D_cons[:N_EVAL], layer, clean, mask_for(ctok),
+                                   sae=sae_, feature=feat, direction=direction)
+        return S, a, o, per
 
     rows, n_nocontrol = [], 0
     for f in reals:
-        enr, ctok, mask = selectivity(Zh[:, f], toks_h)
-        if ctok is None:
-            continue
-        S, a, o, ratio = score_on(D[:, f] / D[:, f].norm(), mask)
-        g = matched_control(f, freq, tops, sel, rng)
-        if g is None:
+        ctok = tops[f]
+        S, a, o, per = judge(sae, f, None, ctok)
+        ctrls = matched_controls(f, freq, tops, sel, act_stats, rng, k=N_CTRL)
+        cs = []
+        for g in ctrls:
+            Sg, _, _, _ = judge(sae, g, None, ctok)     # control feature, on f's concept
+            cs.append(float(Sg))
+        if not ctrls:
             n_nocontrol += 1
-            Sg = float("nan")
-        else:
-            Sg, _, _, _ = score_on(D[:, g] / D[:, g].norm(), mask)   # control, on f's concept
-        rows.append(dict(arm=arm, feature=int(f), enrichment=float(enr), token=tok.decode([ctok]),
-                         S=float(S), dLC=float(a), dLnC=float(o), ratio=float(ratio),
-                         control=(None if g is None else int(g)), S_control=float(Sg),
+        # Positive control for the consequence test itself, valid AT THIS LAYER. The first
+        # version ablated the unembedding row for the concept; detection then tracked relative
+        # depth monotonically (0.01 at layer 4 of 12, 0.68 at 16 of 24), because the unembedding
+        # is the right causal direction only near the output. The gradient of the concept logit
+        # with respect to the layer's own residual stream is the locally steepest direction for
+        # that token AT that layer, so a consequence test that cannot detect it is broken.
+        Wc = concept_gradient_direction(model, layer, D_cons[:GRAD_SEQ], ctok)
+        Sp, _, _, _ = judge(None, None, Wc, ctok) if Wc is not None else (float("nan"),)*4
+        rows.append(dict(arm=arm, feature=int(f), enrichment=float(scored[reals.index(f)][0]),
+                         token=tok.decode([ctok]), concept=int(ctok),
+                         S=float(S), dLC=float(a), dLnC=float(o), per_seq=per,
+                         controls=[int(g) for g in ctrls], S_controls=cs,
+                         S_logit_positive=float(Sp),
+                         positive_defined=bool(Sp == Sp),
+                         positive_wrong_sign=bool(Sp == Sp and Sp < 0),
                          supported=bool(S == S and S > 1.96 and a > 0),
-                         control_supported=bool(Sg == Sg and Sg > 1.96)))
+                         control_supported=bool(cs and max(cs) == max(cs) and
+                                                np.nanmean([1.0 if (c == c and c > 1.96) else 0.0
+                                                            for c in cs]) > 0.5),
+                         positive_detected=bool(Sp == Sp and Sp > 1.96)))
     if n_nocontrol:
-        print(f"  {n_nocontrol} feature(s) had no admissible matched control and are excluded from the pair")
+        print(f"  {n_nocontrol} feature(s) had no admissible matched control")
 
-    # ---- the null suite, unchanged
+    nulls = []
     f0 = reals[0]; u0 = D[:, f0] / D[:, f0].norm()
     rnd = torch.tensor(rng.normal(size=D.shape[0]), dtype=torch.float32, device=DEV)
     perm = torch.tensor(rng.permutation(D.shape[0]), device=DEV); us = u0[perm]
@@ -328,100 +447,192 @@ def run_arm(model_name, layer, rng):
     usg = u0 + noise / noise.norm() * u0.norm() * 0.6
     nz = (freq > 0).nonzero().flatten()
     fd = int(nz[int(freq[nz].argmin())]) if len(nz) else 0
-    nulls = []
-    for nm, u, act, typ in (("random direction", rnd/rnd.norm(), (Xh @ (rnd/rnd.norm())).clamp_min(0), "randomised"),
-                            ("scrambled feature", us/us.norm(), (Xh @ (us/us.norm())).clamp_min(0), "randomised"),
-                            ("correlated surrogate", usg/usg.norm(), (Xh @ (usg/usg.norm())).clamp_min(0), "structure-preserving"),
-                            ("near-dead feature", D[:, fd]/D[:, fd].norm(), Zh[:, fd], "degenerate")):
-        enr, ctok, mask = selectivity(act, toks_h)
-        if ctok is None:
-            nulls.append(dict(arm=arm, name=nm, type=typ, enrichment=0.0, guard1=False)); continue
-        nulls.append(dict(arm=arm, name=nm, type=typ, enrichment=float(enr), guard1=bool(enr > SELECT_MIN)))
+    for nm, act, typ in (("random direction", (Xg @ (rnd/rnd.norm())).clamp_min(0)[keep.reshape(-1)], "randomised"),
+                         ("scrambled feature", (Xg @ (us/us.norm())).clamp_min(0)[keep.reshape(-1)], "randomised"),
+                         ("correlated surrogate", (Xg @ (usg/usg.norm())).clamp_min(0)[keep.reshape(-1)], "structure-preserving"),
+                         ("near-dead feature", Zg[:, fd], "degenerate")):
+        e, t, _ = selectivity(act, nxt_g)
+        nulls.append(dict(arm=arm, name=nm, type=typ, enrichment=float(e),
+                          guard1=bool(t is not None and e > SELECT_MIN)))
 
-    del model, sae, X, Xh, Zh
+    del model, sae, X, Xg, Zg
     torch.cuda.empty_cache()
     return rows, nulls, flow
 
 
-def hierarchical_bootstrap(rows, n=1000, seed=0):
-    """Resample arms, then features within arms, clustering features that share a top token."""
+def cluster_bootstrap(rows, stat, n=2000, seed=0):
+    """Resample arms, then concept clusters within arms. The per-feature verdict is held fixed.
+
+    An earlier version resampled sequences and re-thresholded S on top of that. That is wrong, and
+    visibly so: S is already a t-statistic over sequence-level contrasts, so re-resampling the
+    sequences counts the same noise a second time, and against a one-sided threshold the extra
+    noise pushes more features up than down. It produced an interval lying entirely above its own
+    point estimate, with an upper end above the best single arm -- impossible under arm resampling.
+
+    The units of generalisation are arms and concept clusters, so those are what we resample.
+    """
     rng = np.random.default_rng(seed)
     arms = sorted({r["arm"] for r in rows})
-    by_arm = {a: [r for r in rows if r["arm"] == a] for a in arms}
+    by_arm = {}
+    for a in arms:
+        cl = {}
+        for r in rows:
+            if r["arm"] == a:
+                cl.setdefault(r["concept"], []).append(r)
+        by_arm[a] = list(cl.values())
     out = []
     for _ in range(n):
-        picked = rng.choice(arms, size=len(arms), replace=True)
-        sup = tot = 0
-        for a in picked:
-            rs = by_arm[a]
-            clusters = {}
-            for r in rs:
-                clusters.setdefault(r["token"], []).append(r)
-            keys = list(clusters)
-            for k in rng.choice(keys, size=len(keys), replace=True):
-                for r in clusters[k]:
-                    tot += 1; sup += r["supported"]
-        if tot:
-            out.append(sup / tot)
-    return float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))
+        vals = []
+        for a in rng.choice(arms, size=len(arms), replace=True):
+            cls = by_arm[a]
+            for j in rng.integers(0, len(cls), len(cls)):
+                vals += [stat(r) for r in cls[j]]
+        if vals:
+            out.append(float(np.mean(vals)))
+    if not out:
+        return (float("nan"),) * 2
+    return (float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5)))
+
+
+SUPPORTED = lambda r: float(r["supported"])
+DELTA     = lambda r: float(r["supported"]) - float(bool(r["control_supported"]))
+POSITIVE  = lambda r: float(r["positive_detected"])
 
 
 def main():
     rng = np.random.default_rng(0)
-    print("X2 -- does an SAE feature's meaning survive an intervention a matched control does not?")
-    print(f"{len(ARMS)} arms, up to {N_FEAT} features each; primary endpoint is CAR(selected) - "
-          f"CAR(matched), per ANALYSIS.md\n")
+    print("X2 -- do SAE features survive an intervention a matched control does not?")
+    print(f"{len(ARMS)} arms; three disjoint partitions per arm; primary endpoint CAR@{N_FEAT} "
+          f"minus matched-control rate\n")
 
     rows, nulls, flows = [], [], []
     for model_name, layer in ARMS:
         print(f"[{model_name} layer {layer}]")
-        r, n, f = run_arm(model_name, layer, rng)
-        rows += r; nulls += n; flows.append(f)
-        print()
+        r, n_, f = run_arm(model_name, layer, rng)
+        rows += r; nulls += n_; flows.append(f); print()
 
-    print(f"{'stage':<34}" + "".join(f"{f['arm'][:16]:>18}" for f in flows))
-    for k, lbl in (("N0", "all SAE features"), ("N1", "firing rate in range"),
-                   ("N2", "testable concept"), ("N3", "enrichment > 4"),
-                   ("selected", "selected for intervention")):
-        print(f"  {lbl:<32}" + "".join(f"{f[k]:>18}" for f in flows))
-    print("  (all selected features clear the enrichment threshold by construction; that is not a result)\n")
+    print(f"{'stage':<32}" + "".join(f"{f['arm'][:15]:>17}" for f in flows))
+    for k, lbl in (("N0","all SAE features"),("N1","firing rate in range"),
+                   ("N2","testable concept"),("N3","enrichment > 4"),("selected","selected")):
+        print(f"  {lbl:<30}" + "".join(f"{f[k]:>17}" for f in flows))
 
-    paired = [r for r in rows if r["control"] is not None]
-    car_sel = sum(r["supported"] for r in paired) / max(len(paired), 1)
-    car_ctl = sum(r["control_supported"] for r in paired) / max(len(paired), 1)
-    lo, hi = hierarchical_bootstrap(paired)
+    paired = [r for r in rows if r["controls"]]
+    car   = sum(r["supported"] for r in paired) / max(len(paired), 1)
+    carc  = sum(r["control_supported"] for r in paired) / max(len(paired), 1)
+    posd  = [r for r in rows if r["positive_defined"]]
+    pos   = sum(r["positive_detected"] for r in posd) / max(len(posd), 1)
+    wrong = sum(r["positive_wrong_sign"] for r in posd) / max(len(posd), 1)
+    lo, hi   = cluster_bootstrap(paired, SUPPORTED)
+    dlo, dhi = cluster_bootstrap(paired, DELTA)
+    plo, phi = cluster_bootstrap(posd, POSITIVE)
 
-    print(f"{'arm':<26}{'paired':>8}{'CAR sel':>10}{'CAR ctl':>10}{'delta':>9}")
-    print("-" * 63)
+    print(f"\n{'arm':<26}{'paired':>8}{'CAR@150':>10}{'ctrl':>8}{'delta':>9}")
+    print("-" * 61)
     for a in sorted({r["arm"] for r in paired}):
-        p_ = [r for r in paired if r["arm"] == a]
-        cs = sum(r["supported"] for r in p_) / len(p_)
-        cc = sum(r["control_supported"] for r in p_) / len(p_)
-        print(f"{a:<26}{len(p_):>8}{cs:>10.2f}{cc:>10.2f}{cs-cc:>9.2f}")
-    print("-" * 63)
-    print(f"{'pooled':<26}{len(paired):>8}{car_sel:>10.2f}{car_ctl:>10.2f}{car_sel-car_ctl:>9.2f}")
-    print(f"\n  CAR(selected) = {car_sel:.2f}   hierarchical 95% CI {lo:.2f}-{hi:.2f}"
-          f"   (clustered by arm and shared top token)")
-    print(f"  CAR(matched control) = {car_ctl:.2f}")
-    print(f"  PRIMARY ENDPOINT  delta-CAR = {car_sel-car_ctl:+.2f}")
+        q = [r for r in paired if r["arm"] == a]
+        cs = sum(r["supported"] for r in q)/len(q); cc = sum(r["control_supported"] for r in q)/len(q)
+        print(f"{a:<26}{len(q):>8}{cs:>10.2f}{cc:>8.2f}{cs-cc:>9.2f}")
+    print("-" * 61)
+    print(f"{'pooled':<26}{len(paired):>8}{car:>10.2f}{carc:>8.2f}{car-carc:>9.2f}")
+    print(f"\n  CAR@{N_FEAT} = {car:.2f}   cluster bootstrap 95% CI {lo:.2f}-{hi:.2f}")
+    print(f"  matched-control rate = {carc:.2f}")
+    print(f"  PRIMARY ENDPOINT  delta = {car-carc:+.2f}   95% CI {dlo:+.2f} to {dhi:+.2f}")
+    print("    -> " + ("interval excludes zero; the enrichment guard carries causal information "
+                       "a matched control does not"
+                       if dlo > 0 else
+                       "INTERVAL INCLUDES ZERO -- per ANALYSIS.md the X2 claim is withdrawn"))
+    print(f"\n  AUDIT OF THE CONSEQUENCE TEST ITSELF")
+    print(f"    gradient positive control detected: {pos:.2f} of the {len(posd)} features where it "
+          f"is defined (95% CI {plo:.2f}-{phi:.2f}); undefined for {len(rows)-len(posd)}")
+    print(f"    the control's OWN validity: {wrong:.2f} of its ablations move the logit the wrong way")
+    for a in sorted({r["arm"] for r in rows}):
+        q = [r for r in rows if r["arm"] == a]
+        qd = [r for r in q if r["positive_defined"]]
+        print(f"      {a:<26}detected {np.mean([r['positive_detected'] for r in qd]) if qd else float('nan'):.2f}"
+              f"   wrong-signed {np.mean([r['positive_wrong_sign'] for r in qd]) if qd else float('nan'):.2f}"
+              f"   undefined {len(q)-len(qd)}")
+    print("    -> " + ("H detects a direction that is causal by construction; CAR is interpretable"
+                       if pos > 0.8 and wrong < 0.1 else
+                       "the control does not validate H on every arm; see the per-arm split above. "
+                       "A wrong-signed ablation impeaches the CONTROL, not H: a direction whose "
+                       "removal raises the logit it was built to lower is not causal at that layer."))
 
     nm = list(dict.fromkeys(x["name"] for x in nulls))
     nar = sum(x["guard1"] for x in nulls) / max(len(nulls), 1)
     print(f"\n  null suite, per control:")
     for n_ in nm:
         c = [x for x in nulls if x["name"] == n_]
-        print(f"    {n_:<24}{c[0]['type']:<22}{sum(x['guard1'] for x in c)}/{len(c)} accepted")
+        print(f"    {n_:<24}{c[0]['type']:<22}{sum(x['guard1'] for x in c)}/{len(c)}")
     print(f"  NAR = {nar:.2f}   AnyNullPass = {int(any(x['guard1'] for x in nulls))}")
 
     Path(__file__).with_name("xai_sae.json").write_text(json.dumps(dict(
         rows=rows, nulls=nulls, flow=flows, paired=len(paired),
-        car_selected=car_sel, car_control=car_ctl, delta_car=car_sel-car_ctl, ci=[lo, hi],
-        nar=nar, any_null_pass=int(any(x["guard1"] for x in nulls)),
+        car_at_k=car, car_control=carc, delta_car=car-carc, ci=[lo, hi],
+        delta_ci=[dlo, dhi], positive_control_rate=pos, positive_ci=[plo, phi],
+        per_arm={a: dict(
+            n=sum(r["arm"] == a for r in paired),
+            car=sum(r["supported"] for r in paired if r["arm"] == a)
+                / max(sum(r["arm"] == a for r in paired), 1),
+            control=sum(bool(r["control_supported"]) for r in paired if r["arm"] == a)
+                / max(sum(r["arm"] == a for r in paired), 1),
+            positive=sum(r["positive_detected"] for r in rows
+                         if r["arm"] == a and r["positive_defined"])
+                / max(sum(r["arm"] == a and r["positive_defined"] for r in rows), 1),
+            positive_defined=sum(r["arm"] == a and r["positive_defined"] for r in rows),
+            positive_wrong_sign=sum(r["positive_wrong_sign"] for r in rows
+                                    if r["arm"] == a and r["positive_defined"])
+                / max(sum(r["arm"] == a and r["positive_defined"] for r in rows), 1))
+            for a in sorted({r["arm"] for r in rows})},
+        nar=nar,
+        any_null_pass=int(any(x["guard1"] for x in nulls)),
         config=dict(arms=[list(a) for a in ARMS], expand=EXPAND, topk=TOPK, epochs=EPOCHS,
-                    n_seq=N_SEQ, seq_len=SEQ_LEN, n_feat=N_FEAT, n_eval=N_EVAL,
+                    n_seq=N_SEQ, seq_len=SEQ_LEN, n_feat=N_FEAT, n_ctrl=N_CTRL, n_eval=N_EVAL,
                     select_min=SELECT_MIN, min_concept=MIN_CONCEPT, min_on=MIN_ON,
-                    support_rule="S > 1.96 and dLC > 0")), indent=1))
+                    min_seq=MIN_SEQ, splits="60/20/20 D_sae/D_guard/D_cons",
+                    support_rule="S > 1.96 on sequence-level contrasts and dLC > 0")), indent=1))
+
+
+def recompute_ci():
+    """Recompute the intervals from the shipped rows, without re-running the models.
+
+    The per-feature verdicts, their sequence contrasts, the matched controls and the positive
+    control are all in the JSON, and the intervals are a function of those alone. This exists
+    because a bootstrap defect was found after the GPU run; re-deriving the intervals from the
+    recorded verdicts is the same computation the run would do, and is checkable against them.
+    """
+    f = Path(__file__).with_name("xai_sae.json")
+    d = json.loads(f.read_text())
+    rows = d["rows"]; paired = [r for r in rows if r["controls"]]
+    car  = sum(r["supported"] for r in paired) / len(paired)
+    carc = sum(r["control_supported"] for r in paired) / len(paired)
+    defined = [r for r in rows
+               if r.get("positive_defined", r["S_logit_positive"] == r["S_logit_positive"])]
+    pos  = sum(r["positive_detected"] for r in defined) / max(len(defined), 1)
+    assert abs(car - d["car_at_k"]) < 1e-9, "recomputed CAR disagrees with the shipped value"
+    d["ci"]          = list(cluster_bootstrap(paired, SUPPORTED))
+    d["delta_ci"]    = list(cluster_bootstrap(paired, DELTA))
+    d["positive_ci"] = list(cluster_bootstrap(defined, POSITIVE))
+    d["positive_defined"] = len(defined)
+    d["per_arm"] = {a: dict(
+        n=sum(r["arm"] == a for r in paired),
+        car=sum(r["supported"] for r in paired if r["arm"] == a) / sum(r["arm"] == a for r in paired),
+        control=sum(bool(r["control_supported"]) for r in paired if r["arm"] == a)
+            / sum(r["arm"] == a for r in paired),
+        positive=sum(r["positive_detected"] for r in defined if r["arm"] == a)
+            / max(sum(r["arm"] == a for r in defined), 1),
+        positive_defined=sum(r["arm"] == a for r in defined))
+        for a in sorted({r["arm"] for r in rows})}
+    f.write_text(json.dumps(d, indent=1))
+    print(f"CAR   {car:.3f}  95% CI {d['ci'][0]:.3f}-{d['ci'][1]:.3f}")
+    print(f"ctrl  {carc:.3f}")
+    print(f"delta {car-carc:+.3f}  95% CI {d['delta_ci'][0]:+.3f} to {d['delta_ci'][1]:+.3f}")
+    print(f"pos   {pos:.3f} over {len(defined)} defined  95% CI {d['positive_ci'][0]:.3f}-{d['positive_ci'][1]:.3f}")
+    for a, v in d["per_arm"].items():
+        print(f"  {a:<30}n={v['n']:<5}CAR={v['car']:.2f}  ctrl={v['control']:.2f}  pos={v['positive']:.2f}")
 
 
 if __name__ == "__main__":
-    main()
+    if "--ci-only" in sys.argv:
+        recompute_ci()
+    else:
+        main()

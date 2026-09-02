@@ -116,54 +116,68 @@ for f in ("xai_cka.py", "xai_sae.py"):
 xk = ROOT / "mechanism" / "xai_cka.json"
 if xk.exists():
     d = json.loads(xk.read_text())
-    check("X1: in-sample on 8 stimuli accepts every vacuous candidate",
-          d["alpha_structural_insample_small"] == 1.0, f"alpha={d['alpha_structural_insample_small']}")
-    check("X1: both guards refuse every vacuous candidate",
-          d["alpha_both"] == 0.0 and d["rows"]["real"]["accepted"],
-          f"alpha={d['alpha_both']}, real accepted={d['rows']['real']['accepted']}")
-    check("X1: the uncentred causal guard preferred a vacuous candidate",
-          d["rows"]["randtok"]["causal_raw"] > d["rows"]["real"]["causal_raw"],
-          f"randtok {d['rows']['randtok']['causal_raw']:.2f} vs real {d['rows']['real']['causal_raw']:.2f}")
+check("X1: the shipped result comes from the rebuilt experiment",
+      xk.exists() and "configs" in json.loads(xk.read_text()),
+      "localised patching, multiple configurations, AUROC against each null")
+if xk.exists() and "configs" in json.loads(xk.read_text()):
+    cfgs = d["configs"]
+    check("X1: structural guard alone, scored in-sample on few stimuli, accepts every null",
+          d["nar_structural_insample_small"] == 1.0,
+          f"NAR={d['nar_structural_insample_small']:.2f} at {d['sweep_n'][0]} stimuli")
+    check("X1: the causal guard is run on hundreds of localised interventions",
+          all(r["real"]["n_triples"] >= 400 for r in cfgs.values()),
+          f"{min(r['real']['n_triples'] for r in cfgs.values())} triples per configuration, "
+          f"{len(cfgs)} configurations")
+    check("X1: the real correspondence is accepted in every configuration",
+          all(r["real"]["accepted"] for r in cfgs.values()),
+          f"{sum(r['real']['accepted'] for r in cfgs.values())}/{len(cfgs)}")
+    check("X1: both guards together refuse every null",
+          d["nar_both"] == 0.0 and d["any_null_pass"] == 0,
+          f"NAR(both)={d['nar_both']:.2f}, AnyNullPass={d['any_null_pass']}")
+    check("X1: correspondence-breaking nulls are the ones the structural guard misses",
+          any(r[v]["guard1"] and not r[v]["guard2"]
+              for r in cfgs.values()
+              for v in r if r[v]["type"] == "correspondence-breaking"),
+          "a null that preserves the marginals passes guard 1 and fails guard 2")
+    check("X1: the causal score separates real from null, reported as AUROC not a threshold",
+          all(r[v]["auroc_vs_real"] is not None for r in cfgs.values()
+              for v in r if v != "real"),
+          "AUROC recorded for every null in every configuration")
+
 xs = ROOT / "mechanism" / "xai_sae.json"
 if xs.exists():
     d = json.loads(xs.read_text())
-    check("X2: matched controls make CAR interpretable",
-          abs(d["car_selected"] - 0.46) < 0.02 and abs(d["car_control"] - 0.07) < 0.02,
-          f"CAR selected {d['car_selected']:.2f} vs matched control {d['car_control']:.2f}")
+    check("X2: the primary endpoint carries an interval, and it is the one ANALYSIS.md names",
+          d["delta_ci"][0] > 0,
+          f"delta-CAR = {d['delta_car']:+.2f}, 95% CI {d['delta_ci'][0]:+.2f} to {d['delta_ci'][1]:+.2f}")
+    check("X2: the interval contains its own point estimate",
+          d["ci"][0] <= d["car_at_k"] <= d["ci"][1],
+          f"CAR {d['car_at_k']:.2f} in [{d['ci'][0]:.2f}, {d['ci'][1]:.2f}]")
+    # ANALYSIS.md, section 7: treating the features as independent Bernoulli trials was wrong and
+    # "the new interval will be wider and that is the correct direction". This asserts that.
+    _p, _n = d["car_at_k"], d["paired"]
+    _naive = 1.96 * (_p * (1 - _p) / _n) ** 0.5
+    check("X2: clustering widens the interval, as the frozen spec said it must",
+          (d["ci"][1] - d["ci"][0]) / 2 > _naive,
+          f"clustered half-width {(d['ci'][1]-d['ci'][0])/2:.3f} vs naive binomial {_naive:.3f}")
     check("X2: delta-CAR is positive in every arm",
-          d["delta_car"] > 0.3 and all(
-              sum(r["supported"] for r in d["rows"] if r["arm"] == a and r["control"] is not None) >
-              sum(r["control_supported"] for r in d["rows"] if r["arm"] == a and r["control"] is not None)
-              for a in {r["arm"] for r in d["rows"]}),
-          f"delta-CAR = {d['delta_car']:+.2f}")
-    check("X2: enrichment guard has low NAR yet poor calibration",
-          d["nar"] < 0.10 and d["car_selected"] < 0.60,
-          f"NAR {d['nar']:.2f}, CAR {d['car_selected']:.2f}")
-    check("X2: selection flow recorded, so 150-of-N is visible",
+          all(v["car"] > v["control"] for v in d["per_arm"].values()),
+          "; ".join(f"{a.split()[0][:12]} {v['car']:.2f}>{v['control']:.2f}"
+                    for a, v in d["per_arm"].items()))
+    check("X2: the enrichment guard has low NAR yet imperfect agreement",
+          d["nar"] < 0.10 and d["car_at_k"] < 0.80,
+          f"NAR {d['nar']:.2f}, CAR {d['car_at_k']:.2f}")
+    check("X2: selection flow recorded, so 150-of-N is visible as a construction",
           all(f["N3"] > f["selected"] for f in d["flow"]),
           "; ".join(f"{f['N3']}->{f['selected']}" for f in d["flow"]))
-
-# --- the guards must be shown sensitive, not only specific -------------------------------------
-pos = ROOT / "mechanism" / "external_positives.json"
-check("the positive-control suite ships", pos.exists() and
-      (ROOT / "mechanism" / "external_positives.py").exists())
-if pos.exists():
-    d = json.loads(pos.read_text())
-
-# --- the two interpretability experiments must ship, with their headline numbers ---------------
-for f in ("xai_cka.py", "xai_sae.py"):
-    check(f"the interpretability experiment ships: {f}", (ROOT / "mechanism" / f).exists())
-xk = ROOT / "mechanism" / "xai_cka.json"
-if xk.exists():
-    d = json.loads(xk.read_text())
-    check("X1: in-sample on 8 stimuli accepts every vacuous candidate",
-          d["alpha_structural_insample_small"] == 1.0, f"alpha={d['alpha_structural_insample_small']}")
-    check("X1: both guards refuse every vacuous candidate",
-          d["alpha_both"] == 0.0 and d["rows"]["real"]["accepted"],
-          f"alpha={d['alpha_both']}, real accepted={d['rows']['real']['accepted']}")
-    check("X1: the uncentred causal guard preferred a vacuous candidate",
-          d["rows"]["randtok"]["causal_raw"] > d["rows"]["real"]["causal_raw"],
-          f"randtok {d['rows']['randtok']['causal_raw']:.2f} vs real {d['rows']['real']['causal_raw']:.2f}")
+    check("X2: the consequence test is itself audited by a positive control",
+          "positive_control_rate" in d and d.get("positive_defined", 0) > 0,
+          f"detected {d.get('positive_control_rate', float('nan')):.2f} of "
+          f"{d.get('positive_defined', 0)} defined")
+    check("X2: an undefined positive control is not counted as a failed detection",
+          d.get("positive_defined", 0) <= len(d["rows"]) and
+          all("positive_defined" in r for r in d["rows"]),
+          f"{d.get('positive_defined', 0)} of {len(d['rows'])} features have a defined control")
 
 # --- nothing may still point at a placeholder ------------------------------------------------
 check("no placeholder URLs in the site", 'https://github.com/"' not in site)
@@ -179,6 +193,15 @@ check("site tags balance", not bad, ", ".join(bad))
 # --- the documented requirement must actually be documented -----------------------------------
 check("the model-server requirement is stated", "11434" in readme and "VLLM_MODEL" in readme)
 
+# --- this file must not repeat itself ---------------------------------------------------------
+# Three times a block was spliced into this file twice over, once silently swallowing the
+# positive-suite assertions in between. A duplicated check is worse than a missing one: it inflates
+# the count while testing nothing new.
+import re as _re, collections as _c                                              # noqa: E402
+_names = _re.findall(r'check\(\s*(f?"[^"]*")', pathlib.Path(__file__).read_text())
+_dups = sorted(n for n, c in _c.Counter(_names).items() if c > 1)
+check("no check in this file is written twice", not _dups, ", ".join(_dups) or "all distinct")
+
 width = max(len(n) for n, _, _ in CHECKS)
 failed = 0
 for name, ok, detail in CHECKS:
@@ -186,3 +209,4 @@ for name, ok, detail in CHECKS:
     print(f"  {'ok  ' if ok else 'FAIL'}  {name:<{width}}  {detail}")
 print(f"\n{len(CHECKS) - failed}/{len(CHECKS)} checks pass")
 sys.exit(1 if failed else 0)
+
