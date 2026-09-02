@@ -33,6 +33,26 @@ def mac(name, val):
     out.append(f"\\newcommand{{\\{name}}}{{{val}}}")
 
 
+def effective_types(counts):
+    """Effective number of null types actually exercised: exp of the entropy of the type mix.
+
+    A count of distinct types overstates a suite's diversity when the mass sits on one of them.
+    Six nulls that are five variants of the same degenerate construction plus one other are not
+    six independent ways of being empty. The effective number weights each type by how much of
+    the suite it actually accounts for, so it falls toward 1 as the suite becomes dominated by a
+    single construction and reaches the nominal count only when the types are balanced.
+
+    The statistic is Jost's effective number (Jost, 2006), used for the same purpose by Song et
+    al. (2026) to measure how an LLM's reasoning effort is spread over semantic spaces.
+    """
+    import math
+    n = sum(counts.values())
+    if not n:
+        return 0.0
+    h = -sum((c / n) * math.log(c / n) for c in counts.values() if c)
+    return math.exp(h)
+
+
 LABEL = {"identity": "identity map (harness check)", "adjacent": "adjacent layer, same model",
          "real": "the correspondence under test", "permuted_pairs": "pairings permuted",
          "residue_shuffle": "residues permuted within protein",
@@ -137,6 +157,26 @@ if co:
     fin = [r for r in co["rows"] if math.isfinite(r["origin"]) and math.isfinite(r["translated"])]
     mac("coordIdentical", len(fin))
     mac("coordTranslatedPct", f"{100*co['frac_translated']:.0f}\\%")
+
+# --- how diverse are the null suites, as opposed to how many nulls they contain? -------------
+import collections as _co                                                        # noqa: E402
+NOT_NULL = ("real", "positive", "consequence-test control")
+_suites = {}
+for _f, _pfx in (("xai_cka.json", "Xone"), ("xai_esm.json", "Xthree")):
+    _j = load(_f)
+    if _j and "configs" in _j:
+        _c = _co.Counter(r[v]["type"] for r in _j["configs"].values() for v in r
+                         if r[v]["type"] not in NOT_NULL)
+        _suites[_pfx] = _c
+_j = load("xai_sae.json")
+if _j:
+    _suites["Xtwo"] = _co.Counter(x["type"] for x in _j["nulls"])
+for _pfx, _c in _suites.items():
+    mac(_pfx + "NullTypes", len(_c))
+    mac(_pfx + "NullEffTypes", f"{effective_types(_c):.2f}")
+if _suites:
+    _worst = min(effective_types(c) / max(len(c), 1) for c in _suites.values())
+    mac("NullTypeBalance", f"{_worst:.2f}")
 
 fam = load("xai_families.json")
 if fam:

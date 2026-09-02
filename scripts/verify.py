@@ -185,6 +185,40 @@ if xk.exists() and "configs" in json.loads(xk.read_text()):
               for v in r if v != "real"),
           "AUROC recorded for every null in every configuration")
 
+# --- a null suite must be diverse, not merely numerous -----------------------------------------
+# Counting nulls overstates a suite whose mass sits on one construction. The effective number of
+# types (exp of the entropy of the type mix, Jost 2006) falls toward 1 as one type dominates.
+import collections as _c2, math as _m2                                           # noqa: E402
+_NOTNULL = ("real", "positive", "consequence-test control")
+_eff = {}
+for _f, _tag in (("xai_cka.json", "X1"), ("xai_esm.json", "X3")):
+    _pp = ROOT / "mechanism" / _f
+    if _pp.exists():
+        _d = json.loads(_pp.read_text())
+        if "configs" in _d:
+            _eff[_tag] = _c2.Counter(r[v]["type"] for r in _d["configs"].values() for v in r
+                                     if r[v]["type"] not in _NOTNULL)
+_pp = ROOT / "mechanism" / "xai_sae.json"
+if _pp.exists():
+    _eff["X2"] = _c2.Counter(x["type"] for x in json.loads(_pp.read_text())["nulls"])
+
+
+def _eff_types(counts):
+    n = sum(counts.values())
+    if not n:
+        return 0.0
+    return _m2.exp(-sum((v / n) * _m2.log(v / n) for v in counts.values() if v))
+
+
+if _eff:
+    check("each null suite spans more than two effective types",
+          all(_eff_types(c) > 2.0 for c in _eff.values()),
+          "; ".join(f"{t} {_eff_types(c):.2f} of {len(c)}" for t, c in sorted(_eff.items())))
+    check("no null suite is dominated by one construction",
+          all(_eff_types(c) / max(len(c), 1) > 0.75 for c in _eff.values()),
+          "; ".join(f"{t} balance {_eff_types(c)/max(len(c),1):.2f}"
+                    for t, c in sorted(_eff.items())))
+
 xf = ROOT / "mechanism" / "xai_families.json"
 check("null families are run, not only hand-written nulls", xf.exists(),
       "fresh draws from each correspondence-breaking family")
