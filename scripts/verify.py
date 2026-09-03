@@ -337,13 +337,31 @@ for _f, _pairs in _site_nums.items():
         _s = _tmpl.format(v=_d[_k])
         check(f"the site quotes the current {_k}", _s in site, f"expected {_s!r}")
 
+# The site is public and non-anonymous, so it must host the NAMED build. main.pdf is whichever
+# way the anonymity switch is currently set, so comparing against it would fail whenever the
+# switch is on.
 _hosted = ROOT / "docs" / "paper.pdf"
-_built = ROOT.parent / "paper" / "xai4science" / "main.pdf"
+_pdir = ROOT.parent / "paper" / "xai4science"
+_built = _pdir / "main_named.pdf"
+if not _built.exists():
+    _built = _pdir / "main.pdf"
 if _built.exists():
-    check("the hosted paper is the built one",
+    check("the hosted paper is the named build",
           _hosted.exists() and _hosted.stat().st_size == _built.stat().st_size,
-          f"docs/paper.pdf {_hosted.stat().st_size if _hosted.exists() else 0} B vs built "
-          f"{_built.stat().st_size} B")
+          f"docs/paper.pdf {_hosted.stat().st_size if _hosted.exists() else 0} B vs "
+          f"{_built.name} {_built.stat().st_size} B")
+
+# An anonymous submission that names its authors is withdrawn, so this is checked, not assumed.
+_anon = _pdir / "main_anonymous.pdf"
+if _anon.exists():
+    import subprocess as _sp
+    _txt = _sp.run(["pdftotext", str(_anon), "-"], capture_output=True, text=True).stdout.lower()
+    _info = _sp.run(["pdfinfo", str(_anon)], capture_output=True, text=True).stdout.lower()
+    _leaks = [w for w in ("tianyu", "illinois", "urbana", "champaign", "biophysics",
+                          "real-project-aether") if w in _txt or w in _info]
+    check("the anonymous build names nobody", not _leaks,
+          f"leaked: {_leaks}" if _leaks else "no author, affiliation, e-mail or repo name "
+          "in the text or the PDF metadata")
 
 check("the site does not advertise a stale page count",
       "(5pp)" not in site and "(5 pp)" not in site, "page count removed from the link text")
