@@ -1,0 +1,347 @@
+{
+ "rows": [
+  {
+   "problem": 0,
+   "condition": "real",
+   "type": "real",
+   "n_units": 10,
+   "decisions": [
+    "MAINTAIN",
+    "NEW"
+   ],
+   "seq": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1
+   ],
+   "n_spaces": 2,
+   "N_space_eff": 1.7547653506033232,
+   "N_trans_eff": 0.7547653506033232,
+   "rho": 0.43012323576130557
+  },
+  {
+   "problem": 0,
+   "condition": "two_method",
+   "type": "positive",
+   "n_units": 20,
+   "decisions": [
+    "MAINTAIN",
+    "NEW",
+    "MAINTAIN",
+    "NEW"
+   ],
+   "seq": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "n_spaces": 3,
+   "N_space_eff": 2.9918357260580115,
+   "N_trans_eff": 1.9918357260580115,
+   "rho": 0.6657570496634245
+  },
+  {
+   "problem": 0,
+   "condition": "shuffled",
+   "type": "degenerate",
+   "n_units": 10,
+   "decisions": [
+    "NEW",
+    "NEW"
+   ],
+   "seq": [
+    0,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "n_spaces": 3,
+   "N_space_eff": 2.4602329762891006,
+   "N_trans_eff": 1.4602329762891006,
+   "rho": 0.5935344296098523
+  },
+  {
+   "problem": 0,
+   "condition": "mismatched",
+   "type": "correspondence-breaking",
+   "n_units": 10,
+   "decisions": [
+    "MAINTAIN"
+   ],
+   "seq": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "n_spaces": 1,
+   "N_space_eff": 1.0,
+   "N_trans_eff": 0.0,
+   "rho": 0.0
+  },
+  {
+   "problem": 0,
+   "condition": "spliced",
+   "type": "randomised",
+   "n_units": 10,
+   "decisions": [
+    "NEW"
+   ],
+   "seq": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "n_spaces": 2,
+   "N_space_eff": 1.9796263300525183,
+   "N_trans_eff": 0.9796263300525183,
+   "rho": 0.4948541627179355
+  },
+  {
+   "problem": 1,
+   "condition": "real",
+   "type": "real",
+   "n_units": 10,
+   "decisions": [
+    "NEW"
+   ],
+   "seq": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "n_spaces": 2,
+   "N_space_eff": 1.0,
+   "N_trans_eff": 0.0,
+   "rho": 0.0
+  },
+  {
+   "problem": 1,
+   "condition": "two_method",
+   "type": "positive",
+   "n_units": 20,
+   "decisions": [
+    "NEW",
+    "MAINTAIN"
+   ],
+   "seq": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "n_spaces": 2,
+   "N_space_eff": 1.0,
+   "N_trans_eff": 0.0,
+   "rho": 0.0
+  },
+  {
+   "problem": 1,
+   "condition": "shuffled",
+   "type": "degenerate",
+   "n_units": 10,
+   "decisions": [
+    "NEW"
+   ],
+   "seq": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "n_spaces": 2,
+   "N_space_eff": 1.5069930657725377,
+   "N_trans_eff": 0.5069930657725377,
+   "rho": 0.33642694003547735
+  },
+  {
+   "problem": 1,
+   "condition": "mismatched",
+   "type": "correspondence-breaking",
+   "n_units": 10,
+   "decisions": [
+    "MAINTAIN",
+    "MAINTAIN"
+   ],
+   "seq": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "n_spaces": 1,
+   "N_space_eff": 1.0,
+   "N_trans_eff": 0.0,
+   "rho": 0.0
+  },
+  {
+   "problem": 1,
+   "condition": "spliced",
+   "type": "randomised",
+   "n_units": 10,
+   "decisions": [
+    "MAINTAIN",
+    "MAINTAIN"
+   ],
+   "seq": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "n_spaces": 1,
+   "N_space_eff": 1.0,
+   "N_trans_eff": 0.0,
+   "rho": 0.0
+  }
+ ],
+ "summary": {
+  "real": {
+   "type": "real",
+   "n": 2,
+   "mean_n_spaces": 2.0,
+   "mean_N_space_eff": 1.3773826753016616,
+   "mean_rho": 0.21506161788065278,
+   "auroc_vs_real": NaN
+  },
+  "two_method": {
+   "type": "positive",
+   "n": 2,
+   "mean_n_spaces": 2.5,
+   "mean_N_space_eff": 1.9959178630290058,
+   "mean_rho": 0.33287852483171226,
+   "auroc_vs_real": 0.375
+  },
+  "shuffled": {
+   "type": "degenerate",
+   "n": 2,
+   "mean_n_spaces": 2.5,
+   "mean_N_space_eff": 1.9836130210308192,
+   "mean_rho": 0.4649806848226648,
+   "auroc_vs_real": 0.25
+  },
+  "mismatched": {
+   "type": "correspondence-breaking",
+   "n": 2,
+   "mean_n_spaces": 1.0,
+   "mean_N_space_eff": 1.0,
+   "mean_rho": 0.0,
+   "auroc_vs_real": 0.75
+  },
+  "spliced": {
+   "type": "randomised",
+   "n": 2,
+   "mean_n_spaces": 1.5,
+   "mean_N_space_eff": 1.4898131650262592,
+   "mean_rho": 0.24742708135896774,
+   "auroc_vs_real": 0.375
+  }
+ },
+ "positive_auroc": 0.375,
+ "null_aurocs": {
+  "shuffled": 0.25,
+  "mismatched": 0.75,
+  "spliced": 0.375
+ },
+ "conclusive": false,
+ "config": {
+  "annotator": "Qwen/Qwen2.5-7B-Instruct",
+  "n_problems": 2,
+  "max_units": 10,
+  "dataset": "HuggingFaceH4/MATH-500",
+  "triggers": [
+   "H1",
+   "H2",
+   "H5",
+   "H6",
+   "H10",
+   "H13"
+  ],
+  "guidebooks": "vendored from holi-lab/SHAPE-of-CoT, see shape_vendor/PROVENANCE.md",
+  "deviation": "annotator is 7B via transformers, not Qwen3.5-27B via vLLM"
+ }
+}
