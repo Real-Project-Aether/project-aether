@@ -178,6 +178,19 @@ if _suites:
     _worst = min(effective_types(c) / max(len(c), 1) for c in _suites.values())
     mac("NullTypeBalance", f"{_worst:.2f}")
 
+sh = load("shape_audit.json")
+if sh:
+    import collections as _cs
+    _dec = _cs.Counter(x for r in sh["rows"] for x in r["decisions"])
+    mac("ShapeProblems", sh["config"]["n_problems"])
+    mac("ShapeTraj", len(sh["rows"]))
+    mac("ShapeNew", _dec.get("NEW", 0))
+    mac("ShapeReturn", _dec.get("RETURN", 0))
+    mac("ShapePosAUROC", f"{sh['positive_auroc']:.2f}")
+    _n = list(sh["null_aurocs"].values())
+    mac("ShapeNullLo", f"{min(_n):.2f}")
+    mac("ShapeNullHi", f"{max(_n):.2f}")
+
 fam = load("xai_families.json")
 if fam:
     _rows = [r for v in fam["pairs"].values() for r in v["rows"]]

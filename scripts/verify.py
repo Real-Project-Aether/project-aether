@@ -305,6 +305,49 @@ if xs.exists():
           all("positive_defined" in r for r in d["rows"]),
           f"{d.get('positive_defined', 0)} of {len(d['rows'])} features have a defined control")
 
+# --- an inconclusive audit must stay labelled inconclusive -------------------------------------
+_sh = ROOT / "mechanism" / "shape_audit.json"
+if _sh.exists():
+    _d = json.loads(_sh.read_text())
+    _paper = (ROOT.parent / "paper" / "xai4science" / "main.tex")
+    check("the SHAPE audit records whether it was conclusive",
+          "conclusive" in _d, f"conclusive = {_d.get('conclusive')}")
+    if not _d.get("conclusive", False) and _paper.exists():
+        _t = _paper.read_text()
+        check("an inconclusive audit is reported as inconclusive, not as a finding",
+              "inconclusive" in _t.lower(),
+              "the paper must not turn a failed positive control into a result about the tracker")
+    _dec = [x for r in _d["rows"] for x in r["decisions"]]
+    check("the audit records the tracker's own decision counts",
+          len(_dec) > 0,
+          f"NEW {_dec.count('NEW')}, RETURN {_dec.count('RETURN')}, "
+          f"MAINTAIN {_dec.count('MAINTAIN')} over {len(_d['rows'])} trajectories")
+
+# --- the public site must not carry numbers the result files contradict ------------------------
+# It did: the site advertised the positive suite as 8 reductions and 24 empty candidates long
+# after it became 24 and 72, and the hosted PDF was four days behind the built one, so the public
+# page linked to a paper containing claims we had already corrected.
+_site_nums = {
+    "external_positives.json": [("n_systems", "all {v}"), ("n_negatives", "{v} empty"),
+                                ("closure_only_accepts", "<b>{v} of ")],
+}
+for _f, _pairs in _site_nums.items():
+    _d = json.loads((ROOT / "mechanism" / _f).read_text())
+    for _k, _tmpl in _pairs:
+        _s = _tmpl.format(v=_d[_k])
+        check(f"the site quotes the current {_k}", _s in site, f"expected {_s!r}")
+
+_hosted = ROOT / "docs" / "paper.pdf"
+_built = ROOT.parent / "paper" / "xai4science" / "main.pdf"
+if _built.exists():
+    check("the hosted paper is the built one",
+          _hosted.exists() and _hosted.stat().st_size == _built.stat().st_size,
+          f"docs/paper.pdf {_hosted.stat().st_size if _hosted.exists() else 0} B vs built "
+          f"{_built.stat().st_size} B")
+
+check("the site does not advertise a stale page count",
+      "(5pp)" not in site and "(5 pp)" not in site, "page count removed from the link text")
+
 # --- nothing may still point at a placeholder ------------------------------------------------
 check("no placeholder URLs in the site", 'https://github.com/"' not in site)
 readme = (ROOT / "README.md").read_text()

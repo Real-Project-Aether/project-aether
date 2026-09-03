@@ -317,7 +317,7 @@ footer a{color:var(--ink-2)}
       <div class="fact"><b>96%</b><span>of a public benchmark where the obvious guard accepts an empty answer</span></div>
     </div>
     <div class="cta">
-      <a class="btn" href="paper.pdf">Read the paper (5pp)</a>
+      <a class="btn" href="paper.pdf">Read the paper</a>
       <a class="btn ghost" href="https://github.com/Real-Project-Aether/project-aether">Code &amp; data</a>
       <a class="btn ghost" href="#bound">What it cannot reach</a>
     </div>
@@ -695,20 +695,30 @@ footer a{color:var(--ink-2)}
     closure error of exactly zero. The second test refuses it on <b>all 129</b>.</p>
     <p class="say">A test that refuses everything would be no better, so we also built a suite
     where the right answer is fixed by construction rather than by the test. There the pair
-    recovers <b>6 of 8</b> reductions we know are present and accepts <b>none</b> of the 24 empty
-    ones &mdash; while the first test alone still accepts <b>16 of those 24</b>. It is not
-    forgiving, though: tilt a correct reduction by a tenth of a radian and it is refused.</p>
+    accepts <b>all 24</b> reductions we know are present and <b>none</b> of the
+    72 empty ones &mdash; while the first test alone still accepts
+    <b>47 of those 72</b>. Handed the proposer's estimate
+    of the right answer rather than the answer itself it accepts 0.71, so
+    that shortfall is the proposer and not the test. It is not forgiving: tilt a correct reduction
+    by 0.03&ndash;0.08 radians and it is refused.</p>
     <p class="say">And because the problem is about acceptance tests rather than about physics, we
     ran the same pair on two interpretability methods. Fitting an alignment between two language
     models on eight stimuli and scoring it in&nbsp;sample &mdash; ordinary practice &mdash;
-    <strong>accepts every one of five empty candidates</strong>; held out on 15,360 positions it
-    accepts two. On sparse-autoencoder features the correlational test refuses every empty control,
-    yet of twelve features it calls interpretable an intervention confirms only <b>eight</b>, and
-    one gets <em>better</em> at its own concept when you ablate it. <b>Passing the empty-input
-    check is necessary, not sufficient.</b></p>
-    <p class="mlnote">Our own second test needed the same medicine. Its first version preferred a
-    vacuous candidate to the real one &mdash; 0.70 against 0.39 &mdash; because any intervention
-    pushes both models toward the same common words. We only found that by running the null.</p>
+    <strong>accepts 83% of the empty candidates</strong>, and held out on
+    every position it still accepts 67%. More data does not fix it. Linear CKA
+    gives a genuine correspondence and that same map composed with a random rotation the
+    <em>same</em> score, because it never looks at the map being claimed. The same holds on
+    <b>ESM-2 protein language models</b> (80%). Adding a causal test that
+    perturbs one position and carries the change across refuses every empty candidate in every
+    configuration while accepting the ones we know are real. On sparse-autoencoder features the
+    correlational test refuses almost every empty control, yet of the features it calls
+    interpretable an intervention supports only <b>0.45</b>, against
+    0.005 for matched controls. <b>Passing the empty-input check is necessary,
+    not sufficient.</b></p>
+    <p class="mlnote">Our own second test needed the same medicine. An early version preferred a
+    vacuous candidate to the real one, 0.70 against 0.39, because overwriting the whole residual
+    stream pushes both models toward the same common words. Localising the intervention removed
+    that. We only found it by running the null.</p>
   </div>
 </section>
 
