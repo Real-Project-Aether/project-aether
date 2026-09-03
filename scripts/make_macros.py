@@ -213,7 +213,9 @@ if b:
     mac("XtwoCAR", f"{car:.2f}")
     mac("XtwoCARpct", f"{100*car:.0f}\\%")
     mac("XtwoUnsupportedPct", f"{100*(1-car):.0f}\\%")   # was hand-copied and went stale
-    mac("XtwoControl", f"{b['car_control']:.2f}")
+    # 3 dp, not 2: the matched-control rate is 0.005, and rounding it to 0.00 reads as exactly
+    # zero and overstates the separation from the selected features.
+    mac("XtwoControl", f"{b['car_control']:.3f}")
     mac("XtwoDelta", f"{b['delta_car']:+.2f}")
     mac("XtwoCIlo", f"{b['ci'][0]:.2f}")
     mac("XtwoCIhi", f"{b['ci'][1]:.2f}")
