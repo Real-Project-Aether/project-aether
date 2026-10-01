@@ -1,0 +1,67 @@
+{
+ "positive": {
+  "hidden_share": 0.3,
+  "offset": 0.0,
+  "missing_per_event": 1.1919756653060654,
+  "fraction_of_input": 0.148440639452582,
+  "z": 56.1075663151566,
+  "posit": true,
+  "significance_guard": true
+ },
+ "balance": {
+  "hidden_share": 0.0,
+  "offset": 0.0,
+  "missing_per_event": -0.011196148140787348,
+  "fraction_of_input": -0.0013942930529521895,
+  "z": -0.9778168527096495,
+  "posit": false,
+  "significance_guard": false
+ },
+ "within_noise": {
+  "hidden_share": 0.01,
+  "offset": 0.0,
+  "missing_per_event": 0.028909578974107685,
+  "fraction_of_input": 0.0036002046972322768,
+  "z": 2.526391500368431,
+  "posit": false,
+  "significance_guard": false
+ },
+ "offset_2p5": {
+  "hidden_share": 0.0,
+  "offset": 0.025,
+  "missing_per_event": 0.18983330597254988,
+  "fraction_of_input": 0.02364056427337164,
+  "z": 16.129218507037134,
+  "posit": false,
+  "significance_guard": true
+ },
+ "offset_5": {
+  "hidden_share": 0.0,
+  "offset": 0.05,
+  "missing_per_event": 0.390862760085887,
+  "fraction_of_input": 0.048675421599695456,
+  "z": 30.599564992653193,
+  "posit": false,
+  "significance_guard": true
+ },
+ "hidden_2p5": {
+  "hidden_share": 0.05,
+  "offset": 0.0,
+  "missing_per_event": 0.18933248743368813,
+  "fraction_of_input": 0.02357819569797018,
+  "z": 16.13078672708786,
+  "posit": false,
+  "significance_guard": true
+ },
+ "hidden_5": {
+  "hidden_share": 0.1,
+  "offset": 0.0,
+  "missing_per_event": 0.3898611230081636,
+  "fraction_of_input": 0.04855068444889255,
+  "z": 30.526101177932727,
+  "posit": false,
+  "significance_guard": true
+ },
+ "noise": 0.02,
+ "threshold_fraction": 0.06
+}

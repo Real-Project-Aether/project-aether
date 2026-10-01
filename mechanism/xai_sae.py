@@ -596,10 +596,13 @@ def main():
 
     # ANALYSIS.md section 8 excludes "features with fewer than 30 concept positions in the
     # evaluation set". That threshold was being applied to the split features are SELECTED on, not
-    # to the disjoint split they are JUDGED on, so a feature whose concept never occurs in D_cons
-    # entered the denominator as a failure -- its consequence test was not computable at all. The
-    # boundary is not a judgement call: the excluded features have exactly ZERO concept positions
-    # there and the next smallest has 19, so any threshold between 1 and 19 gives the same set.
+    # to the disjoint split they are JUDGED on, so a feature whose concept is rare or absent in
+    # D_cons entered the denominator as a failure -- its consequence test was not computable at
+    # all. An earlier version of this comment said every excluded feature has exactly zero concept
+    # positions in D_cons. That was wrong: xai_sae_untestable.py recounts them from the token
+    # stream, and 141 of 191 have none while 50 have 1 to 24, below MIN_ON = 30; the smallest
+    # testable concept has 31 positions. 118 of the 191 share one concept, the "send" of
+    # "Townsend", which comes from a single article in D_guard and never occurs in D_cons.
     testable = [r for r in rows if len(r["per_seq"]) >= MIN_SEQ]
     n_untestable = len(rows) - len(testable)
     paired = [r for r in testable if r["controls"]]
@@ -620,7 +623,7 @@ def main():
         print(f"{a:<26}{len(q):>8}{cs:>10.2f}{cc:>8.2f}{cs-cc:>9.2f}")
     print("-" * 61)
     print(f"{'pooled':<26}{len(paired):>8}{car:>10.2f}{carc:>8.2f}{car-carc:>9.2f}")
-    print(f"\n  {n_untestable} of {len(rows)} selected features have no concept position in the "
+    print(f"\n  {n_untestable} of {len(rows)} selected features have too few concept positions in the "
           f"consequence split and are excluded (ANALYSIS.md \u00a78); {len(paired)} are judged")
     print(f"  CAR@{N_FEAT} = {car:.2f}   cluster bootstrap 95% CI {lo:.2f}-{hi:.2f}")
     print(f"  matched-control rate = {carc:.2f}")
@@ -739,7 +742,7 @@ def reanalyse():
                 / max(len(da), 1))
     f.write_text(json.dumps(d, indent=1))
 
-    print(f"{d['untestable']} of {len(rows)} selected features have no concept position in the "
+    print(f"{d['untestable']} of {len(rows)} selected features have too few concept positions in the "
           f"consequence split and are excluded (ANALYSIS.md \u00a78)")
     print(f"CAR   {car:.3f}  95% CI {d['ci'][0]:.3f}-{d['ci'][1]:.3f}   over {len(paired)} judged")
     print(f"ctrl  {carc:.3f}")

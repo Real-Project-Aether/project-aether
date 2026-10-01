@@ -147,7 +147,15 @@ def evaluate(sys_obj, Q, X_list, dt):
     rescue a failed fit --- for an automated-discovery claim the LEARNED law must carry the guard,
     with the derived law kept only as a diagnostic separating a bad proposer from a bad fit.
     """
-    rhs = lambda x: np.asarray(sys_obj.rhs(x, 0.0), float)
+    def rhs(x):
+        # A published right-hand side can be undefined at a lifted state (the constant reduction
+        # lifts to the origin, where some systems divide by zero). That makes the closure error
+        # non-computable for this candidate; it must not drop the whole system from the sweep,
+        # which is what an uncaught ZeroDivisionError here used to do.
+        try:
+            return np.asarray(sys_obj.rhs(x, 0.0), float)
+        except (ZeroDivisionError, FloatingPointError, OverflowError, ValueError):
+            return np.full(len(x), np.nan)
 
     C_all, dC_all = [], []
     for X in X_list:

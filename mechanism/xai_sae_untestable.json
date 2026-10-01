@@ -1,0 +1,15 @@
+{
+ "n_selected": 600,
+ "n_untestable": 191,
+ "untestable_zero": 141,
+ "untestable_max_positions": 24,
+ "testable_min_positions": 31,
+ "testable_min_sequences": 19,
+ "min_on": 30,
+ "top_concept": 13161,
+ "top_concept_text": "send",
+ "top_concept_features": 118,
+ "top_concept_guard_positions": 140,
+ "top_concept_guard_sequences": 47,
+ "top_concept_cons_positions": 0
+}

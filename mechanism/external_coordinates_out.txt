@@ -1,0 +1,26 @@
+Is the constant reduction's closure a fact about closure, or about our coordinates?
+==============================================================================
+
+  system                      origin   translated  intrinsic
+  ----------------------------------------------------------
+  Aizawa                       0.000        0.000      0.000
+  AnishchenkoAstakhov          0.000        0.000      0.000
+  Arneodo                      0.000        0.000      0.000
+  ArnoldBeltramiChildress      0.000        0.000      0.000
+  ArnoldWeb                    0.000        0.000      0.000
+  AtmosphericRegime            0.000        0.000      0.000
+  BeerRNN                      0.000        0.000      0.000
+  BelousovZhabotinsky          0.000        0.000      0.000
+  BickleyJet                   0.000        0.000      0.000
+  Blasius                      0.000        0.000      0.000
+  BlinkingRotlet                 inf        0.000      0.000
+  BlinkingVortex                 inf        0.000      0.000
+  ...                     
+
+  systems tested: 135
+    constant reduction, original coordinates            124/135  (92%)
+    constant reduction, origin moved off the attractor  126/135  (93%)
+    zero-dimensional reduction, no lift at all          135/135  (100%)
+
+  closure identical under translation, where both are finite: 121/121
+  -> the test measures closure, not a property of our coordinates.

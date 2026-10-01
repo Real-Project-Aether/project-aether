@@ -1,6 +1,6 @@
 # What the mechanism says, and where it goes quiet
 
-## Engineering checks (16/16)
+## Engineering checks (21/21)
 
 `test_mechanism.py`. Every case here has an answer we put in ourselves, so passing shows the code
 does what it claims — not that the criterion tracks real theory choice.
@@ -101,7 +101,7 @@ used **only to generate**, never to decide.
 | **B** | **control** — pure noise, nothing to find | 8 | **0** |
 
 **Replicated across three independent runs** (`llm_propose_out.txt`, `llm_propose_run1.txt`,
-`llm_propose_run2.txt`). World B accepted **0 of 8 in every run**. World A accepted 2–3, then 5,
+`llm_propose_run2.txt`). World B accepted **0 of 8 in every run**. World A accepted 2, then 5,
 then 4 — the variation is the temperature, and the higher figures sharpen the limitation below:
 the acceptance rule lets over half the proposals through. The oracle check is identical in all
 three: 97% for the truth against 68% for the near miss and 20% for the wrong ones.
@@ -121,11 +121,11 @@ rejected however confident the model sounds.
 | base model | 18% |
 
 So the test separates the truth from near-misses by a wide margin, and **the proposer is the
-limiting component, not the criterion** — across runs gpt-oss:20b offered `sin(x)`, `sin(2x)`,
-`x**3` and `sin(pi*x)`, never `sin(3x)`, though the residual is a clean sine.
+limiting component, not the criterion** — in world A gpt-oss:20b offered `sin(pi*x)`, `sin(2*pi*x)`,
+`sin(3.7*x)` and related terms, never `sin(3x)`, though the residual is a clean sine.
 
 **A weakness in our own rule, stated plainly.** "Coverage strictly improves" is too permissive:
-it admitted `sin(x)` and `x**3` at 20–22% against a base of 18%, and across three runs it let
-through 2, 4 and 5 of 8 proposals. The rule *ranks* correctly but does not *discriminate*; it
+it admitted terms such as `tanh(x-3)` and `sin(3.7*x)` at 20% against a base of 18%, and across
+three runs it let through 2, 5 and 4 of 8 proposals. The rule *ranks* correctly but does not *discriminate*; it
 needs a margin, not a strict inequality. Proposal counts vary with temperature 0.8 — the control
 accepting zero did not, in any run.

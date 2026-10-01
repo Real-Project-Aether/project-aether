@@ -62,13 +62,13 @@
   },
   {
    "system": "BlinkingRotlet",
-   "origin": NaN,
+   "origin": Infinity,
    "translated": 0.0,
    "intrinsic": 0.0
   },
   {
    "system": "BlinkingVortex",
-   "origin": NaN,
+   "origin": Infinity,
    "translated": 0.0,
    "intrinsic": 0.0
   },
@@ -239,14 +239,584 @@
    "origin": 0.0,
    "translated": 0.0,
    "intrinsic": 0.0
+  },
+  {
+   "system": "Hadley",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Halvorsen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HastingsPowell",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HenonHeiles",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HindmarshRose",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Hopfield",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperBao",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperCai",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperJha",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperLorenz",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperLu",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperPang",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperQi",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperRossler",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperWang",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperXu",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperYan",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "HyperYangChen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "IkedaDelay",
+   "origin": Infinity,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "InteriorSquirmer",
+   "origin": Infinity,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "IsothermalChemical",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ItikBanksTumor",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "JerkCircuit",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "KawczynskiStrizhak",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Laser",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LidDrivenCavityFlow",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LiuChen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Lorenz",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Lorenz84",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Lorenz96",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LorenzBounded",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LorenzCoupled",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LorenzStenflo",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LuChen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "LuChenCheng",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "MacArthur",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "MackeyGlass",
+   "origin": Infinity,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "MooreSpiegel",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "MultiChua",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "NewtonLiepnik",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "NoseHoover",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "NuclearQuadrupole",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "OscillatingFlow",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "PanXuZhou",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "PehlivanWei",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "PiecewiseCircuit",
+   "origin": Infinity,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Qi",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "QiChen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "RabinovichFabrikant",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "RayleighBenard",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "RikitakeDynamo",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Rossler",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Rucklidge",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Sakarya",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SaltonSea",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SanUmSrisuchinwong",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ScrollDelay",
+   "origin": Infinity,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ShimizuMorioka",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottA",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottB",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottC",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottD",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottDelay",
+   "origin": Infinity,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottE",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottF",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottG",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottH",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottI",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottJ",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottJerk",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottK",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottL",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottM",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottMore",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottN",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottO",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottP",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottQ",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottR",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottS",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SprottTorus",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "StickSlipOscillator",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "SwingingAtwood",
+   "origin": Infinity,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Thomas",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ThomasLabyrinth",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Torus",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "Tsucs2",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "TurchinHanski",
+   "origin": Infinity,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "VallisElNino",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "VossDelay",
+   "origin": Infinity,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "WangSun",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "WindmiReduced",
+   "origin": 0.0,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "YuWang",
+   "origin": 0.0,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "YuWang2",
+   "origin": 0.0,
+   "translated": Infinity,
+   "intrinsic": 0.0
+  },
+  {
+   "system": "ZhouChen",
+   "origin": 0.0,
+   "translated": 0.0,
+   "intrinsic": 0.0
   }
  ],
- "frac_origin": 0.95,
- "frac_translated": 1.0,
+ "frac_origin": 0.9185185185185185,
+ "frac_translated": 0.9333333333333333,
  "frac_intrinsic": 1.0,
- "translation_invariant": false,
+ "translation_invariant": true,
  "config": {
-  "n_sys": 40,
+  "n_sys": 135,
   "n_points": 200,
   "close_max": 0.25,
   "seed": 0

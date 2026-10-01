@@ -68,10 +68,23 @@ def posit(q_in, q_out, noise=0.02):
     }
 
 
-def run(label, hidden_share, expect):
+RESULTS = {}
+
+
+def run(label, hidden_share, expect, key=None, offset=0.0):
+    """One measured process. `offset` is a calibration error on the measured output (a fraction of
+    it lost to miscalibration); with hidden_share = 0 nothing is hidden and any imbalance is that
+    error alone, which is the null a significance guard cannot tell from a real carrier."""
     rng = np.random.default_rng(7)
     q_in, q_out = process(rng, hidden_share=hidden_share)
+    q_out = q_out * (1.0 - offset)
     r = posit(q_in, q_out)
+    if key:
+        RESULTS[key] = dict(hidden_share=hidden_share, offset=offset,
+                            missing_per_event=float(r["missing_per_event"]),
+                            fraction_of_input=float(r["as_fraction_of_input"]),
+                            z=float(r["z"]), posit=bool(r["posit"]),
+                            significance_guard=bool(abs(r["z"]) > 6))
     ok = r["posit"] == expect
     print(f"\n{label}")
     print(f"  charge missing per event : {r['missing_per_event']:+.3f}"
@@ -90,8 +103,27 @@ def run(label, hidden_share, expect):
 if __name__ == "__main__":
     print("L4 -- posit an object to close a ledger that does not balance")
     print(f"charge per species: {dict(enumerate(Q))}, species 2 invisible to all probes")
-    a = run("A DECAY WITH AN UNSEEN PRODUCT  (should posit)", 0.30, True)
-    b = run("CONTROL -- the books balance     (must not posit)", 0.00, False)
-    c = run("CONTROL -- imbalance within noise (must not posit)", 0.01, False)
-    print(f"\n{'PASS' if (a and b and c) else 'FAIL'}: "
-          f"posited when something was missing = {a}, stayed silent otherwise = {b and c}")
+    a = run("A DECAY WITH AN UNSEEN PRODUCT  (should posit)", 0.30, True, "positive")
+    b = run("CONTROL -- the books balance     (must not posit)", 0.00, False, "balance")
+    c = run("CONTROL -- imbalance within noise (must not posit)", 0.01, False, "within_noise")
+    # NULLS: nothing hidden, the measured output miscalibrated by a few percent. The imbalance is
+    # many standard errors from zero, so a significance guard posits a carrier that does not
+    # exist; the noise-scale guard (3 x 2% of the input) must stay silent.
+    n1 = run("NULL -- nothing hidden, output miscalibrated by 2.5% (must not posit)", 0.00, False,
+             "offset_2p5", offset=0.025)
+    n2 = run("NULL -- nothing hidden, output miscalibrated by 5% (must not posit)", 0.00, False,
+             "offset_5", offset=0.05)
+    # SENSITIVITY: a real unseen product carrying 2.5% or 5% of the charge (hidden_share 0.05 and
+    # 0.10 of one product) sits below the same threshold, so the operation misses it.
+    d = run("SENSITIVITY -- 2.5% of the charge hidden, below the noise scale (not posited)", 0.05,
+            False, "hidden_2p5")
+    e = run("SENSITIVITY -- 5% of the charge hidden, below the noise scale (not posited)", 0.10,
+            False, "hidden_5")
+    ok = a and b and c and n1 and n2 and d and e
+    print(f"\n{'PASS' if ok else 'FAIL'}: posited when something was missing = {a}, "
+          f"stayed silent otherwise = {b and c and n1 and n2 and d and e}")
+    import json
+    from pathlib import Path
+    RESULTS["noise"] = 0.02
+    RESULTS["threshold_fraction"] = 3 * 0.02
+    (Path(__file__).parent / "l4_posit.json").write_text(json.dumps(RESULTS, indent=1))

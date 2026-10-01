@@ -6,22 +6,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 0.9419130323977928,
-    "learned": 1.0173185562853155,
-    "r2": 0.06989738230720699
+    "derived": 0.9419130323986478,
+    "learned": 1.0173185562861042,
+    "r2": 0.06989738230789577
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 0.9855158848785955,
-    "learned": 0.9855158813683376,
-    "r2": -0.3149514618187552
+    "derived": 0.9855158848773736,
+    "learned": 0.9855158813671157,
+    "r2": -0.31495146182042655
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.0465110533043613,
-    "learned": 1.0434830334712264,
+    "derived": 1.0465110533043616,
+    "learned": 1.043483033471227,
     "r2": -1.0
    },
    "constant": {
@@ -29,7 +29,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.18524133388612807
+    "r2": -0.18524133388612674
    }
   }
  },
@@ -74,14 +74,14 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 2.5892690598679664,
-    "learned": 1.8085304193020488,
+    "derived": 2.5892690598679566,
+    "learned": 1.8085304193020413,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 0.9815242951014805,
+    "derived": 0.9815242951014806,
     "learned": 0.9862121483127957,
     "r2": -1.0
    },
@@ -97,7 +97,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.5438397431996596
+    "r2": -0.5438397431996613
    }
   }
  },
@@ -142,21 +142,21 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 78.90519530797081,
-    "learned": 78.90519530749425,
+    "derived": 78.90519530835208,
+    "learned": 78.90519530816458,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 12.641498664799999,
-    "learned": 9.384236006406962,
-    "r2": -0.7530877448888456
+    "derived": 12.641498663214442,
+    "learned": 9.384236006422293,
+    "r2": -0.7530877516489916
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.1838668487383895e+27,
+    "derived": 1.1838668487402175e+27,
     "learned": Infinity,
     "r2": -1.0
    },
@@ -176,22 +176,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 265.6676022569301,
-    "learned": 265.6676022569358,
+    "derived": 265.66760225446865,
+    "learned": 265.6676022544478,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.1739694286919446,
-    "learned": 1.1739694286919444,
+    "derived": 1.1739694286922446,
+    "learned": 1.1739694286922446,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.1990154255498464,
-    "learned": 1.1990154255498464,
+    "derived": 1.1990154255498808,
+    "learned": 1.199015425549881,
     "r2": -1.0
    },
    "constant": {
@@ -278,22 +278,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 734280.0305800431,
-    "learned": 734314.4218520006,
+    "derived": 734280.0305920675,
+    "learned": 734329.7276451491,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 12.575080415465022,
+    "derived": 12.575080415605738,
     "learned": Infinity,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 379097.1730586345,
-    "learned": 2527.9759555561136,
+    "derived": 379097.17305863544,
+    "learned": 2527.975955571144,
     "r2": -1.0
    },
    "constant": {
@@ -346,22 +346,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 5.332597895006842,
-    "learned": 1.6773138534537158,
+    "derived": 5.332597893923154,
+    "learned": 1.6773138534827363,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 2.1168659417509463,
-    "learned": 1.926802130260995,
+    "derived": 2.1168659417510174,
+    "learned": 1.9268021302609706,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.5459188142759797,
-    "learned": 1.9021655541924307,
+    "derived": 1.5459188142759803,
+    "learned": 1.902165554192382,
     "r2": -1.0
    },
    "constant": {
@@ -380,22 +380,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 10.273673621361976,
-    "learned": 1.5700914616210446,
+    "derived": 10.273673621411254,
+    "learned": 1.5700914617491277,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 2.3272602875212587,
-    "learned": 2.2404786067227525,
-    "r2": -0.5142614286311147
+    "derived": 2.3272602875281505,
+    "learned": 2.2404786067240248,
+    "r2": -0.514261428647798
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 5.4974753604252715,
-    "learned": 1.230007069595648,
+    "derived": 5.497475360422923,
+    "learned": 1.228614404524565,
     "r2": -1.0
    },
    "constant": {
@@ -403,7 +403,7 @@
     "pays": false,
     "derived": Infinity,
     "learned": Infinity,
-    "r2": -0.9521962818435854
+    "r2": -0.9521962818436296
    }
   }
  },
@@ -414,15 +414,15 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.62146419319913,
-    "learned": 1.6131164120689143,
+    "derived": 1.6214641932309177,
+    "learned": 1.613116412100097,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.394617293712287,
-    "learned": 1.395403736032413,
+    "derived": 1.3946172937048453,
+    "learned": 1.3954037360249139,
     "r2": -1.0
    },
    "random": {
@@ -449,21 +449,21 @@
     "closes": false,
     "pays": false,
     "derived": 1.8105714000425934,
-    "learned": 1.8105612374461535,
+    "learned": 1.810561237446153,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
     "derived": Infinity,
-    "learned": 112.85544491356801,
+    "learned": 112.85544491357032,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": 1.4634643442364035,
-    "learned": 1.4649343213630148,
+    "learned": 1.4649343213630155,
     "r2": -1.0
    },
    "constant": {
@@ -788,22 +788,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 54.217185137670135,
+    "derived": 54.217156612067214,
     "learned": Infinity,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.5494918097199373,
-    "learned": 1.5522585236203772,
+    "derived": 1.549491809716871,
+    "learned": 1.5522585236172362,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 15.44576479036644,
-    "learned": 19.67142502127207,
+    "derived": 15.445764790367484,
+    "learned": 19.671425021273354,
     "r2": -1.0
    },
    "constant": {
@@ -856,22 +856,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.5865986139177923,
-    "learned": 1.5069083557209408,
+    "derived": 1.5865986139177979,
+    "learned": 1.5069083557209442,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.064971806748408,
-    "learned": 1.0999190887548644,
+    "derived": 1.0649718067484104,
+    "learned": 1.0999190887548689,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 2.3409492839277646,
-    "learned": 4.034347587260618,
+    "derived": 2.3409492839277766,
+    "learned": 4.034347587260632,
     "r2": -1.0
    },
    "constant": {
@@ -924,15 +924,15 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.625226158820272,
-    "learned": 1.625226158820273,
+    "derived": 1.6252261588202728,
+    "learned": 1.6252261588202739,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 72.62939728861542,
-    "learned": 72.62939728865105,
+    "derived": 72.6293972886153,
+    "learned": 72.62939728865058,
     "r2": -1.0
    },
    "random": {
@@ -992,22 +992,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.0017033043915613,
-    "learned": 1.2512320264621986,
-    "r2": 0.1069783116466202
+    "derived": 1.001703304622766,
+    "learned": 1.2512320259951775,
+    "r2": 0.10697831175102879
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 0.8839828524076212,
+    "derived": 0.8839828525062604,
     "learned": Infinity,
-    "r2": 0.06455502627870258
+    "r2": 0.06455502624200993
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.5238586957852276,
-    "learned": 1.3423751446914076,
+    "derived": 1.523858695785299,
+    "learned": 1.3423751446614371,
     "r2": -1.0
    },
    "constant": {
@@ -1015,7 +1015,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.4440058345347373
+    "r2": -0.4440058345346689
    }
   }
  },
@@ -1026,30 +1026,30 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 18.398723389680043,
-    "learned": 18.398723389679624,
-    "r2": -0.4694736672881963
+    "derived": 18.398723389680335,
+    "learned": 18.39872338967918,
+    "r2": -0.4694736672891735
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 2.732249671605698,
-    "learned": 2.731650657029558,
-    "r2": -0.48889488819082105
+    "derived": 2.7322496716079154,
+    "learned": 2.7316506570317824,
+    "r2": -0.48889488819086435
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.0433594787081724,
-    "learned": 1.0455007319580807,
-    "r2": -0.5788720618674048
+    "derived": 1.0433594787079967,
+    "learned": 1.0455007319579228,
+    "r2": -0.5788720618681367
    },
    "constant": {
     "closes": true,
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.822011843341033
+    "r2": -0.8220118433415518
    }
   }
  },
@@ -1101,14 +1101,14 @@
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 2.851450244218525e+17,
+    "derived": 7.089886455310337e+17,
     "learned": Infinity,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 3269724021232.288,
+    "derived": 3269749884755.1416,
     "learned": 3269741244626.719,
     "r2": -1.0
    },
@@ -1162,21 +1162,21 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 25.839725417788625,
-    "learned": 25.52598277596742,
+    "derived": 25.839725417664205,
+    "learned": 25.525982775845407,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 3.573064130683091,
-    "learned": 3.666715189188821,
+    "derived": 3.573064131680625,
+    "learned": 3.6667151903465522,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 6.544340564002072,
+    "derived": 6.544340563566201,
     "learned": Infinity,
     "r2": -1.0
    },
@@ -1196,22 +1196,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 8.713339167614372,
-    "learned": 6.708100576083407,
+    "derived": 8.713339167753377,
+    "learned": 6.70810057616725,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 2.231607484995668,
+    "derived": 2.2316074850104632,
     "learned": Infinity,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.2718777212010346,
-    "learned": 1.3654208048840444,
+    "derived": 1.2718777212010437,
+    "learned": 1.3654208048840517,
     "r2": -1.0
    },
    "constant": {
@@ -1230,22 +1230,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 14.833893496127699,
-    "learned": 14.833893496127716,
-    "r2": -0.7361481813001185
+    "derived": 14.833893496158097,
+    "learned": 14.833893496157676,
+    "r2": -0.736148181290059
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 7.41603602935251,
-    "learned": 748.6234665041694,
+    "derived": 7.416036029467309,
+    "learned": 748.6234597107185,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 2.4502992064082334,
-    "learned": 1.0039903463845479,
+    "derived": 2.450299206433995,
+    "learned": 1.0039903463856978,
     "r2": -1.0
    },
    "constant": {
@@ -1253,7 +1253,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.8913746158170284
+    "r2": -0.891374615811253
    }
   }
  },
@@ -1298,8 +1298,8 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 2.1133852316113346,
-    "learned": 2.1054010095270868,
+    "derived": 2.1133852316096817,
+    "learned": 2.105401009521274,
     "r2": -1.0
    },
    "fast": {
@@ -1312,8 +1312,8 @@
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.0360755408676203,
-    "learned": 1.037990973679568,
+    "derived": 1.036075540867621,
+    "learned": 1.0379909736795707,
     "r2": -1.0
    },
    "constant": {
@@ -1332,22 +1332,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 0.8361549169651841,
-    "learned": 0.8358702989102039,
+    "derived": 0.8361549169826489,
+    "learned": 0.8358702989276573,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.0167763615655134,
-    "learned": 1.0167736176160675,
+    "derived": 1.0167763615641452,
+    "learned": 1.0167736176147044,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.0437233068438334,
-    "learned": 1.0450714666100858,
+    "derived": 1.0437233068438336,
+    "learned": 1.045071466610086,
     "r2": -1.0
    },
    "constant": {
@@ -1401,8 +1401,8 @@
     "closes": false,
     "pays": false,
     "derived": 2.7394204535116775,
-    "learned": 2.739420453511672,
-    "r2": -0.24338388116977905
+    "learned": 2.739420453511675,
+    "r2": -0.2433838811697746
    },
    "fast": {
     "closes": false,
@@ -1415,7 +1415,7 @@
     "closes": false,
     "pays": false,
     "derived": 1.1848388461644084,
-    "learned": 1.1848388461644095,
+    "learned": 1.184838846164409,
     "r2": -1.0
    },
    "constant": {
@@ -1502,21 +1502,21 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.312050514689617,
-    "learned": 1.3118503558322692,
+    "derived": 1.3120505146810806,
+    "learned": 1.3118503558237018,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 4.544832807903421,
+    "derived": 4.544832807890743,
     "learned": Infinity,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 213.44948996529004,
+    "derived": 213.4494899652899,
     "learned": Infinity,
     "r2": -1.0
    },
@@ -1604,8 +1604,8 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 2.8571390778802592,
-    "learned": 2.857139077880257,
+    "derived": 2.8571390778829096,
+    "learned": 2.8571390778829096,
     "r2": -1.0
    },
    "fast": {
@@ -1978,30 +1978,30 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 136.8450280298232,
+    "derived": 136.84517761445625,
     "learned": Infinity,
-    "r2": -0.13322105281749952
+    "r2": -0.1332230886310517
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1510.453573109235,
+    "derived": 1463.1146131909666,
     "learned": Infinity,
-    "r2": -0.10858530156888757
+    "r2": -0.10858521134068733
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": Infinity,
     "learned": Infinity,
-    "r2": -0.1605903409970213
+    "r2": -0.16058979272674478
    },
    "constant": {
     "closes": false,
     "pays": false,
     "derived": Infinity,
     "learned": Infinity,
-    "r2": -0.5127191340325794
+    "r2": -0.5127184302799987
    }
   }
  },
@@ -2114,22 +2114,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 27.266523880191045,
-    "learned": 25.85040413410837,
+    "derived": 27.26652388018959,
+    "learned": 25.850404134107013,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 3.0768412081419654,
-    "learned": 4.492426775969509,
+    "derived": 3.076841208141143,
+    "learned": 4.4924267759683625,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 2.167080160424621,
-    "learned": 5.89945369868144,
+    "derived": 2.167080160424512,
+    "learned": 5.899453698681722,
     "r2": -1.0
    },
    "constant": {
@@ -2149,8 +2149,8 @@
     "closes": false,
     "pays": false,
     "derived": 1.80871070921186,
-    "learned": 1.8087107092118615,
-    "r2": -0.9530477298814828
+    "learned": 1.80871070921186,
+    "r2": -0.9530477298814795
    },
    "fast": {
     "closes": false,
@@ -2182,22 +2182,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.1476597690518078,
-    "learned": 1.138006459224969,
+    "derived": 1.147659768943877,
+    "learned": 1.1380064591321435,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
     "derived": Infinity,
-    "learned": 1.0066436475523675,
+    "learned": 1.0066436475371092,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": Infinity,
-    "learned": 1.1325111094999158,
+    "learned": 1.1325111094997131,
     "r2": -1.0
    },
    "constant": {
@@ -2284,22 +2284,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.0745004299213714,
-    "learned": 1.0745004299213716,
+    "derived": 1.074500429921357,
+    "learned": 1.0745004299213574,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.115972720343856,
-    "learned": 1.1159727203438563,
+    "derived": 1.1159727203438619,
+    "learned": 1.1159727203438625,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 3.161493516854639,
-    "learned": 3.1614935168546374,
+    "derived": 3.1614935168546476,
+    "learned": 3.1614935168546507,
     "r2": -1.0
    },
    "constant": {
@@ -2352,22 +2352,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.9687686809942968,
-    "learned": 1.9706256150405923,
+    "derived": 1.968768684022835,
+    "learned": 1.9706256181406632,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 0.9817228162710998,
-    "learned": 0.9812891630181947,
+    "derived": 0.9817228162785803,
+    "learned": 0.98128916302464,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 4.056066195831551,
-    "learned": 6.04890117353344,
+    "derived": 4.056066195831549,
+    "learned": 6.048901173533559,
     "r2": -1.0
    },
    "constant": {
@@ -2564,14 +2564,14 @@
     "closes": false,
     "pays": false,
     "derived": 0.9836362660205832,
-    "learned": 0.9846141719121507,
+    "learned": 0.9846141719121503,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": Infinity,
-    "learned": 12.813096535220847,
+    "learned": 12.813096535220872,
     "r2": -1.0
    },
    "constant": {
@@ -2579,7 +2579,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.21087284045928034
+    "r2": -0.21087284045927945
    }
   }
  },
@@ -2659,7 +2659,7 @@
     "closes": false,
     "pays": false,
     "derived": 11.012564974197678,
-    "learned": 11.01256497419788,
+    "learned": 11.012564974197787,
     "r2": -1.0
    },
    "fast": {
@@ -2673,7 +2673,7 @@
     "closes": false,
     "pays": false,
     "derived": 3.4756382522136144,
-    "learned": 3.4756382522136082,
+    "learned": 3.475638252213609,
     "r2": -1.0
    },
    "constant": {
@@ -2692,22 +2692,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 0.16287740121761224,
-    "learned": 0.27197433150828304,
-    "r2": -0.13322363185441044
+    "derived": 0.16287740115935986,
+    "learned": 0.27197433140923233,
+    "r2": -0.13322363176403518
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.1099142409193243,
-    "learned": 0.9408301246964718,
+    "derived": 1.1099142408869103,
+    "learned": 0.9408301247372893,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.3674570328190259,
-    "learned": 1.452294624098769,
+    "derived": 1.3674570328190272,
+    "learned": 1.4522946240987753,
     "r2": -1.0
    },
    "constant": {
@@ -2896,22 +2896,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 14.755788807935406,
+    "derived": 14.755788807405537,
     "learned": Infinity,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 10.549446516474502,
+    "derived": 10.549446516518383,
     "learned": Infinity,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.0577892724527764,
-    "learned": 1.0560128732551088,
+    "derived": 1.057789272452777,
+    "learned": 1.0560128732551095,
     "r2": -1.0
    },
    "constant": {
@@ -3134,30 +3134,30 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 2.908536835125959,
-    "learned": 2.8275995562171,
-    "r2": -0.2535977436200805
+    "derived": 2.908536835341114,
+    "learned": 2.8275995563971486,
+    "r2": -0.25359774359316467
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.0014460193881602,
-    "learned": 1.0014501258969344,
+    "derived": 1.0014460193887815,
+    "learned": 1.0014501258976163,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 2.4126638235128377,
-    "learned": 2.441568484565378,
-    "r2": -0.02021777448124995
+    "derived": 2.4126638235311297,
+    "learned": 2.4415684845828487,
+    "r2": -0.020217774484541096
    },
    "constant": {
     "closes": true,
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.11595091062949026
+    "r2": -0.11595091063139673
    }
   }
  },
@@ -3183,7 +3183,7 @@
     "closes": false,
     "pays": false,
     "derived": 1.3894246456854817,
-    "learned": 1.3894246456854826,
+    "learned": 1.389424645685484,
     "r2": -1.0
    },
    "constant": {
@@ -3203,8 +3203,8 @@
     "closes": false,
     "pays": false,
     "derived": 7.189258639313295,
-    "learned": 7.189258639313288,
-    "r2": -0.873147747028469
+    "learned": 7.189258639313253,
+    "r2": -0.8731477470284676
    },
    "fast": {
     "closes": false,
@@ -3217,7 +3217,7 @@
     "closes": false,
     "pays": false,
     "derived": 6.609954965792572,
-    "learned": 6.6099549657925945,
+    "learned": 6.609954965792634,
     "r2": -0.7117709622448372
    },
    "constant": {
@@ -3225,7 +3225,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.71517142433454
+    "r2": -0.7151714243345404
    }
   }
  },
@@ -3338,21 +3338,21 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 7.809588963259687,
-    "learned": 7.809588963259703,
+    "derived": 7.809588963259756,
+    "learned": 7.809588963259798,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 0.9682569164730205,
-    "learned": 0.9682569164730205,
+    "derived": 0.9682569164730206,
+    "learned": 0.9682569164730206,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 1.077287751002644,
+    "derived": 1.0772877510026437,
     "learned": 1.077287751002644,
     "r2": -1.0
    },
@@ -3373,7 +3373,7 @@
     "closes": false,
     "pays": false,
     "derived": 1.387236511750248,
-    "learned": 1.387236511750248,
+    "learned": 1.3872365117502483,
     "r2": 0.0038255722306325124
    },
    "fast": {
@@ -3387,7 +3387,7 @@
     "closes": false,
     "pays": false,
     "derived": 1.4268643476377583,
-    "learned": 1.426864347637758,
+    "learned": 1.4268643476377576,
     "r2": -1.0
    },
    "constant": {
@@ -3395,7 +3395,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.2869491899357859
+    "r2": -0.28694918993578056
    }
   }
  },
@@ -3441,29 +3441,29 @@
     "closes": false,
     "pays": false,
     "derived": 1.1885678950590812,
-    "learned": 1.1885678950590806,
+    "learned": 1.1885678950590794,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
     "derived": 1.2931151098492257,
-    "learned": 1.2931151098492253,
+    "learned": 1.293115109849226,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": 4.78349343636306,
-    "learned": 4.783493436363061,
-    "r2": -0.054728159788276276
+    "learned": 4.783493436363056,
+    "r2": -0.05472815978827428
    },
    "constant": {
     "closes": true,
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.22128798345242107
+    "r2": -0.2212879834524193
    }
   }
  },
@@ -3625,7 +3625,7 @@
     "closes": false,
     "pays": false,
     "derived": 2.3000355240429617,
-    "learned": 2.300035524042959,
+    "learned": 2.3000355240429546,
     "r2": -1.0
    },
    "constant": {
@@ -3678,30 +3678,30 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 25.373977337032233,
-    "learned": 25.373977337031288,
-    "r2": -0.5262281548379353
+    "derived": 25.37397734404737,
+    "learned": 25.373977344046438,
+    "r2": -0.5262281553580181
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 2.045616618878401,
-    "learned": 1.962931319619663,
-    "r2": -0.10661828258766293
+    "derived": 2.045616618966514,
+    "learned": 1.9629313195731082,
+    "r2": -0.10661828272379581
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 3.6138122028704176,
+    "derived": 3.613812203198581,
     "learned": Infinity,
-    "r2": -0.6652276374772248
+    "r2": -0.665227638002823
    },
    "constant": {
     "closes": true,
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.6641470835601817
+    "r2": -0.6641470837753327
    }
   }
  },
@@ -3720,7 +3720,7 @@
     "closes": false,
     "pays": false,
     "derived": 1.053603760739855,
-    "learned": 1.0536037607398543,
+    "learned": 1.053603760739855,
     "r2": -1.0
    },
    "random": {
@@ -3735,7 +3735,7 @@
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.3414983828657274
+    "r2": -0.3414983828657383
    }
   }
  },
@@ -3781,21 +3781,21 @@
     "closes": false,
     "pays": false,
     "derived": 1.3243038229785888,
-    "learned": 1.3243038229785888,
+    "learned": 1.324303822978589,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
     "derived": 17.61998272636944,
-    "learned": 17.61998272636955,
+    "learned": 17.619982726369535,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": 1.0214081126713506,
-    "learned": 1.0214081126713503,
+    "learned": 1.0214081126713506,
     "r2": -1.0
    },
    "constant": {
@@ -3917,29 +3917,29 @@
     "closes": false,
     "pays": false,
     "derived": 1.6824145521897855,
-    "learned": 1.6824145521897873,
-    "r2": -0.6393570604936949
+    "learned": 1.6824145521897866,
+    "r2": -0.6393570604936953
    },
    "fast": {
     "closes": false,
     "pays": false,
     "derived": 52.73485972836794,
-    "learned": 52.73485972836467,
-    "r2": -0.06192549647099699
+    "learned": 52.73485972836569,
+    "r2": -0.06192549647099743
    },
    "random": {
     "closes": false,
     "pays": false,
     "derived": 1.8536722290656202,
-    "learned": 1.8536722290656213,
-    "r2": -0.44123326428346
+    "learned": 1.8536722290656205,
+    "r2": -0.44123326428346155
    },
    "constant": {
     "closes": true,
     "pays": false,
     "derived": 0.0,
     "learned": 0.0,
-    "r2": -0.6690631044401949
+    "r2": -0.6690631044401953
    }
   }
  },
@@ -3950,22 +3950,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 6.460321709186798,
-    "learned": 6.460321709186797,
+    "derived": 6.460321709212294,
+    "learned": 6.460321709212238,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.8050334367313765,
-    "learned": 1.8259715567622719,
+    "derived": 1.805033427097369,
+    "learned": 1.8259715466263948,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 7.49675805145118,
-    "learned": 15.300085276820662,
+    "derived": 7.496758111488316,
+    "learned": 15.30008539409087,
     "r2": -1.0
    },
    "constant": {
@@ -3984,21 +3984,21 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 1.661539264719592,
+    "derived": 1.6615392649112521,
     "learned": Infinity,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 6.167547140360256,
+    "derived": 6.167547138985166,
     "learned": Infinity,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 545.8984356474203,
+    "derived": 532.7806642886792,
     "learned": Infinity,
     "r2": -1.0
    },
@@ -4154,21 +4154,21 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 15.475312021690073,
+    "derived": 15.475312014513174,
     "learned": Infinity,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 1.5949931151609134,
-    "learned": 1.5951377784242888,
+    "derived": 1.5949931151201402,
+    "learned": 1.5951377783832228,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 3.162752357359595,
+    "derived": 3.162752357180366,
     "learned": Infinity,
     "r2": -1.0
    },
@@ -4256,22 +4256,22 @@
    "slow": {
     "closes": false,
     "pays": false,
-    "derived": 3.089008449919141,
-    "learned": 3.0890084499191444,
+    "derived": 3.089008449919306,
+    "learned": 3.089008449919308,
     "r2": -1.0
    },
    "fast": {
     "closes": false,
     "pays": false,
-    "derived": 3.0784746251631323,
-    "learned": 3.0784746251631288,
+    "derived": 3.078474625163081,
+    "learned": 3.07847462516308,
     "r2": -1.0
    },
    "random": {
     "closes": false,
     "pays": false,
-    "derived": 2.256122747453235,
-    "learned": 2.270339818769069,
+    "derived": 2.256122747453382,
+    "learned": 2.270339818769236,
     "r2": -1.0
    },
    "constant": {

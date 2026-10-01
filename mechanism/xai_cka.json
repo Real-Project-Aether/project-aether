@@ -1201,8 +1201,8 @@
    "n_configs": 4
   }
  },
- "nar_structural_heldout": 0.6666666666666666,
- "nar_structural_insample_small": 0.8333333333333334,
+ "nar_structural_heldout": 0.6,
+ "nar_structural_insample_small": 0.8,
  "nar_both": 0.0,
  "any_null_pass": 0,
  "sweep_n": [
@@ -1251,5 +1251,6 @@
   "cka_min": 0.5,
   "causal_min": 0.2,
   "patch": "difference patching at a single position, read at that position"
- }
+ },
+ "aggregation_note": "nar_* recomputed on 2026-09-30 from the per-configuration rows with the rule in xai_cka.py: the donor-permuted row is a consequence-test control and is excluded from V. The file had been written by an earlier version that counted it (0.67 held out, 0.83 in-sample)."
 }

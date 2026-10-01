@@ -23,12 +23,18 @@ error. Across the range it names the missing amount to within 0.01 absolute.
 
 ## What the sensitivity sweep actually showed
 
-At 5% and 10% hidden the imbalance reaches 16σ and 30σ and the mechanism **still stays silent**.
+With 2.5% and 5% of the charge carried off by an unseen product (`hidden_share` 0.05 and 0.10 of
+one product) the imbalance reaches 16σ and 31σ and the mechanism **still stays silent**: a carrier
+that small is missed, which is the cost of the threshold. The nulls for this guard are separate:
+nothing hidden, the measured output miscalibrated by 2.5% and 5%, which gives 16σ and 31σ as well.
+A significance guard posits a carrier on both; this one stays silent. `l4_posit.py` prints all four
+runs and writes `l4_posit.json`.
 That is not a miss. Significance is not the same as exceeding your systematic uncertainty: a
 calibration error of a few percent produces exactly such an imbalance, and positing a new particle
 on it is how false discoveries are made. The second guard requires the imbalance to be several
-times the *noise scale*, not merely many standard errors from zero. It fires only above about 15%
-of the input charge.
+times the *noise scale*, not merely many standard errors from zero. It fires only when the missing
+charge exceeds three times the 2% measurement noise, 6% of the input charge. (An earlier version of
+this note said "about 15%"; that was the positive case, 14.8%, not the threshold.)
 
 The case it is modelled on behaves the same way. Beta decay's energy deficit was not a 5% effect
 — the electron spectrum ran continuously below a sharp endpoint, leaving a large fraction

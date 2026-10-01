@@ -27,7 +27,7 @@ Six seeds, each with a matched control whose symmetry is deliberately broken:
 | | structure, in-sample | structure, **held out** (< 0.05) | charge test (< 1e-3) |
 |---|---|---|---|
 | real | median 0.0057 — 6/6 | median 0.0061, worst 0.0463 — **6/6 pass** | median 1.3e-11, worst 5.9e-11 — **6/6 pass** |
-| control | median 0.0456 — 5/6 | median 0.0520, best 0.0405 — **2/6 pass** | median 5.2e0, best 2.8e0 — **0/6 pass** |
+| control | median 0.0455 — 5/6 | median 0.0520, best 0.0405 — **2/6 pass** | median 5.2e0, best 2.8e0 — **0/6 pass** |
 
 Combined: **real accepted 6/6, control accepted 0/6.**
 

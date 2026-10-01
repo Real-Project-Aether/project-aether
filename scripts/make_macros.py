@@ -53,7 +53,7 @@ def effective_types(counts):
     return math.exp(h)
 
 
-LABEL = {"identity": "identity map (harness check)", "adjacent": "adjacent layer, same model",
+LABEL = {"identity": "identity map (code check)", "adjacent": "adjacent layer, same model",
          "real": "the correspondence under test", "permuted_pairs": "pairings permuted",
          "residue_shuffle": "residues permuted within protein",
          "orthogonal": "the same map, randomly rotated",
@@ -96,9 +96,49 @@ def corr_audit(j, prefix):
     mac(prefix + "Configs", len(cf))
     mac(prefix + "Triples", j["config"]["triples_per_config"])
     mac(prefix + "TriplesTotal", j["config"]["triples_per_config"] * len(cf))
-    mac(prefix + "NARstructural", f"{j['nar_structural_heldout']:.2f}")
-    mac(prefix + "NARboth", f"{j['nar_both']:.2f}")
-    mac(prefix + "NARinsample", f"{j['nar_structural_insample_small']:.2f}")
+    # NAR is recomputed here from the per-configuration rows rather than read from the file's
+    # pooled field. The X1 file's pooled NAR was written by a version that still counted the
+    # donor-permuted row, a control on the consequence test, as a null candidate (16/24 = 0.67
+    # instead of 12/20 = 0.60), while X3's file excluded it. One rule for both: V holds the
+    # candidates of a null type; real, positive and consequence-test-control rows are not in V.
+    ev = [(r[v], v) for r in cf.values() for v in r if r[v]["type"] not in NOT_NULL]
+    n_ev = len(ev)
+    g1 = sum(x["guard1"] for x, _ in ev)
+    both = sum(x["accepted"] for x, _ in ev)
+    ins = sum(x["sweep"][str(j["sweep_n"][0])][0] > j["config"]["r2_min"] for x, _ in ev)
+    r2o = sum(x["r2"] > j["config"]["r2_min"] for x, _ in ev)
+    ckao = sum(x["cka"] > j["config"]["cka_min"] for x, _ in ev)
+    mac(prefix + "NullEvals", n_ev)
+    mac(prefix + "NullNames", len({v for _, v in ev}))
+    mac(prefix + "NullGone", g1)
+    mac(prefix + "NARstructural", f"{g1/n_ev:.2f}")
+    mac(prefix + "NARboth", f"{both/n_ev:.2f}")
+    mac(prefix + "NARinsample", f"{ins/n_ev:.2f}")
+    # the two halves of guard 1 separately: R^2 alone and CKA alone
+    mac(prefix + "NARrtwo", f"{r2o/n_ev:.2f}")
+    mac(prefix + "NullRtwo", r2o)
+    mac(prefix + "NARcka", f"{ckao/n_ev:.2f}")
+    mac(prefix + "NullCka", ckao)
+    mac(prefix + "RealRtwo", sum(r["real"]["r2"] > j["config"]["r2_min"] for r in cf.values()))
+    mac(prefix + "RealCka", sum(r["real"]["cka"] > j["config"]["cka_min"] for r in cf.values()))
+    mac(prefix + "NullInsample", ins)
+    # the same R^2 criterion at the largest fitting set, in-sample and held out
+    _nl = str(j["sweep_n"][-1])
+    mac(prefix + "SweepMax", f"{j['sweep_n'][-1]:,}".replace(",", "{,}"))
+    mac(prefix + "NARinsampleLarge",
+        f"{sum(x['sweep'][_nl][0] > j['config']['r2_min'] for x, _ in ev)/n_ev:.2f}")
+    mac(prefix + "NARheldLarge",
+        f"{sum(x['sweep'][_nl][1] > j['config']['r2_min'] for x, _ in ev)/n_ev:.2f}")
+    # per configuration, in the order the configurations are listed in the setup
+    _pc = lambda key, thr: ", ".join(
+        str(sum(r[v]["type"] not in NOT_NULL and r[v][key] > thr for v in r)) for r in cf.values())
+    mac(prefix + "RtwoPerConfig", _pc("r2", j["config"]["r2_min"]))
+    mac(prefix + "CkaPerConfig", _pc("cka", j["config"]["cka_min"]))
+    mac(prefix + "NullsPerConfig", len({v for _, v in ev}))
+    # uncentred causal scores: the worst null (controls on H excluded) and the weakest real pair
+    if all("causal_median_raw" in x for x, _ in ev):
+      mac(prefix + "WorstNullRaw", f"{max(x['causal_median_raw'] for x, _ in ev):.2f}")
+      mac(prefix + "WeakestRealRaw", f"{min(r['real']['causal_median_raw'] for r in cf.values()):.2f}")
     if "par_both" in j:
         mac(prefix + "PAR", f"{j['par_both']:.2f}")
     au = [r[v]["auroc_vs_real"] for r in cf.values() for v in r
@@ -126,6 +166,8 @@ def corr_audit(j, prefix):
         cand_table(j, Path(sys.argv[1]) / f"{prefix.lower()}_cands.tex")
 
 
+NOT_NULL = ("real", "positive", "consequence-test control")
+
 ex = load("external_dysts.json")
 if ex:
     n = len(ex)
@@ -136,6 +178,47 @@ if ex:
     mac("dystsConstPays", sum(1 for r in ex if r["res"]["constant"]["pays"]))
     mac("dystsSlowCloses", sum(1 for r in ex if r["res"]["slow"]["closes"]))
     mac("dystsMaxPay", f"{max(r['res']['constant']['r2'] for r in ex):+.3f}")
+    import math as _m
+    mac("dystsConstNonfinite", sum(1 for r in ex if not r["res"]["constant"]["closes"]
+                                   and not _m.isfinite(r["res"]["constant"]["learned"])))
+    mac("dystsSlowBoth", sum(1 for r in ex if r["res"]["slow"]["closes"] and r["res"]["slow"]["pays"]))
+    mac("dystsEmptyBoth", sum(1 for r in ex for c in ("fast", "random", "constant")
+                              if r["res"][c]["closes"] and r["res"][c]["pays"]))
+    mac("dystsSlowMaxPay", f"{max(r['res']['slow']['r2'] for r in ex):+.2f}")
+    if len(sys.argv) > 1:
+        import statistics as _st2
+        _lab = {"slow": "slow modes (the real candidate)",
+                "constant": "\\textsc{control} constant (all to zero)",
+                "fast": "\\textsc{control} fast modes",
+                "random": "\\textsc{control} random subspace"}
+        _tl = []
+        for c in ("slow", "constant", "fast", "random"):
+            cl_ = sum(1 for r in ex if r["res"][c]["closes"])
+            fin_ = [r["res"][c]["learned"] for r in ex if _m.isfinite(r["res"][c]["learned"])]
+            both_ = sum(1 for r in ex if r["res"][c]["closes"] and r["res"][c]["pays"])
+            mx_ = max(r["res"][c]["r2"] for r in ex)
+            _tl.append(f"{_lab[c]} & {cl_} / {n} & {_st2.median(fin_):.3f} & ${mx_:+.3f}$ & "
+                       f"\\textbf{{{both_}}}")
+            if c == "slow":
+                _tl.append("\\midrule")
+        Path(sys.argv[1], "ext_table.tex").write_text(
+            "% GENERATED by scripts/make_macros.py -- do not edit by hand.\n"
+            + " \\\\\n".join(l for l in _tl if l != "\\midrule").replace(
+                "\\textbf{" + str(sum(1 for r in ex if r["res"]["slow"]["closes"]
+                                         and r["res"]["slow"]["pays"])) + "} \\\\\n",
+                "\\textbf{" + str(sum(1 for r in ex if r["res"]["slow"]["closes"]
+                                         and r["res"]["slow"]["pays"])) + "} \\\\ \\midrule\n", 1)
+            + "\n")
+
+exm = load("external_dysts_mild.json")
+if exm:
+    mac("mildN", len(exm))
+    mac("mildSlowCloses", sum(1 for r in exm if r["res"]["slow"]["closes"]))
+    mac("mildSlowBoth", sum(1 for r in exm if r["res"]["slow"]["closes"] and r["res"]["slow"]["pays"]))
+    mac("mildConstCloses", sum(1 for r in exm if r["res"]["constant"]["closes"]))
+    mac("mildConstPays", sum(1 for r in exm if r["res"]["constant"]["pays"]))
+    mac("mildEmptyBoth", sum(1 for r in exm for c in ("fast", "random", "constant")
+                             if r["res"][c]["closes"] and r["res"][c]["pays"]))
 
 po = load("external_positives.json")
 if po:
@@ -154,13 +237,21 @@ if po:
 co = load("external_coordinates.json")
 if co:
     import math
-    fin = [r for r in co["rows"] if math.isfinite(r["origin"]) and math.isfinite(r["translated"])]
+    # restricted to the systems of the main sweep, so the counts refer to the same 129
+    _in = {r["system"] for r in ex} if ex else None
+    _cr = [r for r in co["rows"] if _in is None or r["system"] in _in]
+    fin = [r for r in _cr if math.isfinite(r["origin"]) and math.isfinite(r["translated"])]
+    mac("coordN", len(_cr))
     mac("coordIdentical", len(fin))
-    mac("coordTranslatedPct", f"{100*co['frac_translated']:.0f}\\%")
+    mac("coordTranslatedCloses", sum(1 for r in _cr if r["translated"] < co["config"]["close_max"]))
+    mac("coordEitherCloses", sum(1 for r in _cr if min(r["origin"], r["translated"])
+                                 < co["config"]["close_max"]))
+    mac("coordTranslatedNonfinite", sum(1 for r in _cr if not math.isfinite(r["translated"])))
+    mac("coordIntrinsicCloses", sum(1 for r in _cr if r["intrinsic"] < co["config"]["close_max"]))
+
 
 # --- how diverse are the null suites, as opposed to how many nulls they contain? -------------
 import collections as _co                                                        # noqa: E402
-NOT_NULL = ("real", "positive", "consequence-test control")
 _suites = {}
 for _f, _pfx in (("xai_cka.json", "Xone"), ("xai_esm.json", "Xthree")):
     _j = load(_f)
@@ -187,6 +278,9 @@ if sh:
     mac("ShapeNew", _dec.get("NEW", 0))
     mac("ShapeReturn", _dec.get("RETURN", 0))
     mac("ShapePosAUROC", f"{sh['positive_auroc']:.2f}")
+    _eff = [v["mean_N_space_eff"] for v in sh["summary"].values()]
+    mac("ShapeEffLo", f"{min(_eff):.1f}")
+    mac("ShapeEffHi", f"{max(_eff):.1f}")
     _n = list(sh["null_aurocs"].values())
     mac("ShapeNullLo", f"{min(_n):.2f}")
     mac("ShapeNullHi", f"{max(_n):.2f}")
@@ -214,6 +308,10 @@ a = load("xai_cka.json")
 if a and "configs" in a:
     corr_audit(a, "Xone")
     mac("XoneSeeds", a["config"]["seeds"])
+    mac("XonePos", a["config"]["n_pos"])
+    mac("XoneDonors", a["config"]["n_donor"])
+    mac("XoneRecip", a["config"]["n_recip"])
+    mac("XoneCausalMin", f"{a['config']['causal_min']:.1f}")
     _cb = [(v, r[v]) for r in a["configs"].values() for v in r
            if r[v]["type"] == "correspondence-breaking"]
     mac("XoneCorrBreakGone", f"{sum(x['guard1'] for _, x in _cb)}")
@@ -237,9 +335,42 @@ if b:
     mac("XtwoDeltaCIhi", f"{b['delta_ci'][1]:+.2f}") if "delta_ci" in b else None
     mac("XtwoArms", len(b["config"]["arms"]))
     mac("XtwoNfeat", b["config"]["n_feat"])
+    _cc = b.get("car_curve", {})
+    if _cc:
+        mac("XtwoCurveK", ", ".join(sorted(_cc, key=int)))
+        mac("XtwoCurve", ", ".join(f"{_cc[k]['car']:.2f}" for k in sorted(_cc, key=int)))
     mac("XtwoFlowLo", min(f["N3"] for f in b["flow"]))
     mac("XtwoFlowHi", max(f["N3"] for f in b["flow"]))
     mac("XtwoUntestable", b["untestable"])
+    mac("XtwoNoControl", b["testable"] - b["paired"])
+    _te = [r for r in b["rows"] if len(r["per_seq"]) >= b["config"]["min_seq"]]
+    mac("XtwoTestable", len(_te))
+    import statistics as _st3
+    mac("XtwoEnrTestable", f"{_st3.median(r['enrichment'] for r in _te):.1f}")
+    mac("XtwoEnrUntestable", f"{_st3.median(r['enrichment'] for r in b['rows'] if len(r['per_seq']) < b['config']['min_seq']):.1f}")
+    mac("XtwoCARtestable", f"{sum(r['supported'] for r in _te)/len(_te):.2f}")
+    mac("XtwoNullN", len(b["nulls"]))
+    mac("XtwoNullPass", sum(x["guard1"] for x in b["nulls"]))
+    mac("XtwoAnyNullPass", int(any(x["guard1"] for x in b["nulls"])))
+    _pr = [r for r in b["rows"] if r["controls"] and len(r["per_seq"]) >= b["config"]["min_seq"]]
+    _neg = [r for r in _pr if not r["supported"]]
+    mac("XtwoAblNegN", len(_neg))
+    mac("XtwoActOnAblNeg", sum(r["activate_supported"] for r in _neg))
+    mac("XtwoEither", f"{sum(r['supported'] or r['activate_supported'] for r in _pr)/len(_pr):.2f}")
+    mac("XtwoNeither", f"{1 - sum(r['supported'] or r['activate_supported'] for r in _pr)/len(_pr):.2f}")
+    mac("XtwoEitherN", sum(r["supported"] or r["activate_supported"] for r in _pr))
+    mac("XtwoSupportedN", sum(r["supported"] for r in _pr))
+    # CAR on the arms where the consequence test's own positive control is valid
+    _pa = b.get("per_arm", {})
+    _good = [a for a, v in _pa.items() if v.get("positive_wrong_sign", 1.0) < 0.10]
+    if _good:
+        _q = [r for r in _pr if r["arm"] in _good]
+        mac("XtwoValidArmsN", len(_q))
+        mac("XtwoCARvalid", f"{sum(r['supported'] for r in _q)/len(_q):.2f}")
+        mac("XtwoControlValid", f"{sum(r['control_supported'] for r in _q)/len(_q):.3f}")
+        _bad = sorted(_pa, key=lambda a: -_pa[a].get("positive_wrong_sign", 0))
+        mac("XtwoWrongSignWorst", f"{_pa[_bad[0]]['positive_wrong_sign']:.2f}")
+        mac("XtwoWrongSignNext", f"{_pa[_bad[1]]['positive_wrong_sign']:.2f}")
     mac("XtwoSelected", len(b["rows"]))
     if "car_activate" in b:
         mac("XtwoCARactivate", f"{b['car_activate']:.2f}")
@@ -264,8 +395,138 @@ if b:
         good = [v for v in pa.values() if v.get("positive_wrong_sign", 1.0) < 0.10]
         if good:
             mac("XtwoPositiveValidArms", len(good))
+            # pooled over the features of the valid arms, not the mean of two arm rates, so it
+            # has the same denominator as the CAR reported beside it
+            _ga = [a for a, v in pa.items() if v.get("positive_wrong_sign", 1.0) < 0.10]
+            _gd = [r for r in b["rows"] if r["arm"] in _ga and r["positive_defined"]
+                   and len(r["per_seq"]) >= b["config"]["min_seq"]]
             mac("XtwoPositiveOnValid",
-                f"{sum(v['positive'] for v in good)/len(good):.2f}")
+                f"{sum(r['positive_detected'] for r in _gd)/len(_gd):.2f}")
+            mac("XtwoPositiveOnValidN", sum(r["positive_detected"] for r in _gd))
+            mac("XtwoPositiveOnValidOf", len(_gd))
+            mac("XtwoSelectedValid", sum(1 for r in b["rows"] if r["arm"] in _ga))
+
+def _cluster_bootstrap(rows, stat, n=2000, seed=0):
+    """Copy of xai_sae.cluster_bootstrap (numpy only, so this script needs no torch): resample
+    arms, then concept clusters within arms, holding each per-feature verdict fixed."""
+    import numpy as _np
+    rng = _np.random.default_rng(seed)
+    arms = sorted({r["arm"] for r in rows})
+    by_arm = {}
+    for a_ in arms:
+        cl = {}
+        for r in rows:
+            if r["arm"] == a_:
+                cl.setdefault(r["concept"], []).append(r)
+        by_arm[a_] = list(cl.values())
+    out_ = []
+    for _ in range(n):
+        vals = []
+        for a_ in rng.choice(arms, size=len(arms), replace=True):
+            cls = by_arm[a_]
+            for j in rng.integers(0, len(cls), len(cls)):
+                vals += [stat(r) for r in cls[j]]
+        if vals:
+            out_.append(float(_np.mean(vals)))
+    return (float(_np.percentile(out_, 2.5)), float(_np.percentile(out_, 97.5)))
+
+
+if b:
+    _pr = [r for r in b["rows"] if r["controls"] and len(r["per_seq"]) >= b["config"]["min_seq"]]
+    # the reported interval, recomputed here as a check that the copy above is exact
+    _d = _cluster_bootstrap(_pr, lambda r: float(r["supported"]) - float(bool(r["control_supported"])))
+    assert abs(_d[0] - b["delta_ci"][0]) < 1e-12 and abs(_d[1] - b["delta_ci"][1]) < 1e-12, _d
+    # The frozen specification asked for ONE firing-rate-matched control per feature. The run drew
+    # three (also matched on mean activation) and counts the control as supported when most are.
+    # The first control alone is the closest the run comes to the specification.
+    _first = lambda r: bool(r["S_controls"] and r["S_controls"][0] == r["S_controls"][0]
+                            and r["S_controls"][0] > 1.96)
+    mac("XtwoControlFirst", f"{sum(_first(r) for r in _pr)/len(_pr):.2f}")
+    mac("XtwoDeltaFirst", f"{sum(r['supported'] - _first(r) for r in _pr)/len(_pr):+.2f}")
+    _df = _cluster_bootstrap(_pr, lambda r: float(r["supported"]) - float(_first(r)))
+    mac("XtwoDeltaFirstCIlo", f"{_df[0]:+.2f}")
+    mac("XtwoDeltaFirstCIhi", f"{_df[1]:+.2f}")
+    # the 191 untestable features counted as unsupported instead of excluded
+    mac("XtwoConcepts", len({r["concept"] for r in _pr}))
+    # the correlated surrogate is built from each arm's most enriched feature; how much of that
+    # feature's enrichment does it keep?
+    _sur = [x["enrichment"] for x in b["nulls"] if x["name"] == "correlated surrogate"]
+    _top = [max(r["enrichment"] for r in b["rows"] if r["arm"] == a_)
+            for a_ in sorted({r["arm"] for r in b["rows"]})]
+    mac("XtwoSurrLo", f"{min(_sur):.1f}")
+    mac("XtwoSurrHi", f"{max(_sur):.1f}")
+    mac("XtwoTopEnrLo", f"{min(_top):.0f}")
+    mac("XtwoTopEnrHi", f"{max(_top):.0f}")
+    _allnull = [x["enrichment"] for x in b["nulls"]]
+    mac("XtwoNullEnrHi", f"{max(_allnull):.1f}")
+    mac("XtwoCARallSelected", f"{sum(r['supported'] for r in b['rows'])/len(b['rows']):.2f}")
+
+sp = load("xai_sae_spec_run.json")
+if sp:
+    # the first run to the frozen specification (corpus commit 70a30dc), before the revisions
+    mac("XtwoSpecN", sp["paired"])
+    mac("XtwoSpecCAR", f"{sp['car_selected']:.2f}")
+    mac("XtwoSpecControl", f"{sp['car_control']:.2f}")
+    mac("XtwoSpecDelta", f"{sp['delta_car']:+.2f}")
+    _arms = sorted({r["arm"] for r in sp["rows"]})
+    _pos = sum(1 for a_ in _arms
+               if sum(r["supported"] - bool(r["control_supported"]) for r in sp["rows"]
+                      if r["arm"] == a_) > 0)
+    mac("XtwoSpecArmsPositive", _pos)
+    mac("XtwoSpecArms", len(_arms))
+    mac("XtwoSpecNAR", f"{sp['nar']:.2f}")
+    mac("XtwoSpecAnyNullPass", sp["any_null_pass"])
+    _pass = [x for x in sp["nulls"] if x.get("guard1")]
+    if _pass:
+        mac("XtwoSpecNullPassName", _pass[0]["name"])
+        mac("XtwoSpecNullPassEnr", f"{_pass[0]['enrichment']:.0f}")
+
+l4 = load("l4_posit.json")
+if l4:
+    # L4's nulls: nothing hidden, the measured output miscalibrated by a few percent
+    _nl = [l4["offset_2p5"], l4["offset_5"]]
+    mac("LfourNullZa", f"{_nl[0]['z']:.0f}")
+    mac("LfourNullZb", f"{_nl[1]['z']:.0f}")
+    mac("LfourOffsetA", f"{100*_nl[0]['offset']:g}")
+    mac("LfourOffsetB", f"{100*_nl[1]['offset']:g}")
+    mac("LfourNullNAR", f"{sum(x['significance_guard'] for x in _nl)/len(_nl):.2f}")
+    mac("LfourNullPosited", sum(x["posit"] for x in _nl))
+    # sensitivity: a real unseen product below the same threshold
+    mac("LfourHiddenZa", f"{l4['hidden_2p5']['z']:.0f}")
+    mac("LfourHiddenZb", f"{l4['hidden_5']['z']:.0f}")
+    mac("LfourHiddenA", f"{100*l4['hidden_2p5']['hidden_share']/2:g}")
+    mac("LfourHiddenB", f"{100*l4['hidden_5']['hidden_share']/2:g}")
+    mac("LfourThresholdPct", f"{100*l4['threshold_fraction']:.0f}")
+    mac("LfourPositive", f"{l4['positive']['missing_per_event']:+.3f}")
+
+po2 = load("external_positives.json")
+if po2 and "graded" in po2:
+    # the tilt at which acceptance is lost, per separation, grouped where it is the same
+    _sep = {}
+    for g in po2["graded"]:
+        _sep.setdefault(g["eps"], g["separation"])
+    _by = {}
+    for e_, th in po2["breakdown_theta"].items():
+        if th is not None:
+            _by.setdefault(th, []).append(_sep[float(e_)])
+    _parts = []
+    for th, seps in sorted(_by.items(), key=lambda kv: -max(kv[1])):
+        ss = sorted(seps, reverse=True)
+        sep_txt = " and ".join(f"${x:.1f}\\times$" for x in ss)
+        _parts.append(f"${th:.2f}$ rad at {sep_txt}")
+    mac("posThetaBySep", ", ".join(_parts[:-1]) + ", and " + _parts[-1] if len(_parts) > 1 else _parts[0])
+
+un = load("xai_sae_untestable.json")
+if un:
+    mac("XtwoUntestableZero", un["untestable_zero"])
+    mac("XtwoUntestableSome", un["n_untestable"] - un["untestable_zero"])
+    mac("XtwoUntestableMaxPos", un["untestable_max_positions"])
+    mac("XtwoTestableMinPos", un["testable_min_positions"])
+    mac("XtwoMinOn", un["min_on"])
+    mac("XtwoTopConceptN", un["top_concept_features"])
+    mac("XtwoTopConceptGuard", un["top_concept_guard_positions"])
+    mac("XtwoTopConceptGuardSeq", un["top_concept_guard_sequences"])
+    mac("XtwoTopConceptCons", un["top_concept_cons_positions"])
 
 # --- generated table bodies ------------------------------------------------------------------
 # A hand-typed table drifts exactly as a hand-typed number does, and X2's arm table had drifted
@@ -283,7 +544,7 @@ if len(sys.argv) > 1 and b and "per_arm" in b:
     lines.append("\\midrule")
     lines.append(f"pooled & \\textbf{{{b['paired']}}} & "
                  f"\\textbf{{{car:.2f}}} \\, {{\\footnotesize (CI ${b['ci'][0]:.2f}$--${b['ci'][1]:.2f}$)}} & "
-                 f"\\textbf{{{b['car_control']:.2f}}} & "
+                 f"\\textbf{{{b['car_control']:.3f}}} & "
                  f"$\\mathbf{{{b['delta_car']:+.2f}}}$")   # the row is closed by the caller
     # the selection flow, which had drifted a whole run behind the data
     _stage = [("N0", "all SAE features"), ("N1", "firing rate in range"),

@@ -703,17 +703,19 @@ footer a{color:var(--ink-2)}
     by 0.03&ndash;0.08 radians and it is refused.</p>
     <p class="say">And because the problem is about acceptance tests rather than about physics, we
     ran the same pair on two interpretability methods. Fitting an alignment between two language
-    models on eight stimuli and scoring it in&nbsp;sample &mdash; ordinary practice &mdash;
-    <strong>accepts 83% of the empty candidates</strong>, and held out on
-    every position it still accepts 67%. More data does not fix it. Linear CKA
-    gives a genuine correspondence and that same map composed with a random rotation the
-    <em>same</em> score, because it never looks at the map being claimed. The same holds on
-    <b>ESM-2 protein language models</b> (80%). Adding a causal test that
+    models on eight stimuli and scoring its R&sup2; in&nbsp;sample
+    <strong>accepts 80% of the empty candidates</strong>. More data fixes that half of the
+    test: held out on every position, R&sup2; alone accepts 10%. It does not fix the other half.
+    Linear CKA gives a genuine correspondence and that same map composed with a random rotation the
+    <em>same</em> score, because it never looks at the map being claimed, so the alignment test
+    still accepts <b>60%</b> of the empty candidates held out, and 80% on <b>ESM-2 protein
+    language models</b>. Adding a causal test that
     perturbs one position and carries the change across refuses every empty candidate in every
     configuration while accepting the ones we know are real. On sparse-autoencoder features the
-    correlational test refuses almost every empty control, yet of the features it calls
-    interpretable an intervention supports only <b>0.45</b>, against
-    0.005 for matched controls. <b>Passing the empty-input check is necessary,
+    correlational test refuses every empty control, yet of the features it calls
+    interpretable an intervention supports <b>0.45</b>, against
+    0.005 for matched controls. Where that intervention's own positive control is valid, it
+    detects 0.90 of directions built to be causal. <b>Passing the empty-input check is necessary,
     not sufficient.</b></p>
     <p class="mlnote">Our own second test needed the same medicine. An early version preferred a
     vacuous candidate to the real one, 0.70 against 0.39, because overwriting the whole residual

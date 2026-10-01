@@ -30,21 +30,24 @@ A reduction is accepted only if both hold:
 
 Guard 1 is tested twice, deliberately: a coarse law *learned* from coarse readings alone, and one
 *derived* by pushing the known fine law through the reduction. If derived closes and learned does
-not, the failure was our fitter rather than the physics. On the lattice they agree to three
-decimals (1.626 vs 1.628), so the negative result there is the physics.
+not, the failure was our fitter rather than the physics. On the lattice they agree to within
+0.002 (derived 1.626, learned 1.628), so the negative result there is the physics.
 
 ## Result 1 — it finds a coarse level when one exists
+
+Pay values in this note are from the covariance-weighted score `l2_coarse.pay_score` (updated
+2026-09-30; an earlier version of this note carried the unweighted values).
 
 `l2_slowfast.py`. Four slow variables coupled to eight fast ones, with the separation set by one
 knob. The true coarse description is the slow four.
 
 | separation | closes | pays | verdict |
 |---:|---:|---:|---|
-| 62.9× | 0.062 | 0.95 | **accept** |
-| 25.2× | 0.156 | 0.91 | **accept** |
-| 12.6× | 0.319 | 0.85 | does not close |
-| 6.3× | 0.675 | 0.76 | does not close |
-| 1.1× | 1.966 | 0.78 | does not close |
+| 62.9× | 0.062 | 0.97 | **accept** |
+| 25.2× | 0.156 | 0.96 | **accept** |
+| 12.6× | 0.319 | 0.94 | does not close |
+| 6.3× | 0.675 | 0.91 | does not close |
+| 1.1× | 1.966 | 0.76 | does not close |
 
 **The sensitivity floor is between 12× and 25× of timescale separation.** Below that no coarse
 description closes well enough to accept, which is the correct answer rather than a miss.
@@ -55,9 +58,9 @@ Three vacuity controls, at a separation where a coarse level certainly exists:
 
 | control | closes | pays | refused by |
 |---|---:|---:|---|
-| constant reduction (map everything to zero) | **0.000** | −1.00 | guard 2 only |
-| random subspace | 2.167 | −0.06 | guard 1 |
-| the **fast** modes instead of the slow ones | **0.000** | −1.00 | guard 2 only |
+| constant reduction (map everything to zero) | **0.000** | −0.54 | guard 2 only |
+| random subspace | 2.167 | 0.18 | guard 1 |
+| the **fast** modes instead of the slow ones | **0.000** | −0.50 | guard 2 only |
 
 **Two of the three close perfectly.** The constant map is trivially autonomous, and the fast
 subspace closes because fast modes decay to zero — it is a description of nothing, evolving

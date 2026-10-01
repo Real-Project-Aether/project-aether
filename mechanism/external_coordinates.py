@@ -26,7 +26,8 @@ from l2_coarse import closure_error, CLOSE_MAX          # noqa: E402
 import dysts.flows as F                                  # noqa: E402
 import inspect                                           # noqa: E402
 
-N_SYS, N_POINTS = 40, 200
+# Every system in the benchmark; the first version stopped at 40 to save time.
+N_SYS, N_POINTS = 10**6, 200
 SEED = 0
 
 
@@ -53,6 +54,14 @@ def closes_constant(rhs, X, dt, shift):
     return float(closure_error(f, C[0], C, dt, 1))
 
 
+def _safe(fn, *a):
+    try:
+        e = fn(*a)
+        return e if np.isfinite(e) else float("inf")
+    except Exception:
+        return float("inf")
+
+
 def main():
     rng = np.random.default_rng(SEED)
     names = sorted(n for n, o in inspect.getmembers(F, inspect.isclass)
@@ -71,9 +80,12 @@ def main():
                 continue
             rhs = lambda x: np.asarray(s.rhs(x, 0.0), float)
             scale = float(np.abs(X).max())
-            e_org = closes_constant(rhs, X, dt, np.zeros(X.shape[1]))
             shift = rng.normal(scale=3.0 * max(scale, 1.0), size=X.shape[1])
-            e_tra = closes_constant(rhs, X, dt, shift)
+            # A right-hand side that is singular at the lifted state (a division by zero at the
+            # origin) makes the closure error non-computable. It is recorded as inf rather than
+            # dropping the system, so the systems where this happens stay visible.
+            e_org, e_tra = (_safe(closes_constant, rhs, X, dt, v)
+                            for v in (np.zeros(X.shape[1]), shift))
             # intrinsic: the coarse state is a constant and dc/dt = 0 by definition, no lift
             C = np.zeros((len(X), 1))
             e_int = float(closure_error(lambda c: np.zeros(1), C[0], C, dt, 1))
