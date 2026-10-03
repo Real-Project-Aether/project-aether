@@ -1,0 +1,124 @@
+{
+ "eurekabench_commit": "58956ee98483b6b781f68e1754c37d06bc7bed19",
+ "tasks": {
+  "A": "fusion/nt-edge",
+  "B": "neuroscience/zigzag-foraging"
+ },
+ "judge": "opus subagent, EurekaBench insights_strict prompt verbatim plus a note that the simulator is unavailable",
+ "per_submission": {
+  "A1": [
+   {
+    "replicate": 1,
+    "true": [
+     "I1",
+     "I2",
+     "I3",
+     "I5"
+    ],
+    "n": 13
+   },
+   {
+    "replicate": 2,
+    "true": [
+     "I1",
+     "I2",
+     "I4",
+     "I5"
+    ],
+    "n": 13
+   }
+  ],
+  "A2": [
+   {
+    "replicate": 1,
+    "true": [],
+    "n": 13
+   },
+   {
+    "replicate": 2,
+    "true": [],
+    "n": 13
+   }
+  ],
+  "A3": [
+   {
+    "replicate": 1,
+    "true": [],
+    "n": 13
+   },
+   {
+    "replicate": 2,
+    "true": [],
+    "n": 13
+   }
+  ],
+  "B1": [
+   {
+    "replicate": 1,
+    "true": [
+     "I2"
+    ],
+    "n": 10
+   },
+   {
+    "replicate": 2,
+    "true": [],
+    "n": 10
+   }
+  ],
+  "B2": [
+   {
+    "replicate": 1,
+    "true": [],
+    "n": 10
+   },
+   {
+    "replicate": 2,
+    "true": [],
+    "n": 10
+   }
+  ],
+  "B3": [
+   {
+    "replicate": 1,
+    "true": [],
+    "n": 10
+   },
+   {
+    "replicate": 2,
+    "true": [],
+    "n": 10
+   }
+  ]
+ },
+ "types": {
+  "1": "assertion only (claims the chain, no evidence)",
+  "2": "prediction only (empirical fit, no mechanism)",
+  "3": "wrong (A: contradicts the task premise) / off-topic (B: explains the wave, not the sample pathway)"
+ },
+ "nar_type1": [
+  9,
+  46,
+  0.196
+ ],
+ "nar_type2": [
+  0,
+  46,
+  0.0
+ ],
+ "nar_type3": [
+  0,
+  46,
+  0.0
+ ],
+ "nar_all": [
+  9,
+  138,
+  0.065
+ ],
+ "any_null_pass": 1,
+ "submissions_with_any_true": [
+  "A1",
+  "B1"
+ ]
+}

@@ -1,0 +1,56 @@
+{
+  "insights": {
+    "I1": {
+      "verdict": false,
+      "reason": "The mechanism states the opposite: the reversed shape is 'an L-mode by power deficit' and 'with enough power the barrier would return' (chain step 3; run set 3 reports a barrier at 24 MW for delta = -0.5). It contains no component that makes the barrier inaccessible at any power, so it cannot explain why no heating power restores the barrier."
+    },
+    "I2": {
+      "verdict": false,
+      "reason": "Step 4 says the edge gradient stops 'at the value the L-mode transport allows for the given power', so the gradient depends on power, and step 3 plus run set 3 say it jumps to alpha_edge 2.7 once a barrier forms at 24 MW. The mechanism has no power-independent limit on the edge gradient; it explicitly rejects the ballooning limit as relevant. It cannot derive a single limit reached however hard the plasma is heated."
+    },
+    "I3": {
+      "verdict": false,
+      "reason": "The mechanism never mentions field-line curvature, the fraction of the plasma on the bad-curvature side, or edge bursts (ELMs). Its only lever is the L-H power threshold via an ion-drift/X-point argument. No chain links unfavourable curvature to an ELM-free edge."
+    },
+    "I4": {
+      "verdict": false,
+      "reason": "The mechanism makes barrier-free operation conditional on keeping the heating power below a shape-raised threshold ('its freedom from the barrier is bought by keeping the power below a threshold'). That requires a power limit in addition to the shape, which contradicts the insight. It cannot explain why the shape alone suffices."
+    },
+    "I5": {
+      "verdict": false,
+      "reason": "Step 5 says core radiation lowers the power crossing the boundary and keeps the plasma further below threshold. This rests entirely on the 6 MW reference being far below the >20 MW threshold, which is a property of the chosen operating point and not of the plasma. The threshold itself comes from step 1, which claims that reversing the triangularity changes the direction of the ion grad-B drift relative to the X-point. The grad-B drift direction is set by the toroidal field and is vertical, and the shape does not reverse it, so the chain has no valid physical basis. Run set 5 is an observation that the plasma stays in L-mode, with no shape-based derivation behind it."
+    },
+    "I6": {
+      "verdict": false,
+      "reason": "Step 5 asserts that 'the L-mode edge carries a narrower heat channel' with no mechanism connecting the absence of a barrier to lambda_q. It restates the run set 4 numbers (2.6 vs 3.8 mm) without any physical step (e.g. edge gradients, drifts, or scrape-off-layer transport) that produces the narrowing. This is only observed in the simulator."
+    },
+    "I7": {
+      "verdict": false,
+      "reason": "The mechanism does not discuss the wetted area, flux expansion, divertor geometry or strike-point radius. Its only exhaust statement is a narrower heat channel, which by itself would point to a smaller wetted area. It cannot derive the insight."
+    },
+    "I8": {
+      "verdict": false,
+      "reason": "Step 5 says impurities 'are flushed at the L-mode rate, so their confinement time stays near the energy confinement time'. That repeats the run set 4 ratio (1.0 vs 3.8) as a label. No step explains why particle and energy confinement are tied in the reversed edge, for example by the absence of an edge pedestal pinch or by inter-ELM transport. It is not a derivation."
+    },
+    "I9": {
+      "verdict": false,
+      "reason": "The mechanism checks ballooning stability only to reject it as a cause (run set 1: alpha_edge/alpha_crit = 0.38 at delta = -0.5). It never discusses second-stability access, magnetic shear, or how negative triangularity closes the path to second stability. It cannot explain the insight."
+    },
+    "I10": {
+      "verdict": false,
+      "reason": "Step 6 defines the critical triangularity as the point where the threshold crosses 'the available power', so its value depends on the heating power chosen for the experiments, not on the plasma. The claimed shift with elongation and aspect ratio ('because they change the X-point position') has no sign, magnitude or test behind it and rests on the invalid drift-direction premise of step 1. It does not derive the critical value or its dependence on elongation and aspect ratio."
+    },
+    "I11": {
+      "verdict": false,
+      "reason": "The mechanism has no component that varies between discharges at fixed shape (for example a gradient that hovers near a marginal limit, or sensitivity to edge conditions). It predicts a deterministic L-mode gradient set by power. It cannot explain shot-to-shot variation."
+    },
+    "I12": {
+      "verdict": false,
+      "reason": "The mechanism attributes everything to the X-point position and the ion drift direction relative to the X-point, which is the opposite half of the boundary. It contains nothing about the shape of the side away from the X-point controlling barrier formation, so it cannot derive this insight."
+    },
+    "I13": {
+      "verdict": false,
+      "reason": "The mechanism says nothing about core confinement in the reversed shape or how a core gain compares with the edge loss. There are no core confinement results in the log and no component that weighs core against edge. It cannot answer the question."
+    }
+  }
+}

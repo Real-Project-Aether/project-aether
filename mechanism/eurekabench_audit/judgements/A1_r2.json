@@ -1,0 +1,56 @@
+{
+  "insights": {
+    "I1": {
+      "verdict": true,
+      "reason": "The mechanism gives a chain made of its own components. Step 1: reversing the triangularity increases the fraction of each poloidal turn the outboard edge spends in unfavourable curvature and changes the low-field-side local shear. Step 2: this removes access to the second ballooning stability regime, so alpha at psi=0.95 is capped at the first ballooning limit. Step 3: a barrier needs the edge gradient to rise past the first limit into the second-stable branch; that branch is closed, and the cap depends only on geometry, so extra heating cannot raise the gradient past it and the barrier cannot form at any power. Step 6 places the onset at the critical triangularity where the window closes. The power scan (Q1: D-shape forms a barrier above threshold, reversed shape never does) and the GPEC result (Q2: reversed shape ballooning-limited) are consistent with this chain, and the L-H threshold alternative was tested and rejected because the barrier did not return at higher power. The chain answers why power cannot help: the limiting quantity is a geometric stability cap, not a power threshold."
+    },
+    "I2": {
+      "verdict": true,
+      "reason": "Steps 2 and 3 derive it directly. The closed second-stability window leaves the edge only the first-stability branch, so the normalised gradient alpha at psi=0.95 is capped at the first ballooning limit. That limit is a property of the equilibrium geometry (curvature fraction and local shear from step 1), not of the input power, so heating adds transport at fixed gradient rather than raising the gradient (step 5: edge held at the ballooning limit, near-separatrix transport stays at the barrier-free level). The single limit is the first ballooning boundary. Q1 and Q2 in the log are consistent with a power-independent ballooning-limited gradient."
+    },
+    "I3": {
+      "verdict": false,
+      "reason": "Step 4 states that unfavourable curvature closes second stability, hence no pedestal, hence 'nothing to drive peeling-ballooning bursts'. The last link is asserted, not derived, and it conflicts with the mechanism's own step 2 and 5, which hold the edge at an ideal ballooning limit. The mechanism does not explain why an edge pinned at a ballooning stability boundary relaxes without bursts (for example why the instability at that low gradient gives continuous transport rather than a periodic crash), and it says nothing about the peeling (edge current) drive. No experiment in the log looks at bursts or ELM stability; Q1-Q4 cover barrier formation, GPEC ballooning, exhaust and radiation only. The burst-free edge is therefore not derived from the mechanism's components."
+    },
+    "I4": {
+      "verdict": true,
+      "reason": "The chain in steps 1-3 has only geometric inputs: the shape sets the unfavourable-curvature fraction and local shear, these close the second-stability window, and the closed window caps the edge gradient below what a barrier needs at any heating power (Q1) and any radiated fraction (Q4, step 5: the cap does not depend on the power crossing the boundary). Step 4 adds that the same geometric cap removes the pedestal that would drive bursts, so no separate burst control is required for the barrier-free state. Because no operational input (power, power crossing the separatrix) enters the cap, staying barrier-free requires only that the shape be reversed past the critical triangularity. The rejected L-H threshold alternative supports that the result is not a power-threshold effect."
+    },
+    "I5": {
+      "verdict": true,
+      "reason": "Step 5 gives the derivation: the edge gradient is capped by the first ballooning limit, which step 2-3 tie to the geometry and not to the power crossing the boundary. Radiating half the heating from inside lowers the power reaching the edge but does not change the shape, so the second-stability window stays closed and no barrier can form; there is also no barrier whose loss could be triggered by the lower separatrix power, since the regime never depended on exceeding a power threshold (the L-H threshold alternative was rejected). Q4 in the log (raised radiated fraction, no change of regime) is consistent with this."
+    },
+    "I6": {
+      "verdict": false,
+      "reason": "Step 5 only states that 'transport near the separatrix stays at the barrier-free level' and then that 'the heat channel to the divertor narrows'. No link is given from a ballooning-limited, barrier-free edge to a narrower scrape-off-layer heat channel; a barrier-free edge with higher edge transport would, if anything, need an argument for why the channel is narrower rather than broader. The exhaust quantities are represented by power-law exponents fitted on the runs, and Q3 records only the observation and the statement 'follows from the barrier-free edge'. This is an observation in the saved data, not a derivation."
+    },
+    "I7": {
+      "verdict": false,
+      "reason": "Step 5 attributes the larger wetted area to 'the reversed divertor geometry'. That is a property of the configuration chosen for the runs, not a consequence of the ballooning-limit chain, and the mechanism gives no step from the edge stability or edge transport to how the exhaust spreads on the target (flux expansion, strike-point geometry, channel width). Q3 records the observation only. The prompt excludes results that hold only because of the configurations chosen."
+    },
+    "I8": {
+      "verdict": false,
+      "reason": "Step 5 says 'impurities are not held, so the impurity confinement time stays close to the energy confinement time'. The mechanism does not say why impurities are not held (for example the absence of a barrier-region inward pinch), nor why the impurity confinement time should match the energy confinement time rather than being merely short; both are asserted. Q3 records 'short impurity confinement' as an observation and states it 'follows from the barrier-free edge' without a test. No derivation from the mechanism's components is given."
+    },
+    "I9": {
+      "verdict": false,
+      "reason": "Steps 1-2 name two ingredients, a larger unfavourable-curvature fraction and 'altered' local shear, and state that second-stability access is lost. The mechanism does not say in which direction the local shear changes, how the change removes the shear stabilisation that normally opens the second-stable branch at high alpha, or how the two ingredients combine. The evidence is also indirect: Q2 found the reversed shape 'ballooning-limited' and concluded second stability is not accessible, but no stability diagram, no check of the D-shape's second-stability access, and no separation of curvature from shear effects is recorded. The closing of the window is a premise of the mechanism, not something it derives."
+    },
+    "I10": {
+      "verdict": false,
+      "reason": "The critical triangularity is a constant fitted on the runs (Constants section), so its value is not derived. Step 6 states that it moves with elongation and aspect ratio 'because both change the curvature fraction', but gives no direction of the shift, no relation between curvature fraction and the closing point, and the log contains no elongation or aspect-ratio scan. Neither the value nor its dependence is derived."
+    },
+    "I11": {
+      "verdict": false,
+      "reason": "The mechanism states that the shape alone fixes the ballooning limit and the limit fixes the gradient, which predicts the same edge gradient for every discharge at the same shape. It contains no component (current profile, density, rotation, q95, wall conditions) that could vary between discharges at fixed shape, and the log records no repeat discharges. It cannot explain discharge-to-discharge variation."
+    },
+    "I12": {
+      "verdict": false,
+      "reason": "The mechanism treats triangularity as a single number (-0.5) and refers to the outboard edge and low-field side only. It never separates the upper and lower halves of the boundary or relates either to the X-point position, and no experiment varies one half independently. The role of the half away from the X-point is not addressed."
+    },
+    "I13": {
+      "verdict": false,
+      "reason": "The mechanism and log say nothing about core confinement in the reversed shape: no core transport or stiffness effect of negative triangularity, no comparison of total stored energy or confinement time between shapes, and no balance of core gain against the lost pedestal. The question cannot be answered from the mechanism."
+    }
+  }
+}

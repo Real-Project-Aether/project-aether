@@ -1,0 +1,56 @@
+{
+  "insights": {
+    "I1": {
+      "verdict": false,
+      "reason": "The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. The barrier rule (barrier=1 only if delta > delta_c = -0.21 and P_sep > P_0(n/4e19)^0.7) encodes the observed power-independence below delta_c as a fitted conjunction, and run set 2 only shows it at delta=-0.5 for 2-12 MW. Nothing says what process removes the barrier or why heating cannot restore it; the result is a restatement of the scanned data, not a derivation."
+    },
+    "I2": {
+      "verdict": false,
+      "reason": "The fitted form alpha_edge = a0 + a1 delta + a2 P_sep grows linearly with power without bound (0.47 to 0.89 at delta=-0.5 over 2-12 MW from the stated constants), so it predicts no limit at all. No ballooning or other stability limit is named. The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I3": {
+      "verdict": false,
+      "reason": "The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. No term refers to field-line curvature, the fraction of the plasma in bad curvature, ELMs or edge bursts. The question cannot be addressed from the forms."
+    },
+    "I4": {
+      "verdict": false,
+      "reason": "The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. The barrier rule requires only delta < delta_c to give barrier=0, but this is a fitted classifier over the scanned range at reference density, with no mechanism explaining why the shape alone suffices (for example no stability or transport argument). It does not explain the insight."
+    },
+    "I5": {
+      "verdict": false,
+      "reason": "Run set 3 records barrier=0 at delta=-0.5 for radiated fraction 0-0.5, and P_rad appears only in q_peak. The barrier rule uses P_sep, and with delta < delta_c it returns 0 regardless of power, so the outcome follows from the fitted rule and the chosen configuration, not from a physical process. The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I6": {
+      "verdict": false,
+      "reason": "The lambda_q form c0 Ip^-1.1 (1 + c1 delta) is a fit and contains no barrier term; the log shows lambda_q falls from 3.9 to 2.6 mm as delta goes negative, but the mechanism gives no reason (no link to edge gradient, turbulence, or barrier absence). The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I7": {
+      "verdict": false,
+      "reason": "The only geometric term is f_x = 4.5 + 1.2 delta, which makes flux expansion smaller for negative delta, and lambda_q also shrinks for negative delta, so the forms imply a smaller, not larger, wetted area for the reversed shape. No divertor geometry or strike-point argument is given. The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I8": {
+      "verdict": false,
+      "reason": "tau_imp = 1.0 + 2.8 barrier is a fitted step on the barrier flag (run set 4: tau_imp/tau_E 0.9-1.2 without barrier). It reproduces the data but gives no transport process (no edge pinch, no ELM flushing, no barrier-driven inward convection) for why impurity and energy confinement times coincide. The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I9": {
+      "verdict": false,
+      "reason": "The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. No ballooning stability, magnetic shear, or second-stability access appears in any form."
+    },
+    "I10": {
+      "verdict": false,
+      "reason": "delta_c = -0.21 is a fitted constant with no derivation. Elongation terms were tried and dropped, and aspect ratio is never varied, so the mechanism has no dependence of delta_c on elongation or aspect ratio and cannot explain why the value is what it is. The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I11": {
+      "verdict": false,
+      "reason": "The forms are deterministic functions of delta, P_sep and density; they predict identical alpha_edge at the same shape and power and contain no source of shot-to-shot variability. The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. "
+    },
+    "I12": {
+      "verdict": false,
+      "reason": "The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. Triangularity enters as a single scalar delta; upper and lower halves of the boundary, and the X-point side versus the opposite side, are not distinguished."
+    },
+    "I13": {
+      "verdict": false,
+      "reason": "The submission states that its forms are empirical fits chosen for fewest constants and that no physical process is attached to any term, so it contains no causal chain in the plasma. No core confinement, core profile, or global energy confinement quantity is modelled; only edge gradient, lambda_q, q_peak and tau_imp. The trade-off cannot be assessed."
+    }
+  }
+}

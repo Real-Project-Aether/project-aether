@@ -1,0 +1,44 @@
+{
+  "insights": {
+    "I1": {
+      "verdict": false,
+      "reason": "The mechanism describes forward wave generation in the ventral cord (AVB drive, B/D half-centre oscillators with a slow K current, B-class chemical coupling between segments). It never removes the gap junctions, never states how much of the AVB drive is carried by gap junctions versus chemical synapses, and has no account of swing amplitude. E1 shows the wave stops when AVB drive is 0, so losing the gap-junction share of the drive could reduce or stop the oscillation; the mechanism gives no way to decide. It also does not cover the head or A-class neurons. It cannot derive why all motor neurons swing about as much without gap junctions."
+    },
+    "I2": {
+      "verdict": false,
+      "reason": "The mechanism says the head motor neurons are not needed for the cord wave and gives no account of what drives them. It contains nothing about the head motor neurons' swing or about gap junctions onto them, so it cannot explain why their swing is unchanged when gap junctions are removed."
+    },
+    "I3": {
+      "verdict": false,
+      "reason": "The mechanism states the A class is quiet and flat during forward movement (step 5, E4) and takes no part in the wave. It provides no source of A-class swing, so it cannot explain why A-class neurons keep their swing without gap junctions. It is at odds with the premise that A-class neurons swing."
+    },
+    "I4": {
+      "verdict": false,
+      "reason": "The B-class oscillation is attributed to an intrinsic slow potassium current, a B/D half-centre, and chemical coupling, which would not obviously depend on gap junctions. But the mechanism states AVB depolarises B neurons through gap junctions and chemical synapses, and E1 shows that the oscillation depends on drive level (0 Hz at 0 pA). It does not quantify the gap-junction share of the drive, no gap-junction removal was run, and amplitude is never measured. Whether B neurons keep their swing cannot be derived from the mechanism."
+    },
+    "I5": {
+      "verdict": false,
+      "reason": "D neurons are driven by B neurons through chemical synapses in the half-centre, so D swing would follow B swing. B swing without gap junctions is not derivable (see I4), and the mechanism has no amplitude account for D. The conclusion is not derived."
+    },
+    "I6": {
+      "verdict": false,
+      "reason": "The mechanism contains no sensory input. There is no odor or food-gradient sample, no sensory neuron, no input resistance or gain stage. E1 runs with no odor sample. It cannot explain how a few-picoampere sample produces millivolt motor-neuron changes."
+    },
+    "I7": {
+      "verdict": false,
+      "reason": "The mechanism has no background stimulus level, no adaptation, saturation or gain control in a sensory pathway. Raising AVB drive is said to raise frequency, which is not the same thing. It cannot explain why a higher background lets less of a large swing reach the motor neurons."
+    },
+    "I8": {
+      "verdict": false,
+      "reason": "The mechanism has no proprioceptive or stretch-sensing component. Coupling between segments is through B-class chemical synapses from the anterior segment to the posterior one (step 3). It does not describe how bending of the body behind a motor neuron reaches it."
+    },
+    "I9": {
+      "verdict": false,
+      "reason": "The mechanism treats synapses only as excitatory (B to muscle, B to D) or inhibitory (D to the opposite side). It does not mention neurons that release several transmitters, receptor identity at each synapse, or what sets the polarity of an individual synapse."
+    },
+    "I10": {
+      "verdict": false,
+      "reason": "The mechanism has fixed connections and no plasticity, learning, or time-dependent change in connectivity during foraging. It cannot explain how circuit connections change as the animal keeps foraging."
+    }
+  }
+}
