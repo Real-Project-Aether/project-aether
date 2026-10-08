@@ -58,6 +58,9 @@ header.top{border-bottom:1px solid var(--rule); background:var(--surface)}
 .top .wrap{display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:16px; padding-bottom:16px}
 .brand{font-family:var(--serif); font-size:19px; font-weight:600; letter-spacing:-.01em}
 .brand span{color:var(--accent)}
+.byline{margin:20px 0 0; color:var(--ink-2); font-size:15px; line-height:1.5}
+.byline b{color:var(--ink)}
+.byline .venue{display:block; color:var(--muted); font-size:14px}
 .topnav{display:flex; gap:22px; flex-wrap:wrap; align-items:center}
 .topnav a{font-size:14px; color:var(--ink-2); text-decoration:none}
 .topnav a:hover{color:var(--accent-ink); text-decoration:underline}
@@ -310,6 +313,9 @@ footer a{color:var(--ink-2)}
     <strong>Our goal is a machine that spots such a gap by itself and has the aha moment &mdash;
     producing the new idea, instead of waiting for a physicist to hand it one.</strong> What follows is a first
     attempt at a single one of those moves, made mechanical and tested on real physics.</p>
+    <p class="byline"><b>Project Aether</b>
+      <span class="venue"><em>Null Controls Are Necessary but Not Sufficient: Auditing Acceptance Guards
+      for Scientific Discovery and Interpretability</em>, NeurIPS 2026 Workshop on XAI4Science</span></p>
     <div class="facts">
       <div class="fact"><b>65%</b><span>of physics prizes changed a description</span></div>
       <div class="fact"><b>1 in 13</b><span>depth labels are the rung ML implements</span></div>
@@ -902,7 +908,8 @@ python3 live_rotation_curve.py   <span class="cmt"># where it goes quiet on a re
 
 <footer>
   <div class="wrap">
-    <span><b>Project Aether</b> &mdash; named for what Einstein removed. An open project on automating conceptual change in physics</span>
+    <span><b>Project Aether</b> &mdash; named for what Einstein removed. An open project on automating conceptual change in physics.
+    <a href="https://github.com/Real-Project-Aether/project-aether">github.com/Real-Project-Aether/project-aether</a></span>
     <span>Annotations &amp; code <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> / MIT &middot;
     citation text remains the awarding bodies&rsquo;</span>
   </div>

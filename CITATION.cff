@@ -3,6 +3,8 @@ title: "The Prize Corpus: scientific awards annotated by type of contribution"
 message: "If you use this corpus, please cite the paper below."
 type: dataset
 authors:
+  - name: "Project Aether"
+    website: https://github.com/Real-Project-Aether/project-aether
   - family-names: Wu
     given-names: Tianyu
     email: tianyu16@illinois.edu
@@ -17,11 +19,15 @@ keywords:
   - conceptual change
   - machine learning
 preferred-citation:
-  type: article
-  title: "Patch or Reinterpret? A Prize Corpus and a Measurable Test for the Move Models Do Not Make"
+  type: conference-paper
+  title: "Null Controls Are Necessary but Not Sufficient: Auditing Acceptance Guards for Scientific Discovery and Interpretability"
   authors:
+    - name: "Project Aether"
+      website: https://github.com/Real-Project-Aether/project-aether
     - family-names: Wu
       given-names: Tianyu
       email: tianyu16@illinois.edu
       affiliation: "Center for Biophysics and Quantitative Biology, University of Illinois Urbana-Champaign"
+  collection-title: "NeurIPS 2026 Workshop on XAI4Science: Knowledge Discovery and Trust through Interpretable Foundation Models"
   year: 2026
+  url: https://real-project-aether.github.io/project-aether/paper.pdf

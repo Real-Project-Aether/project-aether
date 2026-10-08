@@ -224,9 +224,23 @@ down. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Citing
 
-See [CITATION.cff](CITATION.cff). The paper is at
+Project Aether and Tianyu Wu. *Null Controls Are Necessary but Not Sufficient: Auditing Acceptance
+Guards for Scientific Discovery and Interpretability.* NeurIPS 2026 Workshop on XAI4Science.
+The paper is at
 [real-project-aether.github.io/project-aether/paper.pdf](https://real-project-aether.github.io/project-aether/paper.pdf);
-the LaTeX source is not part of this repository.
+the LaTeX source is not part of this repository. See also [CITATION.cff](CITATION.cff).
+
+```bibtex
+@inproceedings{projectaether2026nullcontrols,
+  title     = {Null Controls Are Necessary but Not Sufficient: Auditing Acceptance Guards
+               for Scientific Discovery and Interpretability},
+  author    = {{Project Aether} and Wu, Tianyu},
+  booktitle = {NeurIPS 2026 Workshop on XAI4Science: Knowledge Discovery and Trust through
+               Interpretable Foundation Models},
+  year      = {2026},
+  url       = {https://github.com/Real-Project-Aether/project-aether}
+}
+```
 
 ## Licence
 
